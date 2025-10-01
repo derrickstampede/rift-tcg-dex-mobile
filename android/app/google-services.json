@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "769875276341",
+    "project_id": "rift-tcg-dex",
+    "storage_bucket": "rift-tcg-dex.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:769875276341:android:e216dee6fa2dd92b07f77c",
+        "android_client_info": {
+          "package_name": "com.xedtcg.rift"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtrH1CNg0KHCGsVZtEl_ojuccP8qnqxEg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -30,10 +30,52 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
+  auto_size_text: ^3.0.0
+  badges: ^3.1.2
+  carousel_slider: ^5.0.0
+  collection: ^1.19.1
+  crypto: ^3.0.6
   cupertino_icons: ^1.0.8
+  dartz: ^0.10.1
+  device_info_plus: ^10.1.2
+  dotted_border: ^2.1.0
+  fluro: ^2.0.5
+  fancy_shimmer_image: ^2.0.3
+  firebase_analytics: ^11.0.0
+  firebase_core: ^3.15.2
+  firebase_crashlytics: ^4.0.0
+  firebase_messaging: ^15.0.0
+  fl_chart: ^0.69.0
+  flutter_cache_manager: ^3.4.1
+  flutter_colorpicker: ^1.1.0
+  flutter_dotenv: ^5.1.0
+  flutter_expandable_fab: ^2.5.1
+  flutter_local_notifications: ^16.3.2
+  flutter_native_splash: ^2.3.0
+  flutter_riverpod: ^2.6.1
+  # gma_mediation_unity: ^1.4.0
+  # google_mobile_ads: ^6.0.0
+  google_sign_in: ^6.3.0
+  http: ^1.4.0
+  image_picker: ^1.1.2
+  in_app_review: ^2.0.10
+  intl: ^0.20.2
+  material_symbols_icons: ^4.2815.0
+  package_info_plus: ^8.3.0
+  pinch_zoom: ^2.0.1
+  # purchases_flutter: ^8.8.1
+  # purchases_ui_flutter: ^8.8.1
+  readmore: ^3.0.0
+  riverpod: ^2.6.1
+  riverpod_annotation: ^2.6.1
+  shared_preferences: ^2.5.3
+  sign_in_button: ^3.2.0
+  sign_in_with_apple: ^7.0.1
+  slide_countdown: ^2.0.2
+  sliver_tools: ^0.2.12
+  supabase_flutter: ^2.9.0
+  syncfusion_flutter_sliders: ^29.2.4
+  url_launcher: ^6.3.1
 
 dev_dependencies:
   flutter_test:
@@ -45,6 +87,32 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^5.0.0
+  flutter_launcher_icons: ^0.14.3
+  build_runner: ^2.4.8
+  freezed: ^2.4.7
+  json_serializable: ^6.7.1
+  riverpod_generator: ^2.3.11
+
+# # dart run flutter_launcher_icons
+# flutter_launcher_icons:
+#   android: "launcher_icon"
+#   ios: true
+#   image_path: "assets/icons/app-icon.png"
+#   min_sdk_android: 21 # android min sdk min:16, default 21
+#   remove_alpha_ios: true
+#   adaptive_icon_background: "#ed4700" 
+#   adaptive_icon_foreground: "assets/icons/app-icon.png"
+#   android_notification_icon:
+#     image_path: "assets/icons/app-icon.png"
+
+# # dart run flutter_native_splash:create
+# flutter_native_splash:
+#   color: "#ed4700"
+#   color_dark: "#ed4700"
+#   # background_image: "assets/background.png"
+#   image: "assets/icons/app-splash.png"
+#   android_12:
+#     color: "#ed4700"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -58,9 +126,13 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - .env
+    - .env.dev
+    - assets/images/avatar.jpg
+    - assets/images/cardmarket-sm.png
+    - assets/images/app-store.png
+    - assets/images/google-play.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
