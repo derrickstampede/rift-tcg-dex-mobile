@@ -26,5 +26,7 @@
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:769875276341:ios:2e4dd638aacd608807f77c</string>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<true></true>
 </dict>
 </plist>

@@ -12,7 +12,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 // import 'globals.dart';
-// import 'firebase_options.dart';
+import 'firebase_options.dart';
 
 // import 'package:rift/themes/theme.dart';
 
@@ -41,23 +41,25 @@ Future<void> main() async {
 
     final isProd = bool.parse(dotenv.env['IS_PROD']!);
     if (isProd) {
-      // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+      await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+      print("Firebase initialized");
 
-      // final analytics = FirebaseAnalytics.instance;
+      final analytics = FirebaseAnalytics.instance;
+      print("Firebase Analytics initialized");
 
-      // await FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(true);
+      await FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(true);
 
-      // FlutterError.onError = (errorDetails) {
-      //   print("Flutter error caught: ${errorDetails.exception}");
-      //   FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
-      // };
-      // PlatformDispatcher.instance.onError = (error, stack) {
-      //   print("Platform error caught: $error");
-      //   FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
-      //   return true;
-      // };
+      FlutterError.onError = (errorDetails) {
+        print("Flutter error caught: ${errorDetails.exception}");
+        FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+      };
+      PlatformDispatcher.instance.onError = (error, stack) {
+        print("Platform error caught: $error");
+        FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+        return true;
+      };
 
-      // await analytics.logEvent(name: 'app_started', parameters: {'timestamp': DateTime.now().toIso8601String()});
+      await analytics.logEvent(name: 'app_started', parameters: {'timestamp': DateTime.now().toIso8601String()});
 
       // await NotificationService.instance.initialize();
     }
@@ -167,6 +169,13 @@ class _MyHomePageState extends State<MyHomePage> {
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
       _counter++;
+
+      // Send test error to Crashlytics
+      // try {
+      //   throw Exception('Test error from _incrementCounter - Counter: $_counter');
+      // } catch (e, stack) {
+      //   FirebaseCrashlytics.instance.recordError(e, stack, reason: 'Counter incremented');
+      // }
     });
   }
 
