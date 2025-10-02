@@ -11,7 +11,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 // import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
-// import 'globals.dart';
+import 'globals.dart';
 import 'firebase_options.dart';
 
 // import 'package:rift/themes/theme.dart';
@@ -26,7 +26,7 @@ import 'firebase_options.dart';
 // import 'package:rift/helpers/revenuecat.helper.dart';
 // import 'package:rift/helpers/review.helper.dart';
 
-// import 'services/notification.service.dart';
+import 'services/notification.service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -61,7 +61,7 @@ Future<void> main() async {
 
       await analytics.logEvent(name: 'app_started', parameters: {'timestamp': DateTime.now().toIso8601String()});
 
-      // await NotificationService.instance.initialize();
+      await NotificationService.instance.initialize();
     }
   } catch (e, stack) {
     print("Failed to initialize Firebase: $e");
