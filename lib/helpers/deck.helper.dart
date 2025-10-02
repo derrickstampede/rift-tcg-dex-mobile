@@ -1,0 +1,405 @@
+import 'dart:convert';
+
+import 'package:dartz/dartz.dart';
+import 'package:http/http.dart' as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+
+import 'package:rift/main.dart';
+
+import 'package:rift/models/deck.model.dart';
+import 'package:rift/models/card.model.dart';
+import 'package:rift/models/note.model.dart';
+
+final Map<String, String> httpHeaders = {"Content-Type": "application/json", "APIKey": dotenv.env['API_KEY']!};
+
+Future<Either<Map<String, dynamic>, dynamic>> searchDecks() async {
+  try {
+    final headers = {...httpHeaders};
+    Session? session = supabase.auth.currentSession;
+    if (session != null) {
+      headers['AccessToken'] = session.accessToken;
+    }
+
+    final url = Uri.https(dotenv.env['API']!, 'api/v1/decks/search');
+    final response = await http.get(url, headers: headers);
+
+    if (response.statusCode != 200) {
+      final err = json.decode(response.body);
+      throw {"statusCode": response.statusCode, "statusText": err['statusText'], "message": err['message']};
+    }
+
+    final responseData = json.decode(response.body);
+
+    return left({'decks': responseData['data']['decks'].map<Deck>((d) => Deck.fromMap(d)).toList()});
+  } catch (e) {
+    print(e);
+    return right(e);
+  }
+}
+
+Future<Either<Map<String, dynamic>, dynamic>> findDeck(String slug) async {
+  try {
+    final headers = {...httpHeaders};
+    final url = Uri.https(dotenv.env['API']!, 'api/v1/decks/$slug');
+    final response = await http.get(url, headers: headers);
+
+    if (response.statusCode != 200) {
+      final err = json.decode(response.body);
+      throw {"statusCode": response.statusCode, "statusText": err['statusText'], "message": err['message']};
+    }
+
+    final responseData = json.decode(response.body);
+
+    return left({'deck': Deck.fromMap(responseData['data']['deck'])});
+  } catch (e) {
+    return right(e);
+  }
+}
+
+Future<Either<Map<String, dynamic>, dynamic>> exportDeck(String slug) async {
+  try {
+    final headers = {...httpHeaders};
+    Session? session = supabase.auth.currentSession;
+    if (session != null) {
+      headers['AccessToken'] = session.accessToken;
+    }
+    final url = Uri.https(dotenv.env['API']!, 'api/v1/decks/$slug/export');
+    final response = await http.get(url, headers: headers);
+
+    if (response.statusCode != 200) {
+      final err = json.decode(response.body);
+      throw {"statusCode": response.statusCode, "statusText": err['statusText'], "message": err['message']};
+    }
+
+    final responseData = json.decode(response.body);
+
+    return left({'deckExport': responseData['data']['deck']});
+  } catch (e) {
+    return right(e);
+  }
+}
+
+Future<Either<Map<String, dynamic>, dynamic>> findDeckStats(String slug) async {
+  try {
+    final headers = {...httpHeaders};
+    Session? session = supabase.auth.currentSession;
+    if (session != null) {
+      headers['AccessToken'] = session.accessToken;
+    }
+
+    final url = Uri.https(dotenv.env['API']!, 'api/v1/decks/$slug/stats');
+    final response = await http.get(url, headers: headers);
+
+    if (response.statusCode != 200) {
+      final err = json.decode(response.body);
+      throw {"statusCode": response.statusCode, "statusText": err['statusText'], "message": err['message']};
+    }
+
+    final responseData = json.decode(response.body);
+
+    return left({
+      'stats': DeckStats.fromMap(responseData['data']['stats']),
+      'note': responseData['data']['note'] != null ? Note.fromMap(responseData['data']['note']) : null,
+    });
+  } catch (e) {
+    return right(e);
+  }
+}
+
+Future<Either<Map<String, dynamic>, dynamic>> storeDeck(dynamic deck) async {
+  try {
+    final headers = {...httpHeaders};
+    Session? session = supabase.auth.currentSession;
+    if (session != null) {
+      headers['AccessToken'] = session.accessToken;
+    }
+
+    final url = Uri.https(dotenv.env['API']!, 'api/v1/decks');
+    final body = json.encode(deck);
+    final response = await http.post(url, body: body, headers: headers);
+
+    if (response.statusCode != 201) {
+      final err = json.decode(response.body);
+      throw {"statusCode": response.statusCode, "statusText": err['statusText'], "message": err['error']['message']};
+    }
+
+    final responseData = json.decode(response.body);
+
+    return left({'is_created': responseData['data']['is_created'], 'deck': responseData['data']['deck']});
+  } catch (e) {
+    return right(e);
+  }
+}
+
+Future<Either<Map<String, dynamic>, dynamic>> shareDeck(dynamic deckShare) async {
+  try {
+    final url = Uri.https(dotenv.env['API']!, 'api/v1/decks/share');
+    final body = json.encode(deckShare);
+    final response = await http.post(url, body: body, headers: httpHeaders);
+
+    if (response.statusCode != 200) {
+      final err = json.decode(response.body);
+      throw {"statusCode": response.statusCode, "statusText": err['statusText'], "message": err['message']};
+    }
+
+    final responseData = json.decode(response.body);
+    final deckData = responseData['data']['deck'];
+    final deck = Deck(
+      id: deckData['id'],
+      name: deckData['name'],
+      slug: deckData['slug'],
+      leader: CardListItem(
+        id: deckData['leader']['id'],
+        name: deckData['leader']['name'],
+        backName: deckData['leader']['back_name'],
+        slug: deckData['leader']['slug'],
+        cardId: deckData['leader']['card_id'],
+        set: null,
+        thumbnail: deckData['leader']['thumbnail'],
+        backThumbnail: deckData['leader']['back_thumbnail'],
+        type: deckData['leader']['type'],
+        color: deckData['leader']['color'],
+        rarity: deckData['leader']['rarity'],
+        specifiedCost: deckData['leader']['specified_cost'],
+        power: deckData['leader']['power'],
+        awakenPower: deckData['leader']['awaken_power'],
+        combo: deckData['leader']['combo'],
+        count: deckData['leader']['count'],
+        cost: deckData['leader']['cost'],
+        variant: deckData['leader']['variant'],
+        variants:
+            deckData['leader']['variants'] != null
+                ? deckData['leader']['variants'].map<CardVariant>((v) => CardVariant.fromJson(v)).toList()
+                    as List<CardVariant>
+                : [],
+        maxDeckCards: 0,
+        note: null,
+        cardsProfiles: [],
+        conversions: [],
+        yytJp: deckData['leader']['yyt_jp'],
+        tcgpEn: deckData['leader']['tcgp_en'],
+        cmEn: deckData['leader']['cm_en'],
+        cmJp: deckData['leader']['cm_jp'],
+      ),
+      note: null,
+      sortBy: 'card',
+      isSortAscending: true,
+      cards:
+          deckData['cards'].map<CardListItem>((dynamic c) {
+            return CardListItem(
+              id: c['id'],
+              name: c['name'],
+              backName: c['back_name'],
+              slug: c['slug'],
+              cardId: c['card_id'],
+              set: null,
+              thumbnail: c['thumbnail'],
+              backThumbnail: c['back_thumbnail'],
+              type: c['type'],
+              color: c['color'],
+              rarity: c['rarity'],
+              specifiedCost: c['specified_cost'],
+              power: c['power'],
+              awakenPower: c['awaken_power'],
+              combo: c['combo'],
+              count: c['count'],
+              cost: c['cost'],
+              variant: c['variant'],
+              variants:
+                  c['variants'] != null
+                      ? c['variants'].map<CardVariant>((v) => CardVariant.fromJson(v)).toList() as List<CardVariant>
+                      : [],
+              maxDeckCards: 0,
+              note: null,
+              cardsProfiles: [],
+              conversions: [],
+              yytJp: c['yyt_jp'],
+              tcgpEn: c['tcgp_en'],
+              cmEn: c['cm_en'],
+              cmJp: c['cm_jp'],
+            );
+          }).toList(),
+      markets: [],
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+    );
+
+    return left({'deck': deck});
+  } catch (e) {
+    return right(e);
+  }
+}
+
+Future<Either<Map<String, dynamic>, dynamic>> copyDeck(String slug, bool isPro) async {
+  try {
+    final headers = {...httpHeaders};
+    Session? session = supabase.auth.currentSession;
+    if (session != null) {
+      headers['AccessToken'] = session.accessToken;
+    }
+
+    final url = Uri.https(dotenv.env['API']!, 'api/v1/decks/$slug/copy');
+    final body = json.encode({"is_pro": isPro});
+    final response = await http.post(url, body: body, headers: headers);
+
+    if (response.statusCode != 201) {
+      final err = json.decode(response.body);
+      throw {"statusCode": response.statusCode, "statusText": err['statusText'], "message": err['error']['message']};
+    }
+
+    final responseData = json.decode(response.body);
+
+    return left({'is_created': responseData['data']['is_created'], 'deck': responseData['data']['deck']});
+  } catch (e) {
+    return right(e);
+  }
+}
+
+Future<Either<Map<String, dynamic>, dynamic>> updateDeck(dynamic deck, String slug) async {
+  try {
+    final headers = {...httpHeaders};
+    Session? session = supabase.auth.currentSession;
+    if (session != null) {
+      headers['AccessToken'] = session.accessToken;
+    }
+
+    final url = Uri.https(dotenv.env['API']!, 'api/v1/decks/$slug');
+    final body = json.encode(deck);
+    final response = await http.patch(url, body: body, headers: headers);
+
+    if (response.statusCode != 200) {
+      final err = json.decode(response.body);
+      throw {"statusCode": response.statusCode, "statusText": err['statusText'], "message": err['error']['message']};
+    }
+
+    final responseData = json.decode(response.body);
+
+    return left({'is_updated': responseData['data']['is_updated']});
+  } catch (e) {
+    return right(e);
+  }
+}
+
+Future<Either<Map<String, dynamic>, dynamic>> updateLeaderDeck(String slug, int leaderId) async {
+  try {
+    final headers = {...httpHeaders};
+    Session? session = supabase.auth.currentSession;
+    if (session != null) {
+      headers['AccessToken'] = session.accessToken;
+    }
+
+    final url = Uri.https(dotenv.env['API']!, 'api/v1/decks/$slug/update-leader');
+    final body = json.encode({"card_id": leaderId});
+    final response = await http.patch(url, body: body, headers: headers);
+
+    if (response.statusCode != 200) {
+      final err = json.decode(response.body);
+      throw {"statusCode": response.statusCode, "statusText": err['statusText'], "message": err['error']['message']};
+    }
+
+    final responseData = json.decode(response.body);
+
+    return left({'is_updated': responseData['data']['is_updated']});
+  } catch (e) {
+    return right(e);
+  }
+}
+
+Future<Either<Map<String, dynamic>, dynamic>> updateSortingDeck(String sortBy, bool isAscending, String slug) async {
+  try {
+    final headers = {...httpHeaders};
+    Session? session = supabase.auth.currentSession;
+    if (session != null) {
+      headers['AccessToken'] = session.accessToken;
+    }
+
+    final url = Uri.https(dotenv.env['API']!, 'api/v1/decks/$slug/sorting');
+    final body = json.encode({"sort_by": sortBy, "is_sort_ascending": isAscending});
+    final response = await http.patch(url, body: body, headers: headers);
+
+    if (response.statusCode != 200) {
+      final err = json.decode(response.body);
+      throw {"statusCode": response.statusCode, "statusText": err['statusText'], "message": err['error']['message']};
+    }
+
+    final responseData = json.decode(response.body);
+
+    return left({'is_updated': responseData['data']['is_updated']});
+  } catch (e) {
+    return right(e);
+  }
+}
+
+Future<Either<Map<String, dynamic>, dynamic>> updatePublicDeck(bool isPublic, String slug) async {
+  try {
+    final headers = {...httpHeaders};
+    Session? session = supabase.auth.currentSession;
+    if (session != null) {
+      headers['AccessToken'] = session.accessToken;
+    }
+
+    final url = Uri.https(dotenv.env['API']!, 'api/v1/decks/$slug/public');
+    final body = json.encode({"is_public": isPublic});
+    final response = await http.patch(url, body: body, headers: headers);
+
+    if (response.statusCode != 200) {
+      final err = json.decode(response.body);
+      throw {"statusCode": response.statusCode, "statusText": err['statusText'], "message": err['error']['message']};
+    }
+
+    final responseData = json.decode(response.body);
+
+    return left({'is_updated': responseData['data']['is_updated']});
+  } catch (e) {
+    return right(e);
+  }
+}
+
+Future<Either<Map<String, dynamic>, dynamic>> importDeck(Map<String, dynamic> payload) async {
+  try {
+    final headers = {...httpHeaders};
+    Session? session = supabase.auth.currentSession;
+    if (session != null) {
+      headers['AccessToken'] = session.accessToken;
+    }
+
+    final url = Uri.https(dotenv.env['API']!, 'api/v1/decks/import/onepiecetopdecks2');
+    final response = await http.post(url, body: json.encode(payload), headers: headers);
+
+    if (response.statusCode != 201) {
+      final err = json.decode(response.body);
+      throw {"statusCode": response.statusCode, "statusText": err['statusText'], "message": err['error']['message']};
+    }
+
+    final responseData = json.decode(response.body);
+
+    return left({'is_created': responseData['data']['is_created'], 'deck': responseData['data']['deck']});
+  } catch (e) {
+    return right(e);
+  }
+}
+
+Future<Either<Map<String, dynamic>, dynamic>> deleteDeck(String slug) async {
+  try {
+    final headers = {...httpHeaders};
+    Session? session = supabase.auth.currentSession;
+    if (session != null) {
+      headers['AccessToken'] = session.accessToken;
+    }
+
+    final url = Uri.https(dotenv.env['API']!, 'api/v1/decks/$slug');
+    final response = await http.delete(url, headers: headers);
+
+    if (response.statusCode != 201) {
+      final err = json.decode(response.body);
+      throw {"statusCode": response.statusCode, "statusText": err['statusText'], "message": err['error']['message']};
+    }
+
+    final responseData = json.decode(response.body);
+
+    return left({'is_deleted': responseData['data']['is_deleted'], 'deck': responseData['data']['deck']});
+  } catch (e) {
+    return right(e);
+  }
+}
