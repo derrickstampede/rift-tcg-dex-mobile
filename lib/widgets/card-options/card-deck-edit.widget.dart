@@ -89,7 +89,6 @@ class _CardDeckEditState extends ConsumerState<CardDeckEdit> {
       id: widget.card.id,
       cardId: widget.card.cardId,
       name: widget.card.name,
-      backName: widget.card.backName,
       slug: widget.card.slug,
       set: null,
       thumbnail: widget.card.thumbnail,
@@ -97,11 +96,12 @@ class _CardDeckEditState extends ConsumerState<CardDeckEdit> {
       type: widget.card.type,
       color: widget.card.color,
       rarity: widget.card.rarity,
-      cost: widget.card.cost,
-      specifiedCost: widget.card.specifiedCost,
+      domain: widget.card.domain,
+      energy: widget.card.energy,
+      might: widget.card.might,
+      print: widget.card.print,
+      orientation: widget.card.orientation,
       power: widget.card.power,
-      awakenPower: widget.card.awakenPower,
-      combo: widget.card.combo,
       variant: null,
       variants: [],
       cardsProfiles: widget.card.cardsProfiles,
@@ -165,7 +165,7 @@ class _CardDeckEditState extends ConsumerState<CardDeckEdit> {
                   overflow: TextOverflow.ellipsis,
                 ),
                 subtitle: Text(
-                  '${widget.card.cardId} \u2981 ${widget.card.cost.toString()} cost',
+                  '${widget.card.cardId} \u2981 ${widget.card.might.toString()} might',
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -228,9 +228,9 @@ class _CardDeckEditState extends ConsumerState<CardDeckEdit> {
                     overflow: TextOverflow.ellipsis,
                   ),
                   subtitle:
-                      search$.cards[i].type != 'LEADER'
+                      search$.cards[i].type != 'CHAMPION'
                           ? Text(
-                            '${search$.cards[i].cardId} \u2981 ${search$.cards[i].cost.toString()} cost',
+                            '${search$.cards[i].cardId} \u2981 ${search$.cards[i].might!.toString()} might',
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                           )

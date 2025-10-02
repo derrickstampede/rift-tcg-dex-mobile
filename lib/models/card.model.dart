@@ -6,24 +6,22 @@ class CardItemView with ChangeNotifier {
   final int id;
   final String cardId;
   final String name;
-  final String? backName;
   final String slug;
   final bool isParallel;
   final bool isSpecialParallel;
+  final bool isSigned;
   final int? setId;
   final String? setName;
   final String? rarity;
-  final int? cost;
-  final String? specifiedCost;
-  final int? power;
-  final int? awakenPower;
-  final int? combo;
   final String? color;
+  final String? domain;
   final String? type;
-  final String? effect;
-  final String? awakenEffect;
-  final String? features;
-  final String? awakenFeatures;
+  final int? energy;
+  final int? might;
+  final int? power;
+  final String? ability;
+  final String? flavorText;
+  final String? tags;
   final String image;
   final String thumbnail;
   final String? backImage;
@@ -43,24 +41,22 @@ class CardItemView with ChangeNotifier {
     required this.id,
     required this.cardId,
     required this.name,
-    required this.backName,
     required this.slug,
     required this.isParallel,
     required this.isSpecialParallel,
+    required this.isSigned,
     required this.setId,
     required this.setName,
     required this.rarity,
-    required this.cost,
-    required this.specifiedCost,
-    required this.power,
-    required this.awakenPower,
-    required this.combo,
     required this.color,
+    required this.domain,
     required this.type,
-    required this.effect,
-    required this.awakenEffect,
-    required this.features,
-    required this.awakenFeatures,
+    required this.energy,
+    required this.might,
+    required this.power,
+    required this.ability,
+    required this.flavorText,
+    required this.tags,
     required this.image,
     required this.thumbnail,
     required this.backImage,
@@ -81,24 +77,22 @@ class CardItemView with ChangeNotifier {
     'id': id,
     'cardId': cardId,
     'name': name,
-    'back_name': backName,
     'slug': slug,
     'is_parallel': isParallel,
     'is_special_parallel': isSpecialParallel,
+    'is_signed': isSigned,
     'setId': setId,
     'setName': setName,
     'rarity': rarity,
-    'cost': cost,
-    'specified_cost': specifiedCost,
-    'power': power,
-    'awaken_power': awakenPower,
-    'combo': combo,
     'color': color,
+    'domain': domain,
     'type': type,
-    'effect': effect,
-    'awaken_effect': awakenEffect,
-    'features': features,
-    'awaken_features': awakenFeatures,
+    'energy': energy,
+    'might': might,
+    'power': power,
+    'ability': ability,
+    'flavor_text': flavorText,
+    'tags': tags,
     'image': image,
     'thumbnail': thumbnail,
     'back_image': backImage,
@@ -119,24 +113,22 @@ class CardItemView with ChangeNotifier {
     id: map['id'],
     cardId: map['card_id'],
     name: map['name'],
-    backName: map['back_name'],
     slug: map['slug'],
     isParallel: map['is_parallel'],
     isSpecialParallel: map['is_special_parallel'],
+    isSigned: map['is_signed'],
     setId: map['set_id'],
     setName: map['set'] != null ? map['set']['name'] : null,
     rarity: map['rarity'],
-    cost: map['cost'],
-    specifiedCost: map['specified_cost'],
-    power: map['power'],
-    awakenPower: map['awaken_power'],
-    combo: map['combo'],
     color: map['color'],
+    domain: map['domain'],
     type: map['type'],
-    effect: map['effect'],
-    awakenEffect: map['awaken_effect'],
-    features: map['features'],
-    awakenFeatures: map['awaken_features'],
+    energy: map['energy'],
+    might: map['might'],
+    power: map['power'],
+    ability: map['ability'],
+    flavorText: map['flavor_text'],
+    tags: map['tags'],
     image: map['image'],
     thumbnail: map['thumbnail'],
     backImage: map['back_image'],
@@ -145,13 +137,10 @@ class CardItemView with ChangeNotifier {
     print: map['print'],
     originalId: map['original_id'],
     maxDeckCards: map['max_deck_cards'],
-    variants:
-        map['variants'] != null
-            ? map['variants'].map<CardVariant>((v) => CardVariant.fromJson(v)).toList() as List<CardVariant>
-            : [],
+    variants: map['variants'] != null ? map['variants'].map<CardVariant>((t) => CardVariant.fromMap(t)).toList() : [],
     cardsProfiles:
         map['cardsProfiles'] != null
-            ? map['cardsProfiles'].map<CardsProfiles>((v) => CardsProfiles.fromJson(v)).toList() as List<CardsProfiles>
+            ? map['cardsProfiles'].map<CardsProfiles>((t) => CardsProfiles.fromMap(t)).toList()
             : [],
     yytJp: map['yyt_jp'],
     tcgpEn: map['tcgp_en'],
@@ -164,19 +153,19 @@ class CardListItem with ChangeNotifier {
   final int id;
   final String cardId;
   final String name;
-  final String? backName;
   final String slug;
   final CardSet? set;
   String thumbnail;
   final String? backThumbnail;
   final String? rarity;
-  final int? cost;
-  final String? specifiedCost;
   final String? color;
+  final String? domain;
   final String? type;
+  final int? energy;
+  final int? might;
   final int? power;
-  final int? awakenPower;
-  final int? combo;
+  final String? print;
+  final String? orientation;
   final String? variant;
   final List<CardVariant> variants;
   List<CardsProfiles>? cardsProfiles;
@@ -191,21 +180,21 @@ class CardListItem with ChangeNotifier {
 
   CardListItem({
     required this.id,
-    required this.name,
-    required this.backName,
-    required this.slug,
     required this.cardId,
+    required this.name,
+    required this.slug,
     required this.set,
     required this.thumbnail,
-    required this.rarity,
-    required this.cost,
-    required this.specifiedCost,
-    required this.power,
-    required this.awakenPower,
-    required this.combo,
-    required this.color,
-    required this.type,
     required this.backThumbnail,
+    required this.rarity,
+    required this.color,
+    required this.domain,
+    required this.type,
+    required this.energy,
+    required this.might,
+    required this.power,
+    required this.print,
+    required this.orientation,
     required this.variant,
     required this.variants,
     required this.cardsProfiles,
@@ -221,20 +210,21 @@ class CardListItem with ChangeNotifier {
 
   Map<String, dynamic> toJson() => {
     'id': id,
-    'name': name,
-    'back_name': backName,
-    'slug': slug,
     'card_id': cardId,
+    'name': name,
+    'slug': slug,
     'set': set?.toJson(),
     'thumbnail': thumbnail,
+    'back_thumbnail': backThumbnail,
     'rarity': rarity,
-    'cost': cost,
-    'specified_cost': specifiedCost,
-    'power': power,
-    'awaken_power': awakenPower,
-    'combo': combo,
     'color': color,
+    'domain': domain,
     'type': type,
+    'energy': energy,
+    'might': might,
+    'power': power,
+    'print': print,
+    'orientation': orientation,
     'variant': variant,
     'variants': variants.map((c) => c.toJson()).toList(),
     'cardsProfiles': cardsProfiles != null ? cardsProfiles!.map((c) => c.toJson()).toList() : [],
@@ -250,21 +240,21 @@ class CardListItem with ChangeNotifier {
 
   factory CardListItem.fromMap(Map<String, dynamic> map) => CardListItem(
     id: map['id'],
-    name: map['name'],
-    backName: map['back_name'],
-    slug: map['slug'],
     cardId: map['card_id'],
+    name: map['name'],
+    slug: map['slug'],
     set: map['set'] != null ? CardSet.fromMap(map['set']) : null,
     thumbnail: map['thumbnail'],
-    rarity: map['rarity'],
-    cost: map['cost'],
-    specifiedCost: map['specified_cost'],
-    power: map['power'],
-    awakenPower: map['awaken_power'],
-    combo: map['combo'],
-    color: map['color'],
-    type: map['type'],
     backThumbnail: map['back_thumbnail'],
+    rarity: map['rarity'],
+    color: map['color'],
+    domain: map['domain'],
+    type: map['type'],
+    energy: map['energy'],
+    might: map['might'],
+    power: map['power'],
+    print: map['print'],
+    orientation: map['orientation'],
     variant: map['variant'],
     variants: map['variants'] != null ? map['variants'].map<CardVariant>((t) => CardVariant.fromMap(t)).toList() : [],
     cardsProfiles:

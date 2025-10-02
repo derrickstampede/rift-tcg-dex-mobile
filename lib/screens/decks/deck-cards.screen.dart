@@ -172,15 +172,15 @@ class _DeckCardsScreenState extends ConsumerState<DeckCardsScreen> {
       extraCards.sort((a, b) => isAscending ? a.power!.compareTo(b.power!) : b.power!.compareTo(a.power!));
       energyCards.sort((a, b) => isAscending ? a.power!.compareTo(b.power!) : b.power!.compareTo(a.power!));
     }
-    if (by == 'combo') {
-      battleCards.sort((a, b) => isAscending ? a.combo!.compareTo(b.combo!) : b.combo!.compareTo(a.combo!));
-      extraCards.sort((a, b) => isAscending ? a.combo!.compareTo(b.combo!) : b.combo!.compareTo(a.combo!));
-      energyCards.sort((a, b) => isAscending ? a.combo!.compareTo(b.combo!) : b.combo!.compareTo(a.combo!));
+    if (by == 'energy') {
+      battleCards.sort((a, b) => isAscending ? a.energy!.compareTo(b.energy!) : b.energy!.compareTo(a.energy!));
+      extraCards.sort((a, b) => isAscending ? a.energy!.compareTo(b.energy!) : b.energy!.compareTo(a.energy!));
+      energyCards.sort((a, b) => isAscending ? a.energy!.compareTo(b.energy!) : b.energy!.compareTo(a.energy!));
     }
-    if (by == 'cost') {
-      battleCards.sort((a, b) => isAscending ? a.cost!.compareTo(b.cost!) : b.cost!.compareTo(a.cost!));
-      extraCards.sort((a, b) => isAscending ? a.cost!.compareTo(b.cost!) : b.cost!.compareTo(a.cost!));
-      energyCards.sort((a, b) => isAscending ? a.cost!.compareTo(b.cost!) : b.cost!.compareTo(a.cost!));
+    if (by == 'might') {
+      battleCards.sort((a, b) => isAscending ? a.might!.compareTo(b.might!) : b.might!.compareTo(a.might!));
+      extraCards.sort((a, b) => isAscending ? a.might!.compareTo(b.might!) : b.might!.compareTo(a.might!));
+      energyCards.sort((a, b) => isAscending ? a.might!.compareTo(b.might!) : b.might!.compareTo(a.might!));
     }
 
     return [...leaderCards, ...battleCards, ...extraCards, ...energyCards];

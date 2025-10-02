@@ -713,34 +713,17 @@ class _CardScreenState extends ConsumerState<CardScreen> {
                                       ],
                                     ),
                                   ),
-                                if (_card.effect != null)
+                                if (_card.ability != null)
                                   Container(
                                     padding: const EdgeInsets.all(12),
                                     width: double.infinity,
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        const Subheader(text: 'Effect'),
-                                        _card.effect != null
+                                        const Subheader(text: 'ability'),
+                                        _card.ability != null
                                             ? Text(
-                                              _translation?.effect ?? _card.effect!,
-                                              style: const TextStyle(fontSize: 16),
-                                            )
-                                            : const Text('-'),
-                                      ],
-                                    ),
-                                  ),
-                                if (_card.awakenEffect != null)
-                                  Container(
-                                    padding: const EdgeInsets.all(12),
-                                    width: double.infinity,
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        const Subheader(text: 'Awaken Effect'),
-                                        _card.awakenEffect != null
-                                            ? Text(
-                                              _translation?.awakenEffect ?? _card.awakenEffect!,
+                                              _translation?.ability ?? _card.ability!,
                                               style: const TextStyle(fontSize: 16),
                                             )
                                             : const Text('-'),
@@ -764,19 +747,31 @@ class _CardScreenState extends ConsumerState<CardScreen> {
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      if (_card.type!.toLowerCase() != 'leader')
-                                        Expanded(
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              const Subheader(text: 'Cost'),
-                                              Text(
-                                                _card.cost != null ? _card.cost.toString() : '-',
-                                                style: const TextStyle(fontSize: 16),
-                                              ),
-                                            ],
-                                          ),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            const Subheader(text: 'Cost'),
+                                            Text(
+                                              _card.energy != null ? _card.energy.toString() : '-',
+                                              style: const TextStyle(fontSize: 16),
+                                            ),
+                                          ],
                                         ),
+                                      ),
+                                      Expanded(
+                                        flex: 2,
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            const Subheader(text: 'Awaken Power'),
+                                            Text(
+                                              _card.might != null ? _card.might.toString() : '-',
+                                              style: const TextStyle(fontSize: 16),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
                                       Expanded(
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -789,33 +784,6 @@ class _CardScreenState extends ConsumerState<CardScreen> {
                                           ],
                                         ),
                                       ),
-                                      if (_card.type!.toLowerCase() == 'leader')
-                                        Expanded(
-                                          flex: 2,
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              const Subheader(text: 'Awaken Power'),
-                                              Text(
-                                                _card.awakenPower != null ? _card.awakenPower.toString() : '-',
-                                                style: const TextStyle(fontSize: 16),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      if (_card.type!.toLowerCase() != 'leader')
-                                        Expanded(
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              const Subheader(text: 'Combo'),
-                                              Text(
-                                                _card.combo != null ? _card.combo.toString() : '-',
-                                                style: const TextStyle(fontSize: 16),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
                                     ],
                                   ),
                                 ),
@@ -845,7 +813,7 @@ class _CardScreenState extends ConsumerState<CardScreen> {
                                           children: [
                                             const Subheader(text: 'Features'),
                                             Text(
-                                              _card.features != null ? _translation?.features ?? _card.features! : '-',
+                                              _card.tags != null ? _translation?.tags ?? _card.tags! : '-',
                                               style: const TextStyle(fontSize: 16),
                                             ),
                                           ],

@@ -32,8 +32,8 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   try {
-    await dotenv.load(fileName: ".env");
-    // await dotenv.load(fileName: ".env.dev");
+    // await dotenv.load(fileName: ".env");
+    await dotenv.load(fileName: ".env.dev");
 
     final router = FluroRouter.appRouter;
     FluroRoutes.configureRouter(router);

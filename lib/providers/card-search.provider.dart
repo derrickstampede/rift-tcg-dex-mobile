@@ -1023,19 +1023,14 @@ class CardSearchNotifier extends _$CardSearchNotifier {
     if (by == 'name') {
       cards.sort((a, b) => isAscending ? a.name.compareTo(b.name) : b.name.compareTo(a.name));
     }
+    if (by == 'energy') {
+      cards.sort((a, b) => isAscending ? a.energy!.compareTo(b.energy!) : b.energy!.compareTo(a.energy!));
+    }
+    if (by == 'might') {
+      cards.sort((a, b) => isAscending ? a.might!.compareTo(b.might!) : b.might!.compareTo(a.might!));
+    }
     if (by == 'power') {
       cards.sort((a, b) => isAscending ? a.power!.compareTo(b.power!) : b.power!.compareTo(a.power!));
-    }
-    if (by == 'awaken_power') {
-      cards.sort(
-        (a, b) => isAscending ? a.awakenPower!.compareTo(b.awakenPower!) : b.awakenPower!.compareTo(a.awakenPower!),
-      );
-    }
-    if (by == 'cost') {
-      cards.sort((a, b) => isAscending ? a.cost!.compareTo(b.cost!) : b.cost!.compareTo(a.cost!));
-    }
-    if (by == 'combo') {
-      cards.sort((a, b) => isAscending ? a.combo!.compareTo(b.combo!) : b.combo!.compareTo(a.combo!));
     }
     if (by == 'tcgp_en') {
       cards.sort((a, b) => isAscending ? a.tcgpEn!.compareTo(b.tcgpEn!) : b.tcgpEn!.compareTo(a.tcgpEn!));
@@ -1059,10 +1054,9 @@ final List<Filter> _sortingOptions = [
   Filter(label: 'Set', value: 'set'),
   Filter(label: 'Card ID', value: 'card'),
   Filter(label: 'Name', value: 'name'),
+  Filter(label: 'Energy', value: 'energy'),
+  Filter(label: 'Might', value: 'might'),
   Filter(label: 'Power', value: 'power'),
-  Filter(label: 'Awaken Power', value: 'awaken_power'),
-  Filter(label: 'Combo', value: 'combo'),
-  Filter(label: 'Cost', value: 'cost'),
   Filter(label: 'TCGPlayer', value: 'tcgp_en'),
   // Filter(label: 'Yuyu-tei', value: 'yyt_jp'),
   Filter(label: 'CardMarket', value: 'cm_en'),
@@ -1072,19 +1066,17 @@ final List<Filter> _sortingOptions = [
 final List<Filter> _sortingDeckOptions = [
   Filter(label: 'Card ID', value: 'card'),
   Filter(label: 'Name', value: 'name'),
-  Filter(label: 'Power', value: 'power'),
-  // Filter(label: 'Awaken Power', value: 'awaken_power'),
-  Filter(label: 'Combo', value: 'combo'),
-  Filter(label: 'Cost', value: 'cost'),
+  Filter(label: 'Energy', value: 'energy'),
+  Filter(label: 'Might', value: 'might'),
+  Filter(label: 'Power', value: 'cost'),
 ];
 
 final List<Filter> _sortingVaultOptions = [
   Filter(label: 'Card ID', value: 'card'),
   Filter(label: 'Name', value: 'name'),
+  Filter(label: 'Energy', value: 'energy'),
+  Filter(label: 'Might', value: 'might'),
   Filter(label: 'Power', value: 'power'),
-  Filter(label: 'Awaken Power', value: 'awaken_power'),
-  Filter(label: 'Combo', value: 'combo'),
-  Filter(label: 'Cost', value: 'cost'),
   Filter(label: 'TCGPlayer', value: 'tcgp_en'),
   // Filter(label: 'Yuyu-tei', value: 'yyt_jp'),
   Filter(label: 'CardMarket', value: 'cm_en'),
@@ -1094,12 +1086,11 @@ final List<Filter> _sortingVaultOptions = [
 final List<Filter> _viewingOptions = [
   Filter(label: 'Name', value: 'name'),
   Filter(label: 'Set', value: 'set'),
+  Filter(label: 'Energy', value: 'energy'),
+  Filter(label: 'Might', value: 'might'),
   Filter(label: 'Power', value: 'power'),
-  Filter(label: 'Awaken Power', value: 'awaken_power'),
-  Filter(label: 'Cost', value: 'cost'),
-  Filter(label: 'Combo', value: 'combo'),
   Filter(label: 'Rarity', value: 'rarity'),
-  Filter(label: 'Color', value: 'color'),
+  Filter(label: 'Domain', value: 'domain'),
   Filter(label: 'TCGPlayer', value: 'tcgp_en'),
   // Filter(label: 'Yuyu-tei', value: 'yyt_jp'),
   Filter(label: 'CardMarket', value: 'cm_en'),

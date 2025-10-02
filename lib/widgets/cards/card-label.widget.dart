@@ -57,54 +57,35 @@ class _CardLabelState extends ConsumerState<CardLabel> {
     if (widget.label == 'set') {
       labelWidget = Text(widget.card.set!.name, maxLines: 1, overflow: TextOverflow.ellipsis, style: style);
     }
-    if (widget.label == 'power') {
-      if (widget.card.power != null) {
+    if (widget.label == 'energy') {
+      if (widget.card.energy != null) {
         labelWidget = Text(
-          'PWR: ${widget.card.power.toString()}',
+          'ENGY: ${widget.card.energy.toString()}',
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: style,
         );
       }
     }
-    if (widget.label == 'awaken_power') {
-      if (widget.card.awakenPower != null) {
+    if (widget.label == 'might') {
+      if (widget.card.might != null) {
         labelWidget = Text(
-          'AWK: ${widget.card.awakenPower.toString()}',
+          'MGHT: ${widget.card.might.toString()}',
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: style,
         );
       }
     }
-    if (widget.label == 'combo') {
-      if (widget.card.combo != null) {
-        labelWidget = Text(
-          'CMB: ${widget.card.combo.toString()}',
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: style,
-        );
-      }
-    }
-    if (widget.label == 'color') {
-      if (widget.card.color != null) {
-        labelWidget = Text(widget.card.color!, maxLines: 1, overflow: TextOverflow.ellipsis, style: style);
+    
+    if (widget.label == 'domain') {
+      if (widget.card.domain != null) {
+        labelWidget = Text(widget.card.domain!, maxLines: 1, overflow: TextOverflow.ellipsis, style: style);
       }
     }
     if (widget.label == 'rarity') {
       if (widget.card.rarity != null) {
         labelWidget = Text(widget.card.rarity!, maxLines: 1, overflow: TextOverflow.ellipsis, style: style);
-      }
-    }
-    if (widget.label == 'cost') {
-      if (widget.card.cost != null) {
-        labelWidget = Text(
-          'COST: ${widget.card.cost.toString()}',
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: style,
-        );
       }
     }
 
