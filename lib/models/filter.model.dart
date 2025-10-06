@@ -25,14 +25,13 @@ class Filters with ChangeNotifier {
   final List<Filter> language;
   final List<Filter> cardTranslation;
   final List<Filter> color;
+  final List<Filter> domain;
   final List<Filter> type;
   final List<Filter> art;
-  final List<Filter> cost;
-  final List<Filter> specifiedCost;
+  final List<Filter> energy;
+  final List<Filter> might;
   final List<Filter> power;
-  final List<Filter> awakenPower;
-  final List<Filter> combo;
-  final List<Filter> feature;
+  final List<Filter> tag;
   final List<Filter> effect;
 
   Filters({
@@ -40,14 +39,13 @@ class Filters with ChangeNotifier {
     required this.language,
     required this.cardTranslation,
     required this.color,
+    required this.domain,
     required this.type,
     required this.art,
-    required this.cost,
-    required this.specifiedCost,
+    required this.energy,
+    required this.might,
     required this.power,
-    required this.awakenPower,
-    required this.combo,
-    required this.feature,
+    required this.tag,
     required this.effect,
   });
 
@@ -64,29 +62,26 @@ class Filters with ChangeNotifier {
     color: List<Filter>.from(
       map['color'].map<Filter>((r) => Filter.fromMap(r)),
     ),
+    domain: List<Filter>.from(
+      map['domain'].map<Filter>((r) => Filter.fromMap(r)),
+    ),
     type: List<Filter>.from(
       map['type'].map<Filter>((r) => Filter.fromMap(r)),
     ),
     art: List<Filter>.from(
       map['art'].map<Filter>((r) => Filter.fromMap(r)),
     ),
-    cost: List<Filter>.from(
-      map['cost'].map<Filter>((r) => Filter.fromMap(r)),
+    energy: List<Filter>.from(
+      map['energy'].map<Filter>((r) => Filter.fromMap(r)),
     ),
-    specifiedCost: List<Filter>.from(
-      map['specified_cost'].map<Filter>((r) => Filter.fromMap(r)),
+    might: List<Filter>.from(
+      map['might'].map<Filter>((r) => Filter.fromMap(r)),
     ),
     power: List<Filter>.from(
       map['power'].map<Filter>((r) => Filter.fromMap(r)),
     ),
-    awakenPower: List<Filter>.from(
+    tag: List<Filter>.from(
       map['awaken_power'].map<Filter>((r) => Filter.fromMap(r)),
-    ),
-    combo: List<Filter>.from(
-      map['combo'].map<Filter>((r) => Filter.fromMap(r)),
-    ),
-    feature: List<Filter>.from(
-      map['feature'].map<Filter>((r) => Filter.fromMap(r)),
     ),
     effect: List<Filter>.from(
       map['effect'].map<Filter>((r) => Filter.fromMap(r)),

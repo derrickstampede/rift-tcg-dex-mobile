@@ -28,13 +28,13 @@ class CardSearchRepository {
     List<String>? rarity,
     List<String>? language,
     List<String>? color,
+    List<String>? domain,
     List<String>? type,
     List<String>? art,
-    List<int>? cost,
-    String? specifiedCost,
+    List<int>? energy,
+    List<int>? might,
     List<int>? power,
-    List<int>? awakenPower,
-    List<String>? feature,
+    List<String>? tag,
     List<String>? effect,
     String? asc,
     String? desc,
@@ -73,21 +73,18 @@ class CardSearchRepository {
         queryParams.putIfAbsent('art', () => art.join(","));
       }
 
-      if (cost != null && cost.isNotEmpty) {
-        queryParams.putIfAbsent('cost', () => cost.join(","));
+      if (energy != null && energy.isNotEmpty) {
+        queryParams.putIfAbsent('energy', () => energy.join(","));
       }
-      if (specifiedCost != null) {
-        queryParams.putIfAbsent('specifiedCost', () => specifiedCost);
+      if (might != null) {
+        queryParams.putIfAbsent('might', () => might.join(","));
       }
       if (power != null && power.isNotEmpty) {
         queryParams.putIfAbsent('power', () => power.join(","));
       }
-      if (awakenPower != null && awakenPower.isNotEmpty) {
-        queryParams.putIfAbsent('awakenPower', () => awakenPower.join(","));
-      }
 
-      if (feature != null) {
-        queryParams.putIfAbsent('feature', () => feature);
+      if (tag != null) {
+        queryParams.putIfAbsent('tag', () => tag);
       }
       if (effect != null && effect.isNotEmpty) {
         queryParams.putIfAbsent('effect', () => effect.join(","));

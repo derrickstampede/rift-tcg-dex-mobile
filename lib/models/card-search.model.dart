@@ -20,24 +20,29 @@ class CardSearch with ChangeNotifier {
   });
 
   Map<String, dynamic> toJson() => {
-        'cards': cards.map((c) => c.toJson()).toList(),
-        'cardBatches': cardBatches.map((b) => b.map((c) => c.toJson()).toList()).toList(),
-        'status': status.toJson(),
-        'filters': filters.toJson(),
-        'config': config.toJson(),
-        'symbol': symbol,
-      };
+    'cards': cards.map((c) => c.toJson()).toList(),
+    'cardBatches': cardBatches.map((b) => b.map((c) => c.toJson()).toList()).toList(),
+    'status': status.toJson(),
+    'filters': filters.toJson(),
+    'config': config.toJson(),
+    'symbol': symbol,
+  };
 
   factory CardSearch.fromMap(Map<String, dynamic> map) => CardSearch(
-      cards: map['cards'] != null ? map['cards'].map<CardListItem>((c) => CardListItem.fromMap(c)).toList() : [],
-      cardBatches: map['cardBatches'] != null
-          ? List<List<CardListItem>>.from(map['cardBatches']
-              .map<List<CardListItem>>((b) => List<CardListItem>.from(b.map((c) => CardListItem.fromMap(c)))))
-          : [],
-      status: CardSearchStatus.fromMap(map['status']),
-      filters: CardSearchFilters.fromMap(map['filters']),
-      config: CardSearchConfig.fromMap(map['config']),
-      symbol: map['symbol']);
+    cards: map['cards'] != null ? map['cards'].map<CardListItem>((c) => CardListItem.fromMap(c)).toList() : [],
+    cardBatches:
+        map['cardBatches'] != null
+            ? List<List<CardListItem>>.from(
+              map['cardBatches'].map<List<CardListItem>>(
+                (b) => List<CardListItem>.from(b.map((c) => CardListItem.fromMap(c))),
+              ),
+            )
+            : [],
+    status: CardSearchStatus.fromMap(map['status']),
+    filters: CardSearchFilters.fromMap(map['filters']),
+    config: CardSearchConfig.fromMap(map['config']),
+    symbol: map['symbol'],
+  );
 }
 
 class CardSearchFilters {
@@ -47,14 +52,13 @@ class CardSearchFilters {
   final List<String> rarity;
   final List<String> language;
   final List<String> color;
+  final List<String> domain;
   final List<String> type;
   final List<String> art;
-  final List<int> cost;
-  final String? specifiedCost;
+  final List<int> energy;
+  final List<int> might;
   final List<int> power;
-  final List<int> awakenPower;
-  final List<int> combo;
-  final String? feature;
+  final String? tag;
   final List<String> effect;
   final String? asc;
   final String? desc;
@@ -66,58 +70,55 @@ class CardSearchFilters {
     required this.rarity,
     required this.language,
     required this.color,
+    required this.domain,
     required this.type,
     required this.art,
-    required this.cost,
-    required this.specifiedCost,
+    required this.energy,
+    required this.might,
     required this.power,
-    required this.awakenPower,
-    required this.combo,
-    required this.feature,
+    required this.tag,
     required this.effect,
     required this.asc,
     required this.desc,
   });
 
   Map<String, dynamic> toJson() => {
-        'collection': collection,
-        'name': name,
-        'setId': setId,
-        'rarity': rarity,
-        'language': language,
-        'color': color,
-        'type': type,
-        'art': art,
-        'cost': cost,
-        'specifiedCost': specifiedCost,
-        'power': power,
-        'awakenPower': awakenPower,
-        'combo': combo,
-        'feature': feature,
-        'effect': effect,
-        'asc': asc,
-        'desc': desc,
-      };
+    'collection': collection,
+    'name': name,
+    'setId': setId,
+    'rarity': rarity,
+    'language': language,
+    'color': color,
+    'domain': domain,
+    'type': type,
+    'art': art,
+    'energy': energy,
+    'might': might,
+    'power': power,
+    'tag': tag,
+    'effect': effect,
+    'asc': asc,
+    'desc': desc,
+  };
 
   factory CardSearchFilters.fromMap(Map<String, dynamic> map) => CardSearchFilters(
-        collection: map['collection'],
-        name: map['name'],
-        setId: map['setId'],
-        rarity: map['rarity'],
-        language: map['language'],
-        color: map['color'],
-        type: map['type'],
-        art: map['art'],
-        cost: map['cost'],
-        specifiedCost: map['specifiedCost'],
-        power: map['power'],
-        awakenPower: map['awakenPower'],
-        combo: map['combo'],
-        feature: map['feature'],
-        effect: map['effect'],
-        asc: map['asc'],
-        desc: map['desc'],
-      );
+    collection: map['collection'],
+    name: map['name'],
+    setId: map['setId'],
+    rarity: map['rarity'],
+    language: map['language'],
+    color: map['color'],
+    domain: map['domain'],
+    type: map['type'],
+    art: map['art'],
+    energy: map['energy'],
+    might: map['might'],
+    power: map['power'],
+    tag: map['tag'],
+    effect: map['effect'],
+    asc: map['asc'],
+    desc: map['desc'],
+  );
 }
 
 class CardSearchStatus {
@@ -154,38 +155,38 @@ class CardSearchStatus {
   });
 
   Map<String, dynamic> toJson() => {
-        'isInitializing': isInitializing,
-        'isLoading': isLoading,
-        'hasReachedLimit': hasReachedLimit,
-        'showOwned': showOwned,
-        'view': view,
-        'orderBy': orderBy,
-        'isAscending': isAscending,
-        'showCollectionDisabled': showCollectionDisabled,
-        'showTypeRequired': showTypeRequired,
-        'showColorRequired': showColorRequired,
-        'selectLeader': selectLeader,
-        'addToDeck': addToDeck,
-        'addToDeckSelect': addToDeckSelect,
-        'addToVault': addToVault,
-      };
+    'isInitializing': isInitializing,
+    'isLoading': isLoading,
+    'hasReachedLimit': hasReachedLimit,
+    'showOwned': showOwned,
+    'view': view,
+    'orderBy': orderBy,
+    'isAscending': isAscending,
+    'showCollectionDisabled': showCollectionDisabled,
+    'showTypeRequired': showTypeRequired,
+    'showColorRequired': showColorRequired,
+    'selectLeader': selectLeader,
+    'addToDeck': addToDeck,
+    'addToDeckSelect': addToDeckSelect,
+    'addToVault': addToVault,
+  };
 
   factory CardSearchStatus.fromMap(Map<String, dynamic> map) => CardSearchStatus(
-        isInitializing: map['isInitializing'],
-        isLoading: map['isLoading'],
-        hasReachedLimit: map['hasReachedLimit'],
-        showOwned: map['showOwned'],
-        view: map['view'],
-        orderBy: map['orderBy'],
-        isAscending: map['isAscending'],
-        showCollectionDisabled: map['showCollectionDisabled'],
-        showTypeRequired: map['showTypeRequired'],
-        showColorRequired: map['showColorRequired'],
-        selectLeader: map['selectLeader'],
-        addToDeck: map['addToDeck'],
-        addToDeckSelect: map['addToDeckSelect'],
-        addToVault: map['addToVault'],
-      );
+    isInitializing: map['isInitializing'],
+    isLoading: map['isLoading'],
+    hasReachedLimit: map['hasReachedLimit'],
+    showOwned: map['showOwned'],
+    view: map['view'],
+    orderBy: map['orderBy'],
+    isAscending: map['isAscending'],
+    showCollectionDisabled: map['showCollectionDisabled'],
+    showTypeRequired: map['showTypeRequired'],
+    showColorRequired: map['showColorRequired'],
+    selectLeader: map['selectLeader'],
+    addToDeck: map['addToDeck'],
+    addToDeckSelect: map['addToDeckSelect'],
+    addToVault: map['addToVault'],
+  );
 }
 
 class CardSearchConfig {
@@ -212,26 +213,26 @@ class CardSearchConfig {
   });
 
   Map<String, dynamic> toJson() => {
-        'disableCollection': disableCollection,
-        'disableRarity': disableRarity,
-        'disableType': disableType,
-        'disableColor': disableColor,
-        'initialResetColor': initialResetColor,
-        'initialResetType': initialResetType,
-        'initialResetRarity': initialResetRarity,
-        'requireOneType': requireOneType,
-        'requireOneColor': requireOneColor,
-      };
+    'disableCollection': disableCollection,
+    'disableRarity': disableRarity,
+    'disableType': disableType,
+    'disableColor': disableColor,
+    'initialResetColor': initialResetColor,
+    'initialResetType': initialResetType,
+    'initialResetRarity': initialResetRarity,
+    'requireOneType': requireOneType,
+    'requireOneColor': requireOneColor,
+  };
 
   factory CardSearchConfig.fromMap(Map<String, dynamic> map) => CardSearchConfig(
-        disableCollection: map['disableCollection'],
-        disableRarity: map['disableRarity'],
-        disableType: map['disableType'],
-        disableColor: map['disableColor'],
-        initialResetColor: map['initialResetColor'],
-        initialResetType: map['initialResetType'],
-        initialResetRarity: map['initialResetRarity'],
-        requireOneType: map['requireOneType'],
-        requireOneColor: map['requireOneColor'],
-      );
+    disableCollection: map['disableCollection'],
+    disableRarity: map['disableRarity'],
+    disableType: map['disableType'],
+    disableColor: map['disableColor'],
+    initialResetColor: map['initialResetColor'],
+    initialResetType: map['initialResetType'],
+    initialResetRarity: map['initialResetRarity'],
+    requireOneType: map['requireOneType'],
+    requireOneColor: map['requireOneColor'],
+  );
 }

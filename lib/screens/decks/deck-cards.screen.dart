@@ -91,13 +91,12 @@ class _DeckCardsScreenState extends ConsumerState<DeckCardsScreen> {
       language: [],
       type: [],
       color: [],
+      domain: [],
       art: [],
-      cost: List<int>.from(json.decode(dotenv.env['CARD_SEARCH_COST_RESET']!)),
-      specifiedCost: null,
+      energy: List<int>.from(json.decode(dotenv.env['CARD_SEARCH_COST_RESET']!)),
+      might: List<int>.from(json.decode(dotenv.env['CARD_SEARCH_COST_RESET']!)),
       power: List<int>.from(json.decode(dotenv.env['CARD_SEARCH_POWER_RESET']!)),
-      awakenPower: List<int>.from(json.decode(dotenv.env['CARD_SEARCH_AWAKEN_POWER_RESET']!)),
-      combo: List<int>.from(json.decode(dotenv.env['CARD_SEARCH_COMBO_RESET']!)),
-      feature: null,
+      tag: null,
       effect: [],
       asc: null,
       desc: null,
@@ -264,9 +263,7 @@ class _DeckCardsScreenState extends ConsumerState<DeckCardsScreen> {
                             "${ref.read(deckBuildNotifierProvider(widget.slug).notifier).totalCards()}/$_deckCardLimit cards \u2981 ",
                       ),
                       if (ref.read(deckBuildNotifierProvider(widget.slug).notifier).totalOtherCards() > 0)
-                        TextSpan(
-                          text: "1 Energy \u2981 ",
-                        ),
+                        TextSpan(text: "1 Energy \u2981 "),
                       TextSpan(
                         text:
                             ref.read(deckBuildNotifierProvider(widget.slug).notifier).isPublic()

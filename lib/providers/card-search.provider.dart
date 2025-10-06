@@ -73,13 +73,13 @@ class CardSearchNotifier extends _$CardSearchNotifier {
         rarity: search['filters']['rarity'],
         language: search['filters']['language'],
         color: search['filters']['color'],
+        domain: search['filters']['domain'],
         type: search['filters']['type'],
         art: search['filters']['art'],
-        cost: search['filters']['cost'],
-        specifiedCost: search['filters']['specifiedCost'],
+        energy: search['filters']['energy'],
+        might: search['filters']['might'],
         power: search['filters']['power'],
-        awakenPower: search['filters']['awakenPower'],
-        feature: search['filters']['feature'],
+        tag: search['filters']['tag'],
         effect: search['filters']['effect'],
         asc: search['filters']['asc'],
         desc: search['filters']['desc'],
@@ -266,14 +266,13 @@ class CardSearchNotifier extends _$CardSearchNotifier {
       rarity: state.filters.rarity,
       language: state.filters.language,
       color: state.filters.color,
+      domain: state.filters.domain,
       type: state.filters.type,
       art: state.filters.art,
-      cost: state.filters.cost,
-      specifiedCost: state.filters.specifiedCost,
+      energy: state.filters.energy,
+      might: state.filters.might,
       power: state.filters.power,
-      awakenPower: state.filters.awakenPower,
-      combo: state.filters.combo,
-      feature: state.filters.feature,
+      tag: state.filters.tag,
       effect: state.filters.effect,
       asc: asc,
       desc: desc,
@@ -320,14 +319,13 @@ class CardSearchNotifier extends _$CardSearchNotifier {
       rarity: state.filters.rarity,
       language: state.filters.language,
       color: state.filters.color,
+      domain: state.filters.domain,
       type: state.filters.type,
       art: state.filters.art,
-      cost: state.filters.cost,
-      specifiedCost: state.filters.specifiedCost,
+      energy: state.filters.energy,
+      might: state.filters.might,
       power: state.filters.power,
-      awakenPower: state.filters.awakenPower,
-      combo: state.filters.combo,
-      feature: state.filters.feature,
+      tag: state.filters.tag,
       effect: state.filters.effect,
       asc: asc,
       desc: desc,
@@ -399,12 +397,10 @@ class CardSearchNotifier extends _$CardSearchNotifier {
   List<String> color() => state.filters.color;
   List<String> type() => state.filters.type;
   List<String> art() => state.filters.art;
-  List<int> cost() => state.filters.cost;
-  String? specifiedCost() => state.filters.specifiedCost;
+  List<int> energy() => state.filters.energy;
+  List<int> might() => state.filters.might;
   List<int> power() => state.filters.power;
-  List<int> awakenPower() => state.filters.awakenPower;
-  List<int> combo() => state.filters.combo;
-  String? feature() => state.filters.feature;
+  String? tag() => state.filters.tag;
   List<String> effect() => state.filters.effect;
 
   void updateCollection(bool value) {
@@ -440,14 +436,13 @@ class CardSearchNotifier extends _$CardSearchNotifier {
       rarity: newState.filters.rarity,
       language: newState.filters.language,
       color: newState.filters.color,
+      domain: newState.filters.domain,  
       type: newState.filters.type,
       art: newState.filters.art,
-      cost: newState.filters.cost,
-      specifiedCost: newState.filters.specifiedCost,
+      energy: newState.filters.energy,
+      might: newState.filters.might,
       power: newState.filters.power,
-      awakenPower: newState.filters.awakenPower,
-      combo: newState.filters.combo,
-      feature: newState.filters.feature,
+      tag: newState.filters.tag,
       effect: newState.filters.effect,
       asc: newState.filters.asc,
       desc: newState.filters.desc,
@@ -466,14 +461,13 @@ class CardSearchNotifier extends _$CardSearchNotifier {
       rarity: newState.filters.rarity,
       language: newState.filters.language,
       color: newState.filters.color,
+      domain: newState.filters.domain,
       type: newState.filters.type,
       art: newState.filters.art,
-      cost: newState.filters.cost,
-      specifiedCost: newState.filters.specifiedCost,
+      energy: newState.filters.energy,
+      might: newState.filters.might,
       power: newState.filters.power,
-      awakenPower: newState.filters.awakenPower,
-      combo: newState.filters.combo,
-      feature: newState.filters.feature,
+      tag: newState.filters.tag,
       effect: newState.filters.effect,
       asc: newState.filters.asc,
       desc: newState.filters.desc,
@@ -491,14 +485,13 @@ class CardSearchNotifier extends _$CardSearchNotifier {
       rarity: newState.filters.rarity,
       language: newState.filters.language,
       color: newState.filters.color,
+      domain: newState.filters.domain,  
       type: newState.filters.type,
       art: newState.filters.art,
-      cost: newState.filters.cost,
-      specifiedCost: newState.filters.specifiedCost,
+      energy: newState.filters.energy,
+      might: newState.filters.might,
       power: newState.filters.power,
-      awakenPower: newState.filters.awakenPower,
-      combo: newState.filters.combo,
-      feature: newState.filters.feature,
+      tag: newState.filters.tag,
       effect: newState.filters.effect,
       asc: newState.filters.asc,
       desc: newState.filters.desc,
@@ -525,14 +518,13 @@ class CardSearchNotifier extends _$CardSearchNotifier {
       rarity: currentRarity,
       language: newState.filters.language,
       color: newState.filters.color,
+      domain: newState.filters.domain,
       type: newState.filters.type,
       art: newState.filters.art,
-      cost: newState.filters.cost,
-      specifiedCost: newState.filters.specifiedCost,
+      energy: newState.filters.energy,
+      might: newState.filters.might,
       power: newState.filters.power,
-      awakenPower: newState.filters.awakenPower,
-      combo: newState.filters.combo,
-      feature: newState.filters.feature,
+      tag: newState.filters.tag,
       effect: newState.filters.effect,
       asc: newState.filters.asc,
       desc: newState.filters.desc,
@@ -559,14 +551,13 @@ class CardSearchNotifier extends _$CardSearchNotifier {
       rarity: newState.filters.rarity,
       language: currentLanguage,
       color: newState.filters.color,
+      domain: newState.filters.domain,
       type: newState.filters.type,
       art: newState.filters.art,
-      cost: newState.filters.cost,
-      specifiedCost: newState.filters.specifiedCost,
+      energy: newState.filters.energy,
+      might: newState.filters.might,
       power: newState.filters.power,
-      awakenPower: newState.filters.awakenPower,
-      combo: newState.filters.combo,
-      feature: newState.filters.feature,
+      tag: newState.filters.tag,
       effect: newState.filters.effect,
       asc: newState.filters.asc,
       desc: newState.filters.desc,
@@ -598,14 +589,13 @@ class CardSearchNotifier extends _$CardSearchNotifier {
       rarity: newState.filters.rarity,
       language: newState.filters.language,
       color: currentColor,
+      domain: newState.filters.domain,
       type: newState.filters.type,
       art: newState.filters.art,
-      cost: newState.filters.cost,
-      specifiedCost: newState.filters.specifiedCost,
+      energy: newState.filters.energy,
+      might: newState.filters.might,
       power: newState.filters.power,
-      awakenPower: newState.filters.awakenPower,
-      combo: newState.filters.combo,
-      feature: newState.filters.feature,
+      tag: newState.filters.tag,
       effect: newState.filters.effect,
       asc: newState.filters.asc,
       desc: newState.filters.desc,
@@ -631,6 +621,60 @@ class CardSearchNotifier extends _$CardSearchNotifier {
     update(newState);
   }
 
+  void updateDomain(String value) {
+    final newState = CardSearch.fromMap(state.toJson());
+    bool showColorRequired = false;
+
+    final currentDomain = newState.filters.domain;
+    if (!currentDomain.contains(value)) {
+      currentDomain.add(value);
+    } else {
+      if (state.config.requireOneColor && currentDomain.length == 1) {
+        showColorRequired = true;
+      } else {
+        currentDomain.remove(value);
+      }
+    }
+
+    newState.filters = CardSearchFilters(
+      collection: newState.filters.collection,
+      name: newState.filters.name,
+      setId: newState.filters.setId,
+      rarity: newState.filters.rarity,
+      language: newState.filters.language,
+      color: newState.filters.color,
+      domain: currentDomain,
+      type: newState.filters.type,
+      art: newState.filters.art,
+      energy: newState.filters.energy,
+      might: newState.filters.might,
+      power: newState.filters.power,
+      tag: newState.filters.tag,
+      effect: newState.filters.effect,
+      asc: newState.filters.asc,
+      desc: newState.filters.desc,
+    );
+    newState.status = CardSearchStatus(
+      isInitializing: false,
+      isLoading: false,
+      hasReachedLimit: state.status.hasReachedLimit,
+      showOwned: state.status.showOwned,
+      view: state.status.view,
+      orderBy: state.status.orderBy,
+      isAscending: state.status.isAscending,
+      showCollectionDisabled: state.status.showCollectionDisabled,
+      showTypeRequired: state.status.showTypeRequired,
+      showColorRequired: showColorRequired,
+      selectLeader: state.status.selectLeader,
+      addToDeck: state.status.addToDeck,
+      addToDeckSelect: state.status.addToDeckSelect,
+      addToVault: state.status.addToVault,
+    );
+
+    logEvent(name: 'filter_domain', parameters: {'value': value});
+    update(newState);
+  }
+
   void updateType(String value) {
     final newState = CardSearch.fromMap(state.toJson());
 
@@ -648,14 +692,13 @@ class CardSearchNotifier extends _$CardSearchNotifier {
       rarity: newState.filters.rarity,
       language: newState.filters.language,
       color: newState.filters.color,
+      domain: newState.filters.domain,
       type: currentType,
       art: newState.filters.art,
-      cost: newState.filters.cost,
-      specifiedCost: newState.filters.specifiedCost,
+      energy: newState.filters.energy,
+      might: newState.filters.might,
       power: newState.filters.power,
-      awakenPower: newState.filters.awakenPower,
-      combo: newState.filters.combo,
-      feature: newState.filters.feature,
+      tag: newState.filters.tag,
       effect: newState.filters.effect,
       asc: newState.filters.asc,
       desc: newState.filters.desc,
@@ -682,14 +725,13 @@ class CardSearchNotifier extends _$CardSearchNotifier {
       rarity: newState.filters.rarity,
       language: newState.filters.language,
       color: newState.filters.color,
+      domain: newState.filters.domain,
       type: newState.filters.type,
       art: currentArt,
-      cost: newState.filters.cost,
-      specifiedCost: newState.filters.specifiedCost,
+      energy: newState.filters.energy,
+      might: newState.filters.might,
       power: newState.filters.power,
-      awakenPower: newState.filters.awakenPower,
-      combo: newState.filters.combo,
-      feature: newState.filters.feature,
+      tag: newState.filters.tag,
       effect: newState.filters.effect,
       asc: newState.filters.asc,
       desc: newState.filters.desc,
@@ -699,7 +741,7 @@ class CardSearchNotifier extends _$CardSearchNotifier {
     update(newState);
   }
 
-  void updateCost(SfRangeValues value) {
+  void updateEnergy(SfRangeValues value) {
     final newState = CardSearch.fromMap(state.toJson());
 
     newState.filters = CardSearchFilters(
@@ -709,25 +751,25 @@ class CardSearchNotifier extends _$CardSearchNotifier {
       rarity: newState.filters.rarity,
       language: newState.filters.language,
       color: newState.filters.color,
+      domain: newState.filters.domain,
       type: newState.filters.type,
       art: newState.filters.art,
-      cost: [value.start.ceil(), value.end.ceil()],
-      specifiedCost: newState.filters.specifiedCost,
+      energy: [value.start.ceil(), value.end.ceil()],
+      might: newState.filters.might,
       power: newState.filters.power,
-      awakenPower: newState.filters.awakenPower,
-      combo: newState.filters.combo,
-      feature: newState.filters.feature,
+      tag: newState.filters.tag,
       effect: newState.filters.effect,
       asc: newState.filters.asc,
       desc: newState.filters.desc,
     );
 
-    logEvent(name: 'filter_cost', parameters: {'value': '${value.start},${value.end}'});
+    logEvent(name: 'filter_energy', parameters: {'value': '${value.start},${value.end}'});
     update(newState);
   }
 
-  void updateSpecifiedCost(String? value) {
+  void updateMight(SfRangeValues value) {
     final newState = CardSearch.fromMap(state.toJson());
+
     newState.filters = CardSearchFilters(
       collection: newState.filters.collection,
       name: newState.filters.name,
@@ -735,23 +777,23 @@ class CardSearchNotifier extends _$CardSearchNotifier {
       rarity: newState.filters.rarity,
       language: newState.filters.language,
       color: newState.filters.color,
+      domain: newState.filters.domain,
       type: newState.filters.type,
       art: newState.filters.art,
-      cost: newState.filters.cost,
-      specifiedCost: value,
+      energy: newState.filters.energy,
+      might: [value.start.ceil(), value.end.ceil()],
       power: newState.filters.power,
-      awakenPower: newState.filters.awakenPower,
-      combo: newState.filters.combo,
-      feature: newState.filters.feature,
+      tag: newState.filters.tag,
       effect: newState.filters.effect,
       asc: newState.filters.asc,
       desc: newState.filters.desc,
     );
 
-    logEvent(name: 'filter_specified_cost', parameters: {'value': value});
+    logEvent(name: 'filter_might', parameters: {'value': '${value.start},${value.end}'});
     update(newState);
   }
 
+  
   void updatePower(SfRangeValues value) {
     final newState = CardSearch.fromMap(state.toJson());
 
@@ -762,14 +804,13 @@ class CardSearchNotifier extends _$CardSearchNotifier {
       rarity: newState.filters.rarity,
       language: newState.filters.language,
       color: newState.filters.color,
+      domain: newState.filters.domain,
       type: newState.filters.type,
       art: newState.filters.art,
-      cost: newState.filters.cost,
-      specifiedCost: newState.filters.specifiedCost,
+      energy: newState.filters.energy,
+      might: newState.filters.might,
       power: [value.start.ceil(), value.end.ceil()],
-      awakenPower: newState.filters.awakenPower,
-      combo: newState.filters.combo,
-      feature: newState.filters.feature,
+      tag: newState.filters.tag,
       effect: newState.filters.effect,
       asc: newState.filters.asc,
       desc: newState.filters.desc,
@@ -779,61 +820,7 @@ class CardSearchNotifier extends _$CardSearchNotifier {
     update(newState);
   }
 
-  void updateAwakenPower(SfRangeValues value) {
-    final newState = CardSearch.fromMap(state.toJson());
-
-    newState.filters = CardSearchFilters(
-      collection: newState.filters.collection,
-      name: newState.filters.name,
-      setId: newState.filters.setId,
-      rarity: newState.filters.rarity,
-      language: newState.filters.language,
-      color: newState.filters.color,
-      type: newState.filters.type,
-      art: newState.filters.art,
-      cost: newState.filters.cost,
-      specifiedCost: newState.filters.specifiedCost,
-      power: newState.filters.power,
-      awakenPower: [value.start.ceil(), value.end.ceil()],
-      combo: newState.filters.combo,
-      feature: newState.filters.feature,
-      effect: newState.filters.effect,
-      asc: newState.filters.asc,
-      desc: newState.filters.desc,
-    );
-
-    logEvent(name: 'filter_awaken_power', parameters: {'value': '${value.start},${value.end}'});
-    update(newState);
-  }
-
-  void updateCombo(SfRangeValues value) {
-    final newState = CardSearch.fromMap(state.toJson());
-
-    newState.filters = CardSearchFilters(
-      collection: newState.filters.collection,
-      name: newState.filters.name,
-      setId: newState.filters.setId,
-      rarity: newState.filters.rarity,
-      language: newState.filters.language,
-      color: newState.filters.color,
-      type: newState.filters.type,
-      art: newState.filters.art,
-      cost: newState.filters.cost,
-      specifiedCost: newState.filters.specifiedCost,
-      power: newState.filters.power,
-      awakenPower: newState.filters.awakenPower,
-      combo: [value.start.ceil(), value.end.ceil()],
-      feature: newState.filters.feature,
-      effect: newState.filters.effect,
-      asc: newState.filters.asc,
-      desc: newState.filters.desc,
-    );
-
-    logEvent(name: 'filter_combo', parameters: {'value': '${value.start},${value.end}'});
-    update(newState);
-  }
-
-  void updateFeature(String? value) {
+  void updateTag(String? value) {
     final newState = CardSearch.fromMap(state.toJson());
     newState.filters = CardSearchFilters(
       collection: newState.filters.collection,
@@ -842,14 +829,13 @@ class CardSearchNotifier extends _$CardSearchNotifier {
       rarity: newState.filters.rarity,
       language: newState.filters.language,
       color: newState.filters.color,
+      domain: newState.filters.domain,
       type: newState.filters.type,
       art: newState.filters.art,
-      cost: newState.filters.cost,
-      specifiedCost: newState.filters.specifiedCost,
+      energy: newState.filters.energy,
+      might: newState.filters.might,
       power: newState.filters.power,
-      awakenPower: newState.filters.awakenPower,
-      combo: newState.filters.combo,
-      feature: value,
+      tag: value,
       effect: newState.filters.effect,
       asc: newState.filters.asc,
       desc: newState.filters.desc,
@@ -876,14 +862,13 @@ class CardSearchNotifier extends _$CardSearchNotifier {
       rarity: newState.filters.rarity,
       language: newState.filters.language,
       color: newState.filters.color,
+      domain: newState.filters.domain,
       type: newState.filters.type,
       art: newState.filters.art,
-      cost: newState.filters.cost,
-      specifiedCost: newState.filters.specifiedCost,
+      energy: newState.filters.energy,
+      might: newState.filters.might,
       power: newState.filters.power,
-      awakenPower: newState.filters.awakenPower,
-      combo: newState.filters.combo,
-      feature: newState.filters.feature,
+      tag: newState.filters.tag,
       effect: currentEffect,
       asc: newState.filters.asc,
       desc: newState.filters.desc,
@@ -972,10 +957,9 @@ class CardSearchNotifier extends _$CardSearchNotifier {
   void clearFilters() {
     final newState = CardSearch.fromMap(state.toJson());
 
-    const costRange = [0, 7];
-    const powerRange = [0, 50000];
-    const awakenPowerRange = [0, 20000];
-    const comboRange = [0, 10000];
+    const energyRange = [0, 12];
+    const mightRange = [0, 10];
+    const powerRange = [0, 4];
 
     newState.filters = CardSearchFilters(
       collection: newState.filters.collection,
@@ -984,14 +968,13 @@ class CardSearchNotifier extends _$CardSearchNotifier {
       rarity: List.from(resetValues(newState.config.disableRarity, newState.config.initialResetRarity)),
       language: [],
       color: List.from(resetValues(newState.config.disableColor, newState.config.initialResetColor)),
+      domain: List.from(resetValues(newState.config.disableColor, newState.config.initialResetColor)),
       type: List.from(resetValues(newState.config.disableType, newState.config.initialResetType)),
       art: [],
-      cost: costRange,
-      specifiedCost: null,
+      energy: energyRange,
+      might: mightRange,
       power: powerRange,
-      awakenPower: awakenPowerRange,
-      combo: comboRange,
-      feature: null,
+      tag: null,
       effect: [],
       asc: newState.filters.asc,
       desc: newState.filters.desc,

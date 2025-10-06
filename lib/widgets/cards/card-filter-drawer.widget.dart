@@ -88,28 +88,26 @@ class _CardFilterDrawerState extends ConsumerState<CardFilterDrawer> {
     Iterable<List<Filter>> rarityChunks = [];
     Iterable<List<Filter>> languageChunks = [];
     Iterable<List<Filter>> colorChunks = [];
+    Iterable<List<Filter>> domainChunks = [];
     Iterable<List<Filter>> typeChunks = [];
     Iterable<List<Filter>> artChunks = [];
-    List<Filter> costOptions = [];
-    List<Filter> specifiedCostOptions = [];
+    List<Filter> energyOptions = [];
+    List<Filter> mightOptions = [];
     List<Filter> powerOptions = [];
-    List<Filter> awakenPowerOptions = [];
-    List<Filter> comboOptions = [];
-    List<Filter> featureOptions = [];
+    List<Filter> tagOptions = [];
     Iterable<List<Filter>> effectChunks = [];
 
     if (filters$.value != null) {
       rarityChunks = filters$.value!.rarity.slices(3);
       languageChunks = filters$.value!.language.slices(2);
       colorChunks = filters$.value!.color.slices(2);
+      domainChunks = filters$.value!.domain.slices(2);
       typeChunks = filters$.value!.type.slices(2);
       artChunks = filters$.value!.art.slices(2);
-      costOptions = filters$.value!.cost;
-      specifiedCostOptions = filters$.value!.specifiedCost;
+      energyOptions = filters$.value!.energy;
       powerOptions = filters$.value!.power;
-      awakenPowerOptions = filters$.value!.awakenPower;
-      comboOptions = filters$.value!.combo;
-      featureOptions = filters$.value!.feature;
+      mightOptions = filters$.value!.might;
+      tagOptions = filters$.value!.tag;
       effectChunks = filters$.value!.effect.slices(1);
     }
 
@@ -499,7 +497,7 @@ class _CardFilterDrawerState extends ConsumerState<CardFilterDrawer> {
                                               children: [
                                                 RichText(
                                                   text: TextSpan(
-                                                    text: 'Cost ('.toUpperCase(),
+                                                    text: 'Energy ('.toUpperCase(),
                                                     style: TextStyle(
                                                       fontWeight: FontWeight.w800,
                                                       fontSize: 14,
@@ -509,12 +507,12 @@ class _CardFilterDrawerState extends ConsumerState<CardFilterDrawer> {
                                                       TextSpan(
                                                         text: NumberFormat(
                                                           '#,###,###',
-                                                        ).format(searchNotifier$.cost()[0]),
+                                                        ).format(searchNotifier$.energy()[0]),
                                                       ),
-                                                      if (searchNotifier$.cost()[0] != searchNotifier$.cost()[1])
+                                                      if (searchNotifier$.energy()[0] != searchNotifier$.energy()[1])
                                                         TextSpan(
                                                           text:
-                                                              " - ${NumberFormat('#,###,###').format(searchNotifier$.cost()[1])}",
+                                                              " - ${NumberFormat('#,###,###').format(searchNotifier$.energy()[1])}",
                                                         ),
                                                       const TextSpan(text: ")"),
                                                     ],
@@ -522,18 +520,64 @@ class _CardFilterDrawerState extends ConsumerState<CardFilterDrawer> {
                                                 ),
                                                 const SizedBox(height: 6),
                                                 SfRangeSlider(
-                                                  min: int.parse(costOptions.first.value),
-                                                  max: int.parse(costOptions.last.value),
+                                                  min: int.parse(energyOptions.first.value),
+                                                  max: int.parse(energyOptions.last.value),
                                                   interval: 1,
                                                   stepSize: 1,
                                                   showTicks: true,
                                                   showLabels: true,
                                                   enableTooltip: true,
                                                   values: SfRangeValues(
-                                                    searchNotifier$.cost()[0],
-                                                    searchNotifier$.cost()[1],
+                                                    searchNotifier$.energy()[0],
+                                                    searchNotifier$.energy()[1],
                                                   ),
-                                                  onChanged: (SfRangeValues value) => searchNotifier$.updateCost(value),
+                                                  onChanged: (SfRangeValues value) => searchNotifier$.updateEnergy(value),
+                                                ),
+                                                const SizedBox(height: 16),
+                                              ],
+                                            ),
+                                            Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                RichText(
+                                                  text: TextSpan(
+                                                    text: 'Might ('.toUpperCase(),
+                                                    style: TextStyle(
+                                                      fontWeight: FontWeight.w800,
+                                                      fontSize: 14,
+                                                      color: Theme.of(context).colorScheme.secondary,
+                                                    ),
+                                                    children: [
+                                                      TextSpan(
+                                                        text: NumberFormat(
+                                                          '#######',
+                                                        ).format(searchNotifier$.might()[0]),
+                                                      ),
+                                                      if (searchNotifier$.might()[0] !=
+                                                          searchNotifier$.might()[1])
+                                                        TextSpan(
+                                                          text:
+                                                              " - ${NumberFormat('#######').format(searchNotifier$.might()[1])}",
+                                                        ),
+                                                      const TextSpan(text: ")"),
+                                                    ],
+                                                  ),
+                                                ),
+                                                const SizedBox(height: 6),
+                                                SfRangeSlider(
+                                                  min: int.parse(mightOptions.first.value),
+                                                  max: int.parse(mightOptions.last.value),
+                                                  interval: 5000,
+                                                  stepSize: 5000,
+                                                  showTicks: true,
+                                                  showLabels: true,
+                                                  enableTooltip: true,
+                                                  values: SfRangeValues(
+                                                    searchNotifier$.might()[0],
+                                                    searchNotifier$.might()[1],
+                                                  ),
+                                                  onChanged:
+                                                      (SfRangeValues value) => searchNotifier$.updateMight(value),
                                                 ),
                                                 const SizedBox(height: 16),
                                               ],
@@ -586,138 +630,7 @@ class _CardFilterDrawerState extends ConsumerState<CardFilterDrawer> {
                                             Column(
                                               crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
-                                                RichText(
-                                                  text: TextSpan(
-                                                    text: 'Awakened Power ('.toUpperCase(),
-                                                    style: TextStyle(
-                                                      fontWeight: FontWeight.w800,
-                                                      fontSize: 14,
-                                                      color: Theme.of(context).colorScheme.secondary,
-                                                    ),
-                                                    children: [
-                                                      TextSpan(
-                                                        text: NumberFormat(
-                                                          '#######',
-                                                        ).format(searchNotifier$.awakenPower()[0]),
-                                                      ),
-                                                      if (searchNotifier$.awakenPower()[0] !=
-                                                          searchNotifier$.awakenPower()[1])
-                                                        TextSpan(
-                                                          text:
-                                                              " - ${NumberFormat('#######').format(searchNotifier$.awakenPower()[1])}",
-                                                        ),
-                                                      const TextSpan(text: ")"),
-                                                    ],
-                                                  ),
-                                                ),
-                                                const SizedBox(height: 6),
-                                                SfRangeSlider(
-                                                  min: int.parse(awakenPowerOptions.first.value),
-                                                  max: int.parse(awakenPowerOptions.last.value),
-                                                  interval: 5000,
-                                                  stepSize: 5000,
-                                                  showTicks: true,
-                                                  showLabels: true,
-                                                  enableTooltip: true,
-                                                  values: SfRangeValues(
-                                                    searchNotifier$.awakenPower()[0],
-                                                    searchNotifier$.awakenPower()[1],
-                                                  ),
-                                                  onChanged:
-                                                      (SfRangeValues value) => searchNotifier$.updateAwakenPower(value),
-                                                ),
-                                                const SizedBox(height: 16),
-                                              ],
-                                            ),
-                                            Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                RichText(
-                                                  text: TextSpan(
-                                                    text: 'Combo ('.toUpperCase(),
-                                                    style: TextStyle(
-                                                      fontWeight: FontWeight.w800,
-                                                      fontSize: 14,
-                                                      color: Theme.of(context).colorScheme.secondary,
-                                                    ),
-                                                    children: [
-                                                      TextSpan(
-                                                        text: NumberFormat(
-                                                          '#######',
-                                                        ).format(searchNotifier$.combo()[0]),
-                                                      ),
-                                                      if (searchNotifier$.combo()[0] !=
-                                                          searchNotifier$.combo()[1])
-                                                        TextSpan(
-                                                          text:
-                                                              " - ${NumberFormat('#######').format(searchNotifier$.combo()[1])}",
-                                                        ),
-                                                      const TextSpan(text: ")"),
-                                                    ],
-                                                  ),
-                                                ),
-                                                const SizedBox(height: 6),
-                                                SfRangeSlider(
-                                                  min: int.parse(comboOptions.first.value),
-                                                  max: int.parse(comboOptions.last.value),
-                                                  interval: 5000,
-                                                  stepSize: 5000,
-                                                  showTicks: true,
-                                                  showLabels: true,
-                                                  enableTooltip: true,
-                                                  values: SfRangeValues(
-                                                    searchNotifier$.combo()[0],
-                                                    searchNotifier$.combo()[1],
-                                                  ),
-                                                  onChanged:
-                                                      (SfRangeValues value) => searchNotifier$.updateCombo(value),
-                                                ),
-                                                const SizedBox(height: 16),
-                                              ],
-                                            ),
-                                            // Column(
-                                            //   crossAxisAlignment: CrossAxisAlignment.start,
-                                            //   children: [
-                                            //     const Subheader(text: "Specified Cost"),
-                                            //     const SizedBox(height: 6),
-                                            //     Container(
-                                            //       width: double.infinity,
-                                            //       padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                                            //       decoration: BoxDecoration(
-                                            //         borderRadius: BorderRadius.circular(4.0),
-                                            //         border: Border.all(
-                                            //           color: Theme.of(context).colorScheme.outline,
-                                            //           style: BorderStyle.solid,
-                                            //           width: 1,
-                                            //         ),
-                                            //       ),
-                                            //       child: DropdownButtonFormField<String>(
-                                            //         value: searchNotifier$.specifiedCost(),
-                                            //         isExpanded: true,
-                                            //         decoration: const InputDecoration(border: InputBorder.none),
-                                            //         onChanged:
-                                            //             (String? value) => searchNotifier$.updateSpecifiedCost(value),
-                                            //         onSaved: (value) {},
-                                            //         items: [
-                                            //           const DropdownMenuItem<String>(
-                                            //             value: null,
-                                            //             child: Text("All Specified Costs"),
-                                            //           ),
-                                            //           for (var i = 0; i < specifiedCostOptions.length; i++)
-                                            //             DropdownMenuItem<String>(
-                                            //               value: specifiedCostOptions[i].value,
-                                            //               child: Text(specifiedCostOptions[i].label),
-                                            //             ),
-                                            //         ],
-                                            //       ),
-                                            //     ),
-                                            //     const SizedBox(height: 16),
-                                            //   ],
-                                            // ),
-                                            Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                const Subheader(text: "Feature"),
+                                                const Subheader(text: "Tag"),
                                                 const SizedBox(height: 6),
                                                 Container(
                                                   width: double.infinity,
@@ -731,21 +644,21 @@ class _CardFilterDrawerState extends ConsumerState<CardFilterDrawer> {
                                                     ),
                                                   ),
                                                   child: DropdownButtonFormField<String>(
-                                                    value: searchNotifier$.feature(),
+                                                    value: searchNotifier$.tag(),
                                                     isExpanded: true,
                                                     decoration: const InputDecoration(border: InputBorder.none),
                                                     onChanged:
-                                                        (String? value) => searchNotifier$.updateFeature(value),
+                                                        (String? value) => searchNotifier$.updateTag(value),
                                                     onSaved: (value) {},
                                                     items: [
                                                       const DropdownMenuItem<String>(
                                                         value: null,
                                                         child: Text("All Attributes"),
                                                       ),
-                                                      for (var i = 0; i < featureOptions.length; i++)
+                                                      for (var i = 0; i < tagOptions.length; i++)
                                                         DropdownMenuItem<String>(
-                                                          value: featureOptions[i].value,
-                                                          child: Text(featureOptions[i].label),
+                                                          value: tagOptions[i].value,
+                                                          child: Text(tagOptions[i].label),
                                                         ),
                                                     ],
                                                   ),
