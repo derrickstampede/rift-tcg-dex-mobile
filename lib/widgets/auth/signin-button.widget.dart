@@ -32,7 +32,7 @@ class SigninButton extends StatelessWidget {
                 style: TextStyle(fontSize: 18, color: Theme.of(context).colorScheme.onPrimaryContainer),
               ),
               Text(
-                'DBFW TCG Dex!',
+                'RIFT TCG Dex!',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: 18, fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onPrimaryContainer),

@@ -129,7 +129,7 @@ class MyApp extends StatelessWidget {
           }
         },
         child: MaterialApp(
-          title: 'DBFW TCG Dex',
+          title: 'RIFT TCG Dex',
           scaffoldMessengerKey: snackbarKey,
           navigatorKey: navigatorKey,
           debugShowCheckedModeBanner: false,

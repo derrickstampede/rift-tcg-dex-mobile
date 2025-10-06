@@ -34,7 +34,7 @@ void showSignInModal(BuildContext context, {required String title, Function()? f
                   children: <Widget>[
                     const SizedBox(height: 18),
                     Text(title, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700)),
-                    const Text('Sign in to DBFW TCG Dex', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+                    const Text('Sign in to RIFT TCG Dex', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
                     const SizedBox(height: 8),
                     if (Platform.isIOS) const AppleButton(),
                     const GoogleButton(),
