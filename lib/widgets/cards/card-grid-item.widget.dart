@@ -10,6 +10,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:rift/themes/theme-extension.dart';
 
 import 'package:rift/widgets/cards/card-add-remove.widget.dart';
+import 'package:rift/widgets/cards/card-foil-wrapper.widget.dart';
 import 'package:rift/widgets/cards/card-vault-sheet.widget.dart';
 import 'package:rift/widgets/cards/card-image.widget.dart';
 import 'package:rift/widgets/cards/card-select.widget.dart';
@@ -237,7 +238,7 @@ class _CardGridItemState extends ConsumerState<CardGridItem> {
       cardSearchNotifierProvider(screen: widget.searchScreen, cardSearch: widget.cardSearch).notifier,
     );
 
-    Widget cardThumbnail = CardImage(imageUrl: widget.card.thumbnail);
+    Widget cardThumbnail = CardFoilWrapper(print: widget.card.print!, child: CardImage(imageUrl: widget.card.thumbnail));
     if (searchNotifier$.showOwned() && _countOwned() == 0) {
       cardThumbnail = ColorFiltered(
         colorFilter: const ColorFilter.matrix(<double>[

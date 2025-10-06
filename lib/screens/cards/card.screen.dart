@@ -30,7 +30,6 @@ import 'package:rift/models/card-translation.model.dart';
 
 import 'package:rift/providers/card-search.provider.dart';
 
-import 'package:rift/widgets/misc/color-hexagon.widget.dart';
 import 'package:rift/widgets/misc/domain-icon.widget.dart';
 import 'package:rift/widgets/cards/card-image.widget.dart';
 import 'package:rift/widgets/cards/flippable-card.widget.dart';
@@ -858,6 +857,26 @@ class _CardScreenState extends ConsumerState<CardScreen> {
                                             _card.setName != null
                                                 ? Text(_card.setName!, style: const TextStyle(fontSize: 16))
                                                 : const Text('-'),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.all(12),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            const Subheader(text: 'Text'),
+                                            _card.flavorText != null
+                                                ? TitleCase(text: _card.flavorText!, style: const TextStyle(fontSize: 16))
+                                                : const Text('-', style: TextStyle(fontSize: 16)),
                                           ],
                                         ),
                                       ),
