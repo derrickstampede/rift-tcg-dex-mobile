@@ -98,7 +98,7 @@ class _CardFilterDrawerState extends ConsumerState<CardFilterDrawer> {
     Iterable<List<Filter>> effectChunks = [];
 
     if (filters$.value != null) {
-      rarityChunks = filters$.value!.rarity.slices(3);
+      rarityChunks = filters$.value!.rarity.slices(2);
       languageChunks = filters$.value!.language.slices(2);
       colorChunks = filters$.value!.color.slices(2);
       domainChunks = filters$.value!.domain.slices(2);

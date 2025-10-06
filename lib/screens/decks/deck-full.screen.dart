@@ -69,7 +69,7 @@ class DeckFullScreen extends StatelessWidget {
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
               ),
               const TextSpan(
-                text: 'DBFW TCG Dex ',
+                text: 'RIFT TCG Dex ',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
               ),
               WidgetSpan(
