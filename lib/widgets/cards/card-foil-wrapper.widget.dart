@@ -8,7 +8,7 @@ class CardFoilWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (_print == "foil") {
+    if (_print == "foil" || _print == "holofoil") {
       return Stack(
         children: [
           _child,
