@@ -31,6 +31,7 @@ import 'package:rift/models/card-translation.model.dart';
 import 'package:rift/providers/card-search.provider.dart';
 
 import 'package:rift/widgets/misc/color-hexagon.widget.dart';
+import 'package:rift/widgets/misc/domain-icon.widget.dart';
 import 'package:rift/widgets/cards/card-image.widget.dart';
 import 'package:rift/widgets/cards/flippable-card.widget.dart';
 import 'package:rift/widgets/cards/card-in-collection.widget.dart';
@@ -497,7 +498,7 @@ class _CardScreenState extends ConsumerState<CardScreen> {
                                             crossAxisAlignment: CrossAxisAlignment.center,
                                             children: [
                                               Padding(
-                                                padding: const EdgeInsets.only(right: 8),
+                                                padding: const EdgeInsets.only(right: 6),
                                                 child: CardRarityBadge(rarity: _card.rarity!),
                                               ),
                                               Text(
@@ -510,7 +511,7 @@ class _CardScreenState extends ConsumerState<CardScreen> {
                                               ),
                                               Padding(
                                                 padding: const EdgeInsets.only(left: 6),
-                                                child: ColorHexagon(colors: _card.color),
+                                                child: DomainIcon(domain: _card.domain!),
                                               ),
                                             ],
                                           ),
@@ -751,7 +752,7 @@ class _CardScreenState extends ConsumerState<CardScreen> {
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            const Subheader(text: 'Cost'),
+                                            const Subheader(text: 'Energy'),
                                             Text(
                                               _card.energy != null ? _card.energy.toString() : '-',
                                               style: const TextStyle(fontSize: 16),
@@ -760,11 +761,10 @@ class _CardScreenState extends ConsumerState<CardScreen> {
                                         ),
                                       ),
                                       Expanded(
-                                        flex: 2,
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            const Subheader(text: 'Awaken Power'),
+                                            const Subheader(text: 'Might'),
                                             Text(
                                               _card.might != null ? _card.might.toString() : '-',
                                               style: const TextStyle(fontSize: 16),
@@ -811,7 +811,7 @@ class _CardScreenState extends ConsumerState<CardScreen> {
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            const Subheader(text: 'Features'),
+                                            const Subheader(text: 'Tags'),
                                             Text(
                                               _card.tags != null ? _translation?.tags ?? _card.tags! : '-',
                                               style: const TextStyle(fontSize: 16),

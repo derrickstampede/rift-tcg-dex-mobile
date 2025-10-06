@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 
 class CardRarityBadge extends StatelessWidget {
@@ -10,95 +11,179 @@ class CardRarityBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LinearGradient? gradient;
-    Color color = Colors.black;
+    Color shapeColor = Colors.grey;
+    Widget shape = Container();
 
     switch (_rarity) {
-      case 'P':
-        gradient = const LinearGradient(
-          colors: [Color(0xff125c84), Color(0xff58949c), Color(0xff125c84)],
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
+      case 'Common': // Common - Pearl-colored circle
+        shapeColor = const Color(0xffE8E8E8); // Pearl color
+        shape = Container(
+          width: 16,
+          height: 16,
+          decoration: BoxDecoration(
+            color: shapeColor,
+            shape: BoxShape.circle,
+            border: Border.all(color: Colors.grey.shade400, width: 1),
+          ),
         );
         break;
-      // case 'TR':
-      //   gradient = const LinearGradient(
-      //     colors: [Color(0xffBF953F), Color(0xffFCF6BA), Color(0xffBF953F)],
-      //     begin: Alignment.centerLeft,
-      //     end: Alignment.centerRight,
-      //   );
-      //   break;
-      // case 'SP':
-      //   gradient = const LinearGradient(
-      //     colors: [Color(0xffB86B77), Color(0xffD8ABB1), Color(0xffB86B77)],
-      //     begin: Alignment.centerLeft,
-      //     end: Alignment.centerRight,
-      //   );
-      //   break;
-      case 'L':
-        gradient = const LinearGradient(
-          colors: [Color(0xff284e74), Color(0xff4088a9), Color(0xff284e74)],
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-        );
-        color = Colors.grey.shade300;
-        break;
-      case 'SCR':
-        gradient = const LinearGradient(
-          colors: [Color(0xffBF953F), Color(0xffFCF6BA), Color(0xffBF953F)],
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
+      case 'Uncommon': // Uncommon - Aquamarine triangle
+        shapeColor = const Color(0xff7FDBDA); // Aquamarine color
+        shape = CustomPaint(
+          size: const Size(16, 16),
+          painter: TrianglePainter(shapeColor),
         );
         break;
-      case 'SR':
-        gradient = const LinearGradient(
-          colors: [Color(0xffEDF1F4), Color(0xffC3CBDC), Color(0xffEDF1F4)],
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
+      case 'Rare': // Rare - Pink diamond
+        shapeColor = const Color(0xffFF69B4); // Pink color
+        shape = Transform.rotate(
+          angle: 0.785398, // 45 degrees in radians
+          child: Container(
+            width: 16,
+            height: 16,
+            decoration: BoxDecoration(
+              color: shapeColor,
+              borderRadius: BorderRadius.circular(2),
+            ),
+          ),
         );
         break;
-      case 'R':
-        gradient = const LinearGradient(
-          colors: [Color(0xff80501a), Color(0xffe0982d), Color(0xff80501a)],
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
+      case 'Epic': // Epic - Orange pentagon
+        shapeColor = const Color(0xffFF8C00); // Orange color
+        shape = CustomPaint(
+          size: const Size(16, 16),
+          painter: PentagonPainter(shapeColor),
         );
         break;
-      case 'UC':
-        gradient = const LinearGradient(
-          colors: [Color(0xff7bc198), Color(0xffa2ddbc), Color(0xff7bc198)],
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
+      case 'Legendary': // Legendary - Yellow hexagon
+        shapeColor = const Color(0xffFFD700); // Yellow color
+        shape = CustomPaint(
+          size: const Size(16, 16),
+          painter: HexagonPainter(shapeColor),
         );
         break;
-      case 'C':
-        gradient = const LinearGradient(
-          colors: [Color(0xff212121), Color(0xff404040), Color(0xff212121)],
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
+      default:
+        shape = Container(
+          width: 16,
+          height: 16,
+          decoration: BoxDecoration(
+            color: Colors.grey,
+            borderRadius: BorderRadius.circular(4),
+          ),
+          child: Center(
+            child: Text(
+              _rarity,
+              style: const TextStyle(
+                fontSize: 8,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+          ),
         );
-        color = Colors.white;
-        break;
-      case 'E':
-        gradient = const LinearGradient(
-          colors: [Color(0xff212121), Color(0xff404040), Color(0xff212121)],
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-        );
-        color = Colors.white;
         break;
     }
 
     return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(4),
-        gradient: gradient,
-      ),
-      padding: const EdgeInsets.symmetric(vertical: 1, horizontal: 8),
-      child: Text(
-        _rarity,
-        style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: color),
-      ),
+      padding: const EdgeInsets.all(4),
+      child: shape,
     );
   }
+}
+
+// Custom painters for the shapes
+class TrianglePainter extends CustomPainter {
+  final Color color;
+
+  TrianglePainter(this.color);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = color
+      ..style = PaintingStyle.fill;
+
+    final path = Path();
+    path.moveTo(size.width / 2, 0); // Top point
+    path.lineTo(0, size.height); // Bottom left
+    path.lineTo(size.width, size.height); // Bottom right
+    path.close();
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
+
+class PentagonPainter extends CustomPainter {
+  final Color color;
+
+  PentagonPainter(this.color);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = color
+      ..style = PaintingStyle.fill;
+
+    final path = Path();
+    final center = Offset(size.width / 2, size.height / 2);
+    final radius = size.width / 2;
+
+    // Create pentagon points
+    for (int i = 0; i < 5; i++) {
+      final angle = (i * 2 * 3.14159 / 5) - (3.14159 / 2); // Start from top
+      final x = center.dx + radius * 0.8 * cos(angle);
+      final y = center.dy + radius * 0.8 * sin(angle);
+      
+      if (i == 0) {
+        path.moveTo(x, y);
+      } else {
+        path.lineTo(x, y);
+      }
+    }
+    path.close();
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
+
+class HexagonPainter extends CustomPainter {
+  final Color color;
+
+  HexagonPainter(this.color);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = color
+      ..style = PaintingStyle.fill;
+
+    final path = Path();
+    final center = Offset(size.width / 2, size.height / 2);
+    final radius = size.width / 2;
+
+    // Create hexagon points
+    for (int i = 0; i < 6; i++) {
+      final angle = (i * 2 * 3.14159 / 6) - (3.14159 / 2); // Start from top
+      final x = center.dx + radius * 0.8 * cos(angle);
+      final y = center.dy + radius * 0.8 * sin(angle);
+      
+      if (i == 0) {
+        path.moveTo(x, y);
+      } else {
+        path.lineTo(x, y);
+      }
+    }
+    path.close();
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
