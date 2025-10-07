@@ -34,7 +34,7 @@ class CardSearchRepository {
     List<int>? energy,
     List<int>? might,
     List<int>? power,
-    List<String>? tag,
+    String? tag,
     List<String>? effect,
     String? asc,
     String? desc,
@@ -87,7 +87,7 @@ class CardSearchRepository {
         queryParams.putIfAbsent('tag', () => tag);
       }
       if (effect != null && effect.isNotEmpty) {
-        queryParams.putIfAbsent('effect', () => effect.join(","));
+        queryParams.putIfAbsent('ability', () => effect.join(","));
       }
 
       if (asc != null) {

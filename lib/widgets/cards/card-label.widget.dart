@@ -77,6 +77,16 @@ class _CardLabelState extends ConsumerState<CardLabel> {
         );
       }
     }
+    if (widget.label == 'power') {
+      if (widget.card.power != null) {
+        labelWidget = Text(
+          'PWR: ${widget.card.power.toString()}',
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: style,
+        );
+      }
+    }
     
     if (widget.label == 'domain') {
       if (widget.card.domain != null) {

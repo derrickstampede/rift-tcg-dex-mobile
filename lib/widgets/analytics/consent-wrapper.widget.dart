@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:rift/screens/account/consent-manager.screen.dart';
@@ -150,15 +151,20 @@ class _ConsentWrapperState extends State<ConsentWrapper> {
     await prefs.setBool('consent_ad_user_data', true);
     await prefs.setBool('consent_ad_personalization', true);
 
-    final isProd = bool.parse(dotenv.env['IS_PROD']!);
-    if (isProd) {
-      // Update Firebase Analytics consent settings
-      await FirebaseAnalytics.instance.setConsent(
-        analyticsStorageConsentGranted: true,
-        adStorageConsentGranted: true,
-        adUserDataConsentGranted: true,
-        personalizationStorageConsentGranted: true,
-      );
+    // Update Firebase Analytics consent settings if in production
+    try {
+      final isProd = bool.parse(dotenv.env['IS_PROD']!);
+      if (isProd) {
+        await FirebaseAnalytics.instance.setConsent(
+          analyticsStorageConsentGranted: true,
+          adStorageConsentGranted: true,
+          adUserDataConsentGranted: true,
+          personalizationStorageConsentGranted: true,
+        );
+      }
+    } catch (e) {
+      print('Error updating Firebase Analytics consent: $e');
+      // Continue execution even if Firebase update fails
     }
   }
 

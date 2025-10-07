@@ -303,54 +303,54 @@ class _CardFilterDrawerState extends ConsumerState<CardFilterDrawer> {
                                             const SizedBox(height: 6),
                                           ],
                                         ),
+                                        // Column(
+                                        //   crossAxisAlignment: CrossAxisAlignment.start,
+                                        //   children: [
+                                        //     const Subheader(text: "Language"),
+                                        //     const SizedBox(height: 6),
+                                        //     for (var chunk in languageChunks)
+                                        //       Row(
+                                        //         children: [
+                                        //           for (var i = 0; i < chunk.length; i++)
+                                        //             Expanded(
+                                        //               flex: 1,
+                                        //               child:
+                                        //                   chunk[i].value != '-'
+                                        //                       ? ListTileTheme(
+                                        //                         horizontalTitleGap: 4,
+                                        //                         child: CheckboxListTile(
+                                        //                           visualDensity: const VisualDensity(
+                                        //                             horizontal: 0,
+                                        //                             vertical: -4,
+                                        //                           ),
+                                        //                           contentPadding: EdgeInsets.zero,
+                                        //                           controlAffinity: ListTileControlAffinity.leading,
+                                        //                           title: Text(chunk[i].label),
+                                        //                           value: searchNotifier$.hasFilter(
+                                        //                             'language',
+                                        //                             chunk[i].value,
+                                        //                           ),
+                                        //                           onChanged:
+                                        //                               (!searchNotifier$.isDisabled(
+                                        //                                     'language',
+                                        //                                     chunk[i].value,
+                                        //                                   )
+                                        //                                   ? (bool? newValue) => searchNotifier$
+                                        //                                       .updateLanguage(chunk[i].value)
+                                        //                                   : null),
+                                        //                         ),
+                                        //                       )
+                                        //                       : const SizedBox(height: 0),
+                                        //             ),
+                                        //         ],
+                                        //       ),
+                                        //     const SizedBox(height: 6),
+                                        //   ],
+                                        // ),
                                         Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            const Subheader(text: "Language"),
-                                            const SizedBox(height: 6),
-                                            for (var chunk in languageChunks)
-                                              Row(
-                                                children: [
-                                                  for (var i = 0; i < chunk.length; i++)
-                                                    Expanded(
-                                                      flex: 1,
-                                                      child:
-                                                          chunk[i].value != '-'
-                                                              ? ListTileTheme(
-                                                                horizontalTitleGap: 4,
-                                                                child: CheckboxListTile(
-                                                                  visualDensity: const VisualDensity(
-                                                                    horizontal: 0,
-                                                                    vertical: -4,
-                                                                  ),
-                                                                  contentPadding: EdgeInsets.zero,
-                                                                  controlAffinity: ListTileControlAffinity.leading,
-                                                                  title: Text(chunk[i].label),
-                                                                  value: searchNotifier$.hasFilter(
-                                                                    'language',
-                                                                    chunk[i].value,
-                                                                  ),
-                                                                  onChanged:
-                                                                      (!searchNotifier$.isDisabled(
-                                                                            'language',
-                                                                            chunk[i].value,
-                                                                          )
-                                                                          ? (bool? newValue) => searchNotifier$
-                                                                              .updateLanguage(chunk[i].value)
-                                                                          : null),
-                                                                ),
-                                                              )
-                                                              : const SizedBox(height: 0),
-                                                    ),
-                                                ],
-                                              ),
-                                            const SizedBox(height: 6),
-                                          ],
-                                        ),
-                                        Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            const Subheader(text: "Color"),
+                                            const Subheader(text: "Domain"),
                                             if (searchNotifier$.showColorRequired())
                                               Padding(
                                                 padding: const EdgeInsets.only(top: 2),
@@ -522,7 +522,7 @@ class _CardFilterDrawerState extends ConsumerState<CardFilterDrawer> {
                                                 SfRangeSlider(
                                                   min: int.parse(energyOptions.first.value),
                                                   max: int.parse(energyOptions.last.value),
-                                                  interval: 1,
+                                                  interval: 2,
                                                   stepSize: 1,
                                                   showTicks: true,
                                                   showLabels: true,
@@ -567,8 +567,8 @@ class _CardFilterDrawerState extends ConsumerState<CardFilterDrawer> {
                                                 SfRangeSlider(
                                                   min: int.parse(mightOptions.first.value),
                                                   max: int.parse(mightOptions.last.value),
-                                                  interval: 5000,
-                                                  stepSize: 5000,
+                                                  interval: 2,
+                                                  stepSize: 1,
                                                   showTicks: true,
                                                   showLabels: true,
                                                   enableTooltip: true,
@@ -612,8 +612,8 @@ class _CardFilterDrawerState extends ConsumerState<CardFilterDrawer> {
                                                 SfRangeSlider(
                                                   min: int.parse(powerOptions.first.value),
                                                   max: int.parse(powerOptions.last.value),
-                                                  interval: 55000,
-                                                  stepSize: 5000,
+                                                  interval: 1,
+                                                  stepSize: 1,
                                                   showTicks: true,
                                                   showLabels: true,
                                                   enableTooltip: true,
@@ -669,7 +669,7 @@ class _CardFilterDrawerState extends ConsumerState<CardFilterDrawer> {
                                             Column(
                                               crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
-                                                const Subheader(text: "Effect"),
+                                                const Subheader(text: "Ability"),
                                                 const SizedBox(height: 6),
                                                 for (var chunk in effectChunks)
                                                   Row(

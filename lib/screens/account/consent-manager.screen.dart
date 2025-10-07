@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ConsentManagerWidget extends StatefulWidget {
   final bool showSaveButton;
@@ -108,13 +109,21 @@ class _ConsentManagerWidgetState extends State<ConsentManagerWidget> {
     await prefs.setBool('consent_ad_user_data', adUserDataConsent);
     await prefs.setBool('consent_ad_personalization', adPersonalizationConsent);
 
-    // Update Firebase Analytics consent settings
-    await FirebaseAnalytics.instance.setConsent(
-      analyticsStorageConsentGranted: analyticsConsent ? true : false,
-      adStorageConsentGranted: adStorageConsent ? true : false,
-      adUserDataConsentGranted: adUserDataConsent ? true : false,
-      personalizationStorageConsentGranted: adPersonalizationConsent ? true : false,
-    );
+    // Update Firebase Analytics consent settings if in production
+    try {
+      final isProd = bool.parse(dotenv.env['IS_PROD']!);
+      if (isProd) {
+        await FirebaseAnalytics.instance.setConsent(
+          analyticsStorageConsentGranted: analyticsConsent ? true : false,
+          adStorageConsentGranted: adStorageConsent ? true : false,
+          adUserDataConsentGranted: adUserDataConsent ? true : false,
+          personalizationStorageConsentGranted: adPersonalizationConsent ? true : false,
+        );
+      }
+    } catch (e) {
+      print('Error updating Firebase Analytics consent: $e');
+      // Continue execution even if Firebase update fails
+    }
 
     if (mounted && widget.showSaveButton) {
       ScaffoldMessenger.of(context).showSnackBar(
