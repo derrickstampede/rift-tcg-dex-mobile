@@ -12,6 +12,7 @@ class Deck with ChangeNotifier {
   final int? order;
   final CardListItem legend;
   final CardListItem champion;
+  final CardListItem? battlefield;
   final List<CardListItem> cards;
   num? cardCount;
   Note? note;
@@ -32,6 +33,7 @@ class Deck with ChangeNotifier {
     this.order,
     required this.legend,
     required this.champion,
+    required this.battlefield,
     required this.cards,
     this.cardCount,
     required this.note,
@@ -46,50 +48,54 @@ class Deck with ChangeNotifier {
   });
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-        'slug': slug,
-        'user_uid': userUid,
-        'order': order,
-        'legend': legend.toJson(),
-        'champion': champion.toJson(),
-        'cards': cards.map((c) => c.toJson()).toList(),
-        'cardCount': cardCount,
-        'note': note?.toJson(),
-        'sort_by': sortBy,
-        'is_sort_ascending': isSortAscending,
-        'created_at': createdAt.toString(),
-        'updated_at': updatedAt.toString(),
-        'country_id': countryId,
-        'symbol': symbol,
-        'is_public': isPublic,
-        'markets': markets.map((m) => m.toJson()).toList(),
-      };
+    'id': id,
+    'name': name,
+    'slug': slug,
+    'user_uid': userUid,
+    'order': order,
+    'legend': legend.toJson(),
+    'champion': champion.toJson(),
+    'battlefield': battlefield?.toJson(),
+    'cards': cards.map((c) => c.toJson()).toList(),
+    'cardCount': cardCount,
+    'note': note?.toJson(),
+    'sort_by': sortBy,
+    'is_sort_ascending': isSortAscending,
+    'created_at': createdAt.toString(),
+    'updated_at': updatedAt.toString(),
+    'country_id': countryId,
+    'symbol': symbol,
+    'is_public': isPublic,
+    'markets': markets.map((m) => m.toJson()).toList(),
+  };
 
   factory Deck.fromMap(Map<String, dynamic> map) => Deck(
-        id: map['id'],
-        name: map['name'],
-        slug: map['slug'],
-        userUid: map['user_uid'],
-        order: map['order'],
-        legend: CardListItem.fromMap(map['legend']),
-        champion: CardListItem.fromMap(map['champion']),
-        cards: map['cards'] == null
+    id: map['id'],
+    name: map['name'],
+    slug: map['slug'],
+    userUid: map['user_uid'],
+    order: map['order'],
+    legend: CardListItem.fromMap(map['legend']),
+    champion: CardListItem.fromMap(map['champion']),
+    battlefield: map['battlefield'] != null ? CardListItem.fromMap(map['battlefield']) : null,
+    cards:
+        map['cards'] == null
             ? []
             : List<CardListItem>.from(map['cards'].map<CardListItem>((c) => CardListItem.fromMap(c))),
-        note: map['note'] != null ? Note.fromMap(map['note']) : null,
-        sortBy: map['sort_by'],
-        isSortAscending: map['is_sort_ascending'],
-        cardCount: map['cardCount'],
-        createdAt: map['created_at'] != null ? DateTime.parse(map['created_at']) : DateTime.now(),
-        updatedAt: map['updatedAt'] != null ? DateTime.parse(map['updated_at']) : DateTime.now(),
-        countryId: map['country_id'], 
-        symbol: map['symbol'],
-        isPublic: map['is_public'] ?? false,
-        markets: map['markets'] == null
+    note: map['note'] != null ? Note.fromMap(map['note']) : null,
+    sortBy: map['sort_by'],
+    isSortAscending: map['is_sort_ascending'],
+    cardCount: map['cardCount'],
+    createdAt: map['created_at'] != null ? DateTime.parse(map['created_at']) : DateTime.now(),
+    updatedAt: map['updatedAt'] != null ? DateTime.parse(map['updated_at']) : DateTime.now(),
+    countryId: map['country_id'],
+    symbol: map['symbol'],
+    isPublic: map['is_public'] ?? false,
+    markets:
+        map['markets'] == null
             ? []
             : List<DeckMarket>.from(map['markets'].map<DeckMarket>((m) => DeckMarket.fromMap(m))),
-      );
+  );
 }
 
 class DeckList with ChangeNotifier {
@@ -98,26 +104,21 @@ class DeckList with ChangeNotifier {
   final String sortBy;
   final bool isSortAscending;
 
-  DeckList({
-    required this.decks,
-    required this.isLoading,
-    required this.sortBy,
-    required this.isSortAscending,
-  });
+  DeckList({required this.decks, required this.isLoading, required this.sortBy, required this.isSortAscending});
 
   Map<String, dynamic> toJson() => {
-        'decks': decks.map((c) => c.toJson()).toList(),
-        'isLoading': isLoading,
-        'sortBy': sortBy,
-        'isSortAscending': isSortAscending,
-      };
+    'decks': decks.map((c) => c.toJson()).toList(),
+    'isLoading': isLoading,
+    'sortBy': sortBy,
+    'isSortAscending': isSortAscending,
+  };
 
   factory DeckList.fromMap(Map<String, dynamic> map) => DeckList(
-        decks: map['decks'] == null ? [] : List<Deck>.from(map['decks'].map<Deck>((d) => Deck.fromMap(d))),
-        isLoading: map['isLoading'],
-        sortBy: map['sortBy'],
-        isSortAscending: map['isSortAscending'],
-      );
+    decks: map['decks'] == null ? [] : List<Deck>.from(map['decks'].map<Deck>((d) => Deck.fromMap(d))),
+    isLoading: map['isLoading'],
+    sortBy: map['sortBy'],
+    isSortAscending: map['isSortAscending'],
+  );
 }
 
 class DeckForm with ChangeNotifier {
@@ -125,45 +126,33 @@ class DeckForm with ChangeNotifier {
   final int leaderId;
   final List<DeckCardForm> cards;
 
-  DeckForm({
-    required this.name,
-    required this.leaderId,
-    required this.cards,
-  });
+  DeckForm({required this.name, required this.leaderId, required this.cards});
 
   Map<String, dynamic> toJson() => {
-        'name': name,
-        'leader_id': leaderId,
-        'cards': cards.map((c) => c.toJson()).toList(),
-      };
+    'name': name,
+    'leader_id': leaderId,
+    'cards': cards.map((c) => c.toJson()).toList(),
+  };
 
   factory DeckForm.fromMap(Map<String, dynamic> map) => DeckForm(
-        name: map['name'],
-        leaderId: map['leader_id'],
-        cards: map['cards'] == null
+    name: map['name'],
+    leaderId: map['leader_id'],
+    cards:
+        map['cards'] == null
             ? []
             : List<DeckCardForm>.from(map['cards'].map<DeckCardForm>((c) => DeckCardForm.fromMap(c))),
-      );
+  );
 }
 
 class DeckCardForm with ChangeNotifier {
   final int cardId;
   final int count;
 
-  DeckCardForm({
-    required this.cardId,
-    required this.count,
-  });
+  DeckCardForm({required this.cardId, required this.count});
 
-  Map<String, dynamic> toJson() => {
-        'card_id': cardId,
-        'count': count,
-      };
+  Map<String, dynamic> toJson() => {'card_id': cardId, 'count': count};
 
-  factory DeckCardForm.fromMap(Map<String, dynamic> map) => DeckCardForm(
-        cardId: map['card_id'],
-        count: map['count'],
-      );
+  factory DeckCardForm.fromMap(Map<String, dynamic> map) => DeckCardForm(cardId: map['card_id'], count: map['count']);
 }
 
 class DeckShare with ChangeNotifier {
@@ -186,44 +175,35 @@ class DeckShare with ChangeNotifier {
   });
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-        'slug': slug,
-        'user_uid': userUid,
-        'order': order,
-        'leader_id': leaderId,
-        'cards': cards.map((c) => c.toJson()).toList(),
-      };
+    'id': id,
+    'name': name,
+    'slug': slug,
+    'user_uid': userUid,
+    'order': order,
+    'leader_id': leaderId,
+    'cards': cards.map((c) => c.toJson()).toList(),
+  };
 
   factory DeckShare.fromMap(Map<String, dynamic> map) => DeckShare(
-        id: map['id'],
-        name: map['name'],
-        slug: map['slug'],
-        userUid: map['user_uid'],
-        order: map['order'],
-        leaderId: map['leader_id'],
-        cards: List<DeckCardShare>.from(map['cards'].map<DeckCardShare>((c) => DeckCardShare.fromMap(c))),
-      );
+    id: map['id'],
+    name: map['name'],
+    slug: map['slug'],
+    userUid: map['user_uid'],
+    order: map['order'],
+    leaderId: map['leader_id'],
+    cards: List<DeckCardShare>.from(map['cards'].map<DeckCardShare>((c) => DeckCardShare.fromMap(c))),
+  );
 }
 
 class DeckCardShare with ChangeNotifier {
   final int id;
   final int count;
 
-  DeckCardShare({
-    required this.id,
-    required this.count,
-  });
+  DeckCardShare({required this.id, required this.count});
 
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'count': count,
-      };
+  Map<String, dynamic> toJson() => {'id': id, 'count': count};
 
-  factory DeckCardShare.fromMap(Map<String, dynamic> map) => DeckCardShare(
-        id: map['id'],
-        count: map['count'],
-      );
+  factory DeckCardShare.fromMap(Map<String, dynamic> map) => DeckCardShare(id: map['id'], count: map['count']);
 }
 
 class DeckStats with ChangeNotifier {
@@ -248,45 +228,33 @@ class DeckStats with ChangeNotifier {
   });
 
   factory DeckStats.fromMap(Map<String, dynamic> map) => DeckStats(
-        count: map['count'],
-        cost: List<DeckStatCost>.from(map['cost'].map<DeckStatCost>((c) => DeckStatCost.fromMap(c))),
-        specifiedCost: List<DeckStatCount>.from(map['specified_cost'].map<DeckStatCount>((c) => DeckStatCount.fromMap(c))),
-        withEffect: map['with_effect'],
-        power: List<DeckStatCount>.from(map['power'].map<DeckStatCount>((c) => DeckStatCount.fromMap(c))),
-        effect: List<DeckStatCount>.from(map['effect'].map<DeckStatCount>((c) => DeckStatCount.fromMap(c))),
-        type: List<DeckStatCount>.from(map['type'].map<DeckStatCount>((c) => DeckStatCount.fromMap(c))),
-        rarity: List<DeckStatCount>.from(map['rarity'].map<DeckStatCount>((c) => DeckStatCount.fromMap(c))),
-      );
+    count: map['count'],
+    cost: List<DeckStatCost>.from(map['cost'].map<DeckStatCost>((c) => DeckStatCost.fromMap(c))),
+    specifiedCost: List<DeckStatCount>.from(map['specified_cost'].map<DeckStatCount>((c) => DeckStatCount.fromMap(c))),
+    withEffect: map['with_effect'],
+    power: List<DeckStatCount>.from(map['power'].map<DeckStatCount>((c) => DeckStatCount.fromMap(c))),
+    effect: List<DeckStatCount>.from(map['effect'].map<DeckStatCount>((c) => DeckStatCount.fromMap(c))),
+    type: List<DeckStatCount>.from(map['type'].map<DeckStatCount>((c) => DeckStatCount.fromMap(c))),
+    rarity: List<DeckStatCount>.from(map['rarity'].map<DeckStatCount>((c) => DeckStatCount.fromMap(c))),
+  );
 }
 
 class DeckStatCost with ChangeNotifier {
   final String label;
   final int count;
 
-  DeckStatCost({
-    required this.label,
-    required this.count,
-  });
+  DeckStatCost({required this.label, required this.count});
 
-  factory DeckStatCost.fromMap(Map<String, dynamic> map) => DeckStatCost(
-        label: map['label'],
-        count: map['count'],
-      );
+  factory DeckStatCost.fromMap(Map<String, dynamic> map) => DeckStatCost(label: map['label'], count: map['count']);
 }
 
 class DeckStatCount with ChangeNotifier {
   final String label;
   final int count;
 
-  DeckStatCount({
-    required this.label,
-    required this.count,
-  });
+  DeckStatCount({required this.label, required this.count});
 
-  factory DeckStatCount.fromMap(Map<String, dynamic> map) => DeckStatCount(
-        label: map['label'],
-        count: map['count'],
-      );
+  factory DeckStatCount.fromMap(Map<String, dynamic> map) => DeckStatCount(label: map['label'], count: map['count']);
 }
 
 class DeckStatColorCount with ChangeNotifier {
@@ -294,15 +262,8 @@ class DeckStatColorCount with ChangeNotifier {
   final int count;
   final int start;
 
-  DeckStatColorCount({
-    required this.label,
-    required this.count,
-    required this.start,
-  });
+  DeckStatColorCount({required this.label, required this.count, required this.start});
 
-  factory DeckStatColorCount.fromMap(Map<String, dynamic> map) => DeckStatColorCount(
-        label: map['label'],
-        count: map['count'],
-        start: map['start'],
-      );
+  factory DeckStatColorCount.fromMap(Map<String, dynamic> map) =>
+      DeckStatColorCount(label: map['label'], count: map['count'], start: map['start']);
 }

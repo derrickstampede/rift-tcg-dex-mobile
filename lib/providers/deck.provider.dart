@@ -39,6 +39,9 @@ class DeckBuildNotifier extends _$DeckBuildNotifier {
       final deck = await deckRepository.findDeck(slug);
       deck.cards.insert(0, deck.legend);
       deck.cards.insert(0, deck.champion);
+      if (deck.battlefield != null) {
+        deck.cards.insert(0, deck.battlefield!);
+      }
       update(deck);
       computeTotals();
     } catch (e) {
@@ -57,11 +60,16 @@ class DeckBuildNotifier extends _$DeckBuildNotifier {
 
     final deckForm = {
       "name": deck['name'],
-      "leader_id": deck['leader']['id'],
+      "legend_id": deck['legend']['id'],
+      "champion_id": deck['champion']['id'],
+      "battlefield_id": deck['battlefield']['id'],
       "cards":
-          deck['cards'].where((c) => c['type'] != 'LEADER').map((c) {
-            return {"card_id": c['id'], "count": c['count']};
-          }).toList(),
+          deck['cards']
+              .where((c) => c['type'] != 'LEGEND' && c['type'] != 'CHAMPION UNIT' && c['type'] != 'BATTLEFIELD')
+              .map((c) {
+                return {"card_id": c['id'], "count": c['count']};
+              })
+              .toList(),
     };
     final response = await updateDeck(deckForm, deck['slug']);
     response.fold(
@@ -175,7 +183,7 @@ class DeckBuildNotifier extends _$DeckBuildNotifier {
     debounceUpdate();
 
     num cardCount = 0;
-    final cards = deck['cards'].where((c) => c['type'] != 'LEADER').toList();
+    final cards = deck['cards'].where((c) => c['type'] != 'LEGEND').toList();
     for (var i = 0; i < cards.length; i++) {
       cardCount += cards[i]['count'];
     }
