@@ -181,7 +181,7 @@ Future<Either<Map<String, dynamic>, dynamic>> findCardByCardId(String cardId) as
       throw {"statusCode": response.statusCode, "statusText": err['statusText'], "message": err['message']};
     }
 
-    final responseData = json.decode(utf8.decode(response.body.codeUnits));
+    final responseData = json.decode(response.body);
     final cards = responseData['data']['cards'].map<CardItemView>((c) => CardItemView.fromMap(c)).toList();
 
     return left({'cards': cards});

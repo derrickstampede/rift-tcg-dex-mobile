@@ -314,7 +314,7 @@ Future<Either<Map<String, dynamic>, dynamic>> updateDeck(dynamic deck, String sl
   }
 }
 
-Future<Either<Map<String, dynamic>, dynamic>> updateLeaderDeck(String slug, int leaderId) async {
+Future<Either<Map<String, dynamic>, dynamic>> updateLegendDeck(String slug, int leaderId) async {
   try {
     final headers = {...httpHeaders};
     Session? session = supabase.auth.currentSession;
@@ -322,8 +322,33 @@ Future<Either<Map<String, dynamic>, dynamic>> updateLeaderDeck(String slug, int 
       headers['AccessToken'] = session.accessToken;
     }
 
-    final url = Uri.https(dotenv.env['API']!, 'api/v1/decks/$slug/update-leader');
+    final url = Uri.https(dotenv.env['API']!, 'api/v1/decks/$slug/update-legend');
     final body = json.encode({"card_id": leaderId});
+    final response = await http.patch(url, body: body, headers: headers);
+
+    if (response.statusCode != 200) {
+      final err = json.decode(response.body);
+      throw {"statusCode": response.statusCode, "statusText": err['statusText'], "message": err['error']['message']};
+    }
+
+    final responseData = json.decode(response.body);
+
+    return left({'is_updated': responseData['data']['is_updated']});
+  } catch (e) {
+    return right(e);
+  }
+}
+
+Future<Either<Map<String, dynamic>, dynamic>> updateChampionDeck(String slug, int championId) async {
+  try {
+    final headers = {...httpHeaders};
+    Session? session = supabase.auth.currentSession;
+    if (session != null) {
+      headers['AccessToken'] = session.accessToken;
+    }
+
+    final url = Uri.https(dotenv.env['API']!, 'api/v1/decks/$slug/update-champion');
+    final body = json.encode({"card_id": championId});
     final response = await http.patch(url, body: body, headers: headers);
 
     if (response.statusCode != 200) {

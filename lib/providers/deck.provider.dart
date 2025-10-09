@@ -38,6 +38,7 @@ class DeckBuildNotifier extends _$DeckBuildNotifier {
     try {
       final deck = await deckRepository.findDeck(slug);
       deck.cards.insert(0, deck.legend);
+      deck.cards.insert(0, deck.champion);
       update(deck);
       computeTotals();
     } catch (e) {

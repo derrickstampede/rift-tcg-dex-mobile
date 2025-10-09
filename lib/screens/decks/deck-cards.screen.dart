@@ -93,8 +93,8 @@ class _DeckCardsScreenState extends ConsumerState<DeckCardsScreen> {
       color: [],
       domain: [],
       art: [],
-      energy: List<int>.from(json.decode(dotenv.env['CARD_SEARCH_COST_RESET']!)),
-      might: List<int>.from(json.decode(dotenv.env['CARD_SEARCH_COST_RESET']!)),
+      energy: List<int>.from(json.decode(dotenv.env['CARD_SEARCH_ENERGY_RESET']!)),
+      might: List<int>.from(json.decode(dotenv.env['CARD_SEARCH_MIGHT_RESET']!)),
       power: List<int>.from(json.decode(dotenv.env['CARD_SEARCH_POWER_RESET']!)),
       tag: null,
       effect: [],
@@ -151,38 +151,85 @@ class _DeckCardsScreenState extends ConsumerState<DeckCardsScreen> {
   }
 
   List<CardListItem> _sortCards(List<CardListItem> cards, String by, bool isAscending) {
-    final leaderCards = cards.where((c) => c.type?.toLowerCase() == 'leader').toList();
-    final battleCards = cards.where((c) => c.type?.toLowerCase() == 'battle').toList();
-    final extraCards = cards.where((c) => c.type?.toLowerCase() == 'extra').toList();
-    final energyCards = cards.where((c) => c.type?.toLowerCase() == 'energy marker').toList();
+    final signatures = ['Signature Unit', 'Signature Spell'];
+
+    final legendCard = cards.where((c) => c.type?.toLowerCase() == 'legend').toList();
+    final championCard = cards.where((c) => c.type?.toLowerCase() == 'champion unit').toList();
+    final signatureCards = cards.where((c) => signatures.contains(c.type?.toLowerCase())).toList();
+    final unitCards = cards.where((c) => c.type?.toLowerCase() == 'unit').toList();
+    final spellCards = cards.where((c) => c.type?.toLowerCase() == 'spell').toList();
+    final gearCards = cards.where((c) => c.type?.toLowerCase() == 'gear').toList();
+    final battlefieldCards = cards.where((c) => c.type?.toLowerCase() == 'battlefield').toList();
+    final tokenCards = cards.where((c) => c.type?.toLowerCase() == 'token unit').toList();
+    final runeCards = cards.where((c) => c.type?.toLowerCase() == 'rune').toList();
 
     if (by == 'card') {
-      battleCards.sort((a, b) => isAscending ? a.cardId.compareTo(b.cardId) : b.cardId.compareTo(a.cardId));
-      extraCards.sort((a, b) => isAscending ? a.cardId.compareTo(b.cardId) : b.cardId.compareTo(a.cardId));
-      energyCards.sort((a, b) => isAscending ? a.cardId.compareTo(b.cardId) : b.cardId.compareTo(a.cardId));
+      legendCard.sort((a, b) => isAscending ? a.cardId.compareTo(b.cardId) : b.cardId.compareTo(a.cardId));
+      championCard.sort((a, b) => isAscending ? a.cardId.compareTo(b.cardId) : b.cardId.compareTo(a.cardId));
+      signatureCards.sort((a, b) => isAscending ? a.cardId.compareTo(b.cardId) : b.cardId.compareTo(a.cardId));
+      unitCards.sort((a, b) => isAscending ? a.cardId.compareTo(b.cardId) : b.cardId.compareTo(a.cardId));
+      spellCards.sort((a, b) => isAscending ? a.cardId.compareTo(b.cardId) : b.cardId.compareTo(a.cardId));
+      gearCards.sort((a, b) => isAscending ? a.cardId.compareTo(b.cardId) : b.cardId.compareTo(a.cardId));
+      battlefieldCards.sort((a, b) => isAscending ? a.cardId.compareTo(b.cardId) : b.cardId.compareTo(a.cardId));
+      tokenCards.sort((a, b) => isAscending ? a.cardId.compareTo(b.cardId) : b.cardId.compareTo(a.cardId));
+      runeCards.sort((a, b) => isAscending ? a.cardId.compareTo(b.cardId) : b.cardId.compareTo(a.cardId));
     }
     if (by == 'name') {
-      battleCards.sort((a, b) => isAscending ? a.name.compareTo(b.name) : b.name.compareTo(a.name));
-      extraCards.sort((a, b) => isAscending ? a.name.compareTo(b.name) : b.name.compareTo(a.name));
-      energyCards.sort((a, b) => isAscending ? a.name.compareTo(b.name) : b.name.compareTo(a.name));
+      legendCard.sort((a, b) => isAscending ? a.name.compareTo(b.name) : b.name.compareTo(a.name));
+      championCard.sort((a, b) => isAscending ? a.name.compareTo(b.name) : b.name.compareTo(a.name));
+      signatureCards.sort((a, b) => isAscending ? a.name.compareTo(b.name) : b.name.compareTo(a.name));
+      unitCards.sort((a, b) => isAscending ? a.name.compareTo(b.name) : b.name.compareTo(a.name));
+      spellCards.sort((a, b) => isAscending ? a.name.compareTo(b.name) : b.name.compareTo(a.name));
+      gearCards.sort((a, b) => isAscending ? a.name.compareTo(b.name) : b.name.compareTo(a.name));
+      battlefieldCards.sort((a, b) => isAscending ? a.name.compareTo(b.name) : b.name.compareTo(a.name));
+      tokenCards.sort((a, b) => isAscending ? a.name.compareTo(b.name) : b.name.compareTo(a.name));
+      runeCards.sort((a, b) => isAscending ? a.name.compareTo(b.name) : b.name.compareTo(a.name));
     }
     if (by == 'power') {
-      battleCards.sort((a, b) => isAscending ? a.power!.compareTo(b.power!) : b.power!.compareTo(a.power!));
-      extraCards.sort((a, b) => isAscending ? a.power!.compareTo(b.power!) : b.power!.compareTo(a.power!));
-      energyCards.sort((a, b) => isAscending ? a.power!.compareTo(b.power!) : b.power!.compareTo(a.power!));
+      legendCard.sort((a, b) => isAscending ? a.power!.compareTo(b.power!) : b.power!.compareTo(a.power!));
+      championCard.sort((a, b) => isAscending ? a.power!.compareTo(b.power!) : b.power!.compareTo(a.power!));
+      signatureCards.sort((a, b) => isAscending ? a.power!.compareTo(b.power!) : b.power!.compareTo(a.power!));
+      unitCards.sort((a, b) => isAscending ? a.power!.compareTo(b.power!) : b.power!.compareTo(a.power!));
+      spellCards.sort((a, b) => isAscending ? a.power!.compareTo(b.power!) : b.power!.compareTo(a.power!));
+      gearCards.sort((a, b) => isAscending ? a.power!.compareTo(b.power!) : b.power!.compareTo(a.power!));
+      battlefieldCards.sort((a, b) => isAscending ? a.power!.compareTo(b.power!) : b.power!.compareTo(a.power!));
+      tokenCards.sort((a, b) => isAscending ? a.power!.compareTo(b.power!) : b.power!.compareTo(a.power!));
+      runeCards.sort((a, b) => isAscending ? a.power!.compareTo(b.power!) : b.power!.compareTo(a.power!));
     }
     if (by == 'energy') {
-      battleCards.sort((a, b) => isAscending ? a.energy!.compareTo(b.energy!) : b.energy!.compareTo(a.energy!));
-      extraCards.sort((a, b) => isAscending ? a.energy!.compareTo(b.energy!) : b.energy!.compareTo(a.energy!));
-      energyCards.sort((a, b) => isAscending ? a.energy!.compareTo(b.energy!) : b.energy!.compareTo(a.energy!));
+      legendCard.sort((a, b) => isAscending ? a.energy!.compareTo(b.energy!) : b.energy!.compareTo(a.energy!));
+      championCard.sort((a, b) => isAscending ? a.energy!.compareTo(b.energy!) : b.energy!.compareTo(a.energy!));
+      signatureCards.sort((a, b) => isAscending ? a.energy!.compareTo(b.energy!) : b.energy!.compareTo(a.energy!));
+      unitCards.sort((a, b) => isAscending ? a.energy!.compareTo(b.energy!) : b.energy!.compareTo(a.energy!));
+      spellCards.sort((a, b) => isAscending ? a.energy!.compareTo(b.energy!) : b.energy!.compareTo(a.energy!));
+      gearCards.sort((a, b) => isAscending ? a.energy!.compareTo(b.energy!) : b.energy!.compareTo(a.energy!));
+      battlefieldCards.sort((a, b) => isAscending ? a.energy!.compareTo(b.energy!) : b.energy!.compareTo(a.energy!));
+      tokenCards.sort((a, b) => isAscending ? a.energy!.compareTo(b.energy!) : b.energy!.compareTo(a.energy!));
+      runeCards.sort((a, b) => isAscending ? a.energy!.compareTo(b.energy!) : b.energy!.compareTo(a.energy!));
     }
     if (by == 'might') {
-      battleCards.sort((a, b) => isAscending ? a.might!.compareTo(b.might!) : b.might!.compareTo(a.might!));
-      extraCards.sort((a, b) => isAscending ? a.might!.compareTo(b.might!) : b.might!.compareTo(a.might!));
-      energyCards.sort((a, b) => isAscending ? a.might!.compareTo(b.might!) : b.might!.compareTo(a.might!));
+      legendCard.sort((a, b) => isAscending ? a.might!.compareTo(b.might!) : b.might!.compareTo(a.might!));
+      championCard.sort((a, b) => isAscending ? a.might!.compareTo(b.might!) : b.might!.compareTo(a.might!));
+      signatureCards.sort((a, b) => isAscending ? a.might!.compareTo(b.might!) : b.might!.compareTo(a.might!));
+      unitCards.sort((a, b) => isAscending ? a.might!.compareTo(b.might!) : b.might!.compareTo(a.might!));
+      spellCards.sort((a, b) => isAscending ? a.might!.compareTo(b.might!) : b.might!.compareTo(a.might!));
+      gearCards.sort((a, b) => isAscending ? a.might!.compareTo(b.might!) : b.might!.compareTo(a.might!));
+      battlefieldCards.sort((a, b) => isAscending ? a.might!.compareTo(b.might!) : b.might!.compareTo(a.might!));
+      tokenCards.sort((a, b) => isAscending ? a.might!.compareTo(b.might!) : b.might!.compareTo(a.might!));
+      runeCards.sort((a, b) => isAscending ? a.might!.compareTo(b.might!) : b.might!.compareTo(a.might!));
     }
 
-    return [...leaderCards, ...battleCards, ...extraCards, ...energyCards];
+    return [
+      ...legendCard,
+      ...championCard,
+      ...signatureCards,
+      ...unitCards,
+      ...spellCards,
+      ...gearCards,
+      ...battlefieldCards,
+      ...tokenCards,
+      ...runeCards,
+    ];
   }
 
   void _viewFull(String name, List<CardListItem> cards, Color foregroundColor, Color backgroundColor) {
@@ -260,10 +307,13 @@ class _DeckCardsScreenState extends ConsumerState<DeckCardsScreen> {
                     children: [
                       TextSpan(
                         text:
-                            "${ref.read(deckBuildNotifierProvider(widget.slug).notifier).totalCards()}/$_deckCardLimit cards \u2981 ",
+                            "${ref.read(deckBuildNotifierProvider(widget.slug).notifier).totalCards()}/$_deckCardLimit ",
                       ),
                       if (ref.read(deckBuildNotifierProvider(widget.slug).notifier).totalOtherCards() > 0)
-                        TextSpan(text: "1 Energy \u2981 "),
+                        TextSpan(
+                          text: "+ ${ref.read(deckBuildNotifierProvider(widget.slug).notifier).totalOtherCards()} ",
+                        ),
+                      TextSpan(text: "cards \u2981 "),
                       TextSpan(
                         text:
                             ref.read(deckBuildNotifierProvider(widget.slug).notifier).isPublic()

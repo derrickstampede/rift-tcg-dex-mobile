@@ -26,19 +26,66 @@ class CardAddRemove extends ConsumerStatefulWidget {
 }
 
 class _CardAddRemoveState extends ConsumerState<CardAddRemove> {
-  Future<void> _getLeaders(String deckSlug, int currentLeaderId, String cardId, Color backgroundColor, Color foregroundColor) async {
+  Future<void> _getLeaders(
+    String deckSlug,
+    int currentLeaderId,
+    String cardId,
+    Color backgroundColor,
+    Color foregroundColor,
+  ) async {
     final cardResponse = await findCardByCardId(cardId);
-    return cardResponse.fold((l) async {
-      final List<CardItemView> cards = l['cards'];
+    return cardResponse.fold(
+      (l) async {
+        final List<CardItemView> cards = l['cards'];
 
-      final response = await switchLeaderModal(context, deckSlug, currentLeaderId, cards, backgroundColor, foregroundColor);
-      if (response != null) {
-        ref.watch(deckBuildNotifierProvider(deckSlug).notifier).find(deckSlug);
-        ref.read(deckListNotifierProvider.notifier).updateLeader(deckSlug, response);
-      }
-    }, (r) {
-      print(r);
-    });
+        final response = await switchLegendModal(
+          context,
+          deckSlug,
+          currentLeaderId,
+          cards,
+          backgroundColor,
+          foregroundColor,
+        );
+        if (response != null) {
+          ref.watch(deckBuildNotifierProvider(deckSlug).notifier).find(deckSlug);
+          ref.read(deckListNotifierProvider.notifier).updateLeader(deckSlug, response);
+        }
+      },
+      (r) {
+        print(r);
+      },
+    );
+  }
+
+  Future<void> _getChampions(
+    String deckSlug,
+    int currenChampionId,
+    String cardId,
+    Color backgroundColor,
+    Color foregroundColor,
+  ) async {
+    final cardResponse = await findCardByCardId(cardId);
+    return cardResponse.fold(
+      (l) async {
+        final List<CardItemView> cards = l['cards'];
+
+        final response = await switchChampionModal(
+          context,
+          deckSlug,
+          currenChampionId,
+          cards,
+          backgroundColor,
+          foregroundColor,
+        );
+        if (response != null) {
+          ref.watch(deckBuildNotifierProvider(deckSlug).notifier).find(deckSlug);
+          ref.read(deckListNotifierProvider.notifier).updateLeader(deckSlug, response);
+        }
+      },
+      (r) {
+        print(r);
+      },
+    );
   }
 
   @override
@@ -58,13 +105,14 @@ class _CardAddRemoveState extends ConsumerState<CardAddRemove> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          if (widget.card.rarity != "L")
+          if (widget.card.type != "Legend" && widget.card.type != "Champion Unit")
             SizedBox(
               width: 42,
               child: RawMaterialButton(
                 onPressed: () {
-                  final cardCount =
-                      ref.read(deckBuildNotifierProvider(widget.deck.slug).notifier).removeCard(widget.card);
+                  final cardCount = ref
+                      .read(deckBuildNotifierProvider(widget.deck.slug).notifier)
+                      .removeCard(widget.card);
                   if (cardCount != null) {
                     ref.read(deckListNotifierProvider.notifier).updateCount(widget.deck.slug, cardCount);
                   }
@@ -74,14 +122,10 @@ class _CardAddRemoveState extends ConsumerState<CardAddRemove> {
                 fillColor: foregroundColor.withOpacity(0.9),
                 padding: const EdgeInsets.all(8.0),
                 shape: const CircleBorder(),
-                child: Icon(
-                  Symbols.remove,
-                  size: 24.0,
-                  color: backgroundColor,
-                ),
+                child: Icon(Symbols.remove, size: 24.0, color: backgroundColor),
               ),
             ),
-          if (widget.card.rarity == "L")
+          if (widget.card.type == "Legend")
             SizedBox(
               width: 42,
               child: RawMaterialButton(
@@ -92,11 +136,21 @@ class _CardAddRemoveState extends ConsumerState<CardAddRemove> {
                 fillColor: foregroundColor.withOpacity(0.9),
                 padding: const EdgeInsets.all(8.0),
                 shape: const CircleBorder(),
-                child: Icon(
-                  Symbols.loop,
-                  size: 24.0,
-                  color: backgroundColor,
-                ),
+                child: Icon(Symbols.loop, size: 24.0, color: backgroundColor),
+              ),
+            ),
+          if (widget.card.type == "Champion Unit")
+            SizedBox(
+              width: 42,
+              child: RawMaterialButton(
+                onPressed: () async {
+                  _getChampions(widget.deck.slug, widget.card.id, widget.card.cardId, backgroundColor, foregroundColor);
+                },
+                elevation: 2.0,
+                fillColor: foregroundColor.withOpacity(0.9),
+                padding: const EdgeInsets.all(8.0),
+                shape: const CircleBorder(),
+                child: Icon(Symbols.loop, size: 24.0, color: backgroundColor),
               ),
             ),
           SizedBox(
@@ -107,14 +161,10 @@ class _CardAddRemoveState extends ConsumerState<CardAddRemove> {
               fillColor: backgroundColor,
               padding: const EdgeInsets.all(2),
               shape: const CircleBorder(),
-              child: CardDeckCount(
-                card: widget.card,
-                deck: widget.deck,
-                foregroundColor: foregroundColor,
-              ),
+              child: CardDeckCount(card: widget.card, deck: widget.deck, foregroundColor: foregroundColor),
             ),
           ),
-          if (widget.card.rarity != "L")
+          if (widget.card.type != "Legend" && widget.card.type != "Champion Unit")
             SizedBox(
               width: 42,
               child: RawMaterialButton(
@@ -129,11 +179,7 @@ class _CardAddRemoveState extends ConsumerState<CardAddRemove> {
                 fillColor: foregroundColor.withOpacity(0.9),
                 padding: const EdgeInsets.all(8.0),
                 shape: const CircleBorder(),
-                child: Icon(
-                  Symbols.add,
-                  size: 24.0,
-                  color: backgroundColor,
-                ),
+                child: Icon(Symbols.add, size: 24.0, color: backgroundColor),
               ),
             ),
         ],

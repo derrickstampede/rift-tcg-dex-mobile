@@ -13,8 +13,15 @@ Future<void> _launchUrl(String url) async {
   }
 }
 
-void showSnackbar(String title,
-    {String type = 'primary', String? subtitle, String? image, int duration = 4, String? linkType, String? link}) {
+void showSnackbar(
+  String title, {
+  String type = 'primary',
+  String? subtitle,
+  String? image,
+  int duration = 4,
+  String? linkType,
+  String? link,
+}) {
   Color containerColor = Theme.of(navigatorKey.currentState!.overlay!.context).colorScheme.primaryContainer;
   Color textColor = Theme.of(navigatorKey.currentState!.overlay!.context).colorScheme.onPrimaryContainer;
 
@@ -55,10 +62,7 @@ void showSnackbar(String title,
               width: 50,
               height: 50,
               padding: const EdgeInsets.only(right: 8),
-              child: FancyShimmerImage(
-                imageUrl: image,
-                boxFit: BoxFit.contain,
-              ),
+              child: FancyShimmerImage(imageUrl: image, boxFit: BoxFit.contain),
             ),
           Flexible(
             child: Column(
@@ -71,12 +75,7 @@ void showSnackbar(String title,
                   overflow: TextOverflow.ellipsis,
                 ),
                 if (subtitle != null)
-                  Text(
-                    subtitle,
-                    style: TextStyle(color: textColor),
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                  ),
+                  Text(subtitle, style: TextStyle(color: textColor), maxLines: 3, overflow: TextOverflow.ellipsis),
               ],
             ),
           ),
@@ -99,17 +98,20 @@ Color getColor(String color) {
     case 'Red':
       selectedColor = Colors.red.shade400;
       break;
+    case 'Green':
+      selectedColor = Colors.green.shade500;
+      break;
     case 'Blue':
       selectedColor = Colors.blue.shade400;
       break;
     case 'Yellow':
       selectedColor = Colors.yellow.shade400;
       break;
-    case 'Black':
-      selectedColor = Colors.grey.shade900;
+    case 'Purple':
+      selectedColor = Colors.purple.shade400;
       break;
-    case 'Green':
-      selectedColor = Colors.green.shade500;
+    case 'Orange':
+      selectedColor = Colors.orange.shade400;
       break;
     default:
       selectedColor = Colors.black;
@@ -121,24 +123,26 @@ Color getColor(String color) {
 class TransparentRoute extends PageRouteBuilder {
   final WidgetBuilder builder;
   TransparentRoute({required this.builder})
-      : super(
-          pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) =>
-              builder(context),
-          opaque: false,
-          barrierDismissible: false,
-          barrierColor: Colors.black54,
-          transitionDuration: const Duration(milliseconds: 300),
-          transitionsBuilder:
-              (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
-            var begin = const Offset(0.0, 1.0);
-            var end = Offset.zero;
-            var curve = Curves.ease;
-            var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-            final offsetAnimation = animation.drive(tween);
-            return SlideTransition(
-              position: offsetAnimation,
-              child: child,
-            );
-          },
-        );
+    : super(
+        pageBuilder:
+            (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) =>
+                builder(context),
+        opaque: false,
+        barrierDismissible: false,
+        barrierColor: Colors.black54,
+        transitionDuration: const Duration(milliseconds: 300),
+        transitionsBuilder: (
+          BuildContext context,
+          Animation<double> animation,
+          Animation<double> secondaryAnimation,
+          Widget child,
+        ) {
+          var begin = const Offset(0.0, 1.0);
+          var end = Offset.zero;
+          var curve = Curves.ease;
+          var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+          final offsetAnimation = animation.drive(tween);
+          return SlideTransition(position: offsetAnimation, child: child);
+        },
+      );
 }

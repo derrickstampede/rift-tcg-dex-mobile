@@ -109,15 +109,24 @@ class _CardWhereState extends State<CardWhere> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Padding(padding: EdgeInsets.symmetric(horizontal: 8), child: Subheader(text: 'Decks')),
-                if (_decks.isEmpty) Padding(padding: EdgeInsets.symmetric(horizontal: 8), child: Text('-', style: TextStyle(fontSize: 16))),
+                if (_decks.isEmpty)
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 8),
+                    child: Text('-', style: TextStyle(fontSize: 16)),
+                  ),
                 ..._decks.map(
                   (d) => ListTile(
                     contentPadding: const EdgeInsets.symmetric(horizontal: 8),
                     dense: true,
-                    // leading: SizedBox(
-                    //   width: 36,
-                    //   child: CardImage(imageUrl: d.leader.thumbnail),
-                    // ),
+                    leading: SizedBox(
+                      width: 90,
+                      child: Row(
+                        children: [
+                          Expanded(child: CardImage(imageUrl: d.legend.thumbnail)),
+                          Expanded(child: CardImage(imageUrl: d.champion.thumbnail)),
+                        ],
+                      ),
+                    ),
                     title: Text(
                       d.name,
                       style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
@@ -139,7 +148,11 @@ class _CardWhereState extends State<CardWhere> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Padding(padding: EdgeInsets.symmetric(horizontal: 8), child: Subheader(text: 'Vaults')),
-                if (_vaults.isEmpty) Padding(padding: EdgeInsets.symmetric(horizontal: 8), child: Text('-', style: TextStyle(fontSize: 16))),
+                if (_vaults.isEmpty)
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 8),
+                    child: Text('-', style: TextStyle(fontSize: 16)),
+                  ),
                 ..._vaults.map(
                   (v) => ListTile(
                     contentPadding: const EdgeInsets.symmetric(horizontal: 8),
