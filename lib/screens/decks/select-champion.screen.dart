@@ -23,14 +23,16 @@ import 'package:rift/widgets/cards/card-grid.widget.dart';
 import 'package:rift/widgets/cards/card-sort-header.widget.dart';
 // import 'package:rift/widgets/ads/ad-banner.widget.dart';
 
-class SelectLeaderScreen extends ConsumerStatefulWidget {
-  const SelectLeaderScreen({super.key});
+class SelectChampionScreen extends ConsumerStatefulWidget {
+  const SelectChampionScreen({super.key, required this.color});
+
+  final String color;
 
   @override
-  ConsumerState<SelectLeaderScreen> createState() => _SelectLeaderScreenState();
+  ConsumerState<SelectChampionScreen> createState() => _SelectChampionScreenState();
 }
 
-class _SelectLeaderScreenState extends ConsumerState<SelectLeaderScreen> {
+class _SelectChampionScreenState extends ConsumerState<SelectChampionScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final _scrollController = ScrollController();
 
@@ -38,62 +40,65 @@ class _SelectLeaderScreenState extends ConsumerState<SelectLeaderScreen> {
   late final StreamSubscription<AuthState> _authStateSubscription;
 
   final _searchScreen = 'select-leader';
-  final CardSearch _cardSearch = CardSearch(
-    cards: [],
-    cardBatches: [],
-    status: CardSearchStatus(
-      isInitializing: true,
-      isLoading: false,
-      hasReachedLimit: false,
-      showOwned: false,
-      view: 'power',
-      orderBy: 'set',
-      isAscending: false,
-      showCollectionDisabled: false,
-      showTypeRequired: false,
-      showColorRequired: false,
-      selectLeader: true,
-      addToDeck: false,
-      addToDeckSelect: false,
-      addToVault: false,
-    ),
-    filters: CardSearchFilters(
-      collection: false,
-      name: null,
-      setId: null,
-      rarity: [],
-      language: [],
-      type: ["Legend"],
-      color: [],
-      domain: [],
-      art: [],
-      energy: List<int>.from(json.decode(dotenv.env['CARD_SEARCH_ENERGY_RESET']!)),
-      might: List<int>.from(json.decode(dotenv.env['CARD_SEARCH_MIGHT_RESET']!)),
-      power: List<int>.from(json.decode(dotenv.env['CARD_SEARCH_POWER_RESET']!)),
-      tag: null,
-      effect: [],
-      asc: null,
-      desc: null,
-    ),
-    config: CardSearchConfig(
-      disableCollection: false,
-      disableRarity: const ["SCR", "SR", "UC", "C", "R"],
-      disableType: const ["battle", "extra"],
-      disableColor: const [],
-      initialResetColor: const [],
-      initialResetType: const [],
-      initialResetRarity: const [],
-      requireOneType: false,
-      requireOneColor: false,
-    ),
-    symbol: null,
-  );
+  late final CardSearch _cardSearch;
 
   bool _isPro = bool.parse(dotenv.env['IS_PRO']!);
 
   @override
   void initState() {
     super.initState();
+
+    print(widget.color);
+    _cardSearch = CardSearch(
+      cards: [],
+      cardBatches: [],
+      status: CardSearchStatus(
+        isInitializing: true,
+        isLoading: false,
+        hasReachedLimit: false,
+        showOwned: false,
+        view: 'power',
+        orderBy: 'set',
+        isAscending: false,
+        showCollectionDisabled: false,
+        showTypeRequired: false,
+        showColorRequired: false,
+        selectLeader: true,
+        addToDeck: false,
+        addToDeckSelect: false,
+        addToVault: false,
+      ),
+      filters: CardSearchFilters(
+        collection: false,
+        name: null,
+        setId: null,
+        rarity: [],
+        language: [],
+        type: ["Champion Unit"],
+        color: [...widget.color.split("/")],
+        domain: [],
+        art: [],
+        energy: List<int>.from(json.decode(dotenv.env['CARD_SEARCH_ENERGY_RESET']!)),
+        might: List<int>.from(json.decode(dotenv.env['CARD_SEARCH_MIGHT_RESET']!)),
+        power: List<int>.from(json.decode(dotenv.env['CARD_SEARCH_POWER_RESET']!)),
+        tag: null,
+        effect: [],
+        asc: null,
+        desc: null,
+      ),
+      config: CardSearchConfig(
+        disableCollection: false,
+        disableRarity: const ["SCR", "SR", "UC", "C", "R"],
+        disableType: const ["battle", "extra"],
+        disableColor: const [],
+        initialResetColor: const [],
+        initialResetType: const [],
+        initialResetRarity: const [],
+        requireOneType: false,
+        requireOneColor: false,
+      ),
+      symbol: null,
+    );
 
     _scrollController.addListener(() => _loadMore(ref));
 
@@ -129,7 +134,7 @@ class _SelectLeaderScreenState extends ConsumerState<SelectLeaderScreen> {
     }
   }
 
-  void _selectLeader({required CardListItem card}) {
+  void _selectChampion({required CardListItem card}) {
     Navigator.pop(context, card);
   }
 
@@ -140,7 +145,7 @@ class _SelectLeaderScreenState extends ConsumerState<SelectLeaderScreen> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: const Text('Select Leader Card'),
+        title: const Text('Select Champion Card'),
         elevation: 1,
         actions: [
           Builder(
@@ -173,7 +178,7 @@ class _SelectLeaderScreenState extends ConsumerState<SelectLeaderScreen> {
                       searchScreen: _searchScreen,
                       cardSearch: _cardSearch,
                       columns: 3,
-                      select: _selectLeader,
+                      select: _selectChampion,
                     ),
                     // if (!_isPro &&
                     //     (i == 0 || search$.cardBatches[i].length >= int.parse(dotenv.env['AD_BANNER_CARDS_PER_AD']!)))

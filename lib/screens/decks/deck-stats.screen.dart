@@ -115,7 +115,7 @@ class _DeckStatsScreenState extends State<DeckStatsScreen> {
                                                       BarChartRodData(
                                                         toY: c.count.toDouble(),
                                                         width: 16,
-                                                        color: getColor(widget.deck.leader.color!),
+                                                        color: getColor(widget.deck.legend.color!),
                                                       ),
                                                     ],
                                                     showingTooltipIndicators: [0],

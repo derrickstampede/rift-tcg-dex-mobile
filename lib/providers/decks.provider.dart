@@ -51,35 +51,44 @@ class DeckListNotifier extends _$DeckListNotifier {
     List<Deck> decks = state.decks;
 
     if (state.sortBy == 'name') {
-      decks.sort((a, b) => state.isSortAscending
-          ? a.name.toUpperCase().compareTo(b.name.toUpperCase())
-          : b.name.toUpperCase().compareTo(a.name.toUpperCase()));
+      decks.sort(
+        (a, b) =>
+            state.isSortAscending
+                ? a.name.toUpperCase().compareTo(b.name.toUpperCase())
+                : b.name.toUpperCase().compareTo(a.name.toUpperCase()),
+      );
     }
-    if (state.sortBy == 'leader') {
-      decks.sort((a, b) => state.isSortAscending
-          ? a.leader.name.toUpperCase().compareTo(b.leader.name.toUpperCase())
-          : b.leader.name.toUpperCase().compareTo(a.leader.name.toUpperCase()));
+    if (state.sortBy == 'legend') {
+      decks.sort(
+        (a, b) =>
+            state.isSortAscending
+                ? a.legend.name.toUpperCase().compareTo(b.legend.name.toUpperCase())
+                : b.legend.name.toUpperCase().compareTo(a.legend.name.toUpperCase()),
+      );
     }
     if (state.sortBy == 'color') {
       decks.sort((a, b) => a.name.compareTo(b.name));
-      final red = decks.where((d) => d.leader.color!.split('/')[0] == 'Red');
-      final blue = decks.where((d) => d.leader.color!.split('/')[0] == 'Blue');
-      final green = decks.where((d) => d.leader.color!.split('/')[0] == 'Green');
-      final yellow = decks.where((d) => d.leader.color!.split('/')[0] == 'Yellow');
-      final black = decks.where((d) => d.leader.color!.split('/')[0] == 'Black');
+      final red = decks.where((d) => d.legend.color!.split('/')[0] == 'Red');
+      final green = decks.where((d) => d.legend.color!.split('/')[0] == 'Green');
+      final blue = decks.where((d) => d.legend.color!.split('/')[0] == 'Blue');
+      final orange = decks.where((d) => d.legend.color!.split('/')[0] == 'Orange');
+      final purple = decks.where((d) => d.legend.color!.split('/')[0] == 'Purple');
+      final yellow = decks.where((d) => d.legend.color!.split('/')[0] == 'Yellow');
       if (state.isSortAscending) {
-        decks = [...red, ...blue, ...green, ...yellow, ...black];
+        decks = [...red, ...blue, ...green, ...orange, ...yellow, ...purple];
       } else {
-        decks = [...black, ...yellow, ...green, ...blue, ...red];
+        decks = [...purple, ...yellow, ...orange, ...green, ...blue, ...red];
       }
     }
     if (state.sortBy == 'date_created') {
       decks.sort(
-          (a, b) => state.isSortAscending ? a.createdAt.compareTo(b.createdAt) : b.createdAt.compareTo(a.createdAt));
+        (a, b) => state.isSortAscending ? a.createdAt.compareTo(b.createdAt) : b.createdAt.compareTo(a.createdAt),
+      );
     }
     if (state.sortBy == 'date_updated') {
       decks.sort(
-          (a, b) => state.isSortAscending ? a.updatedAt.compareTo(b.updatedAt) : b.updatedAt.compareTo(a.updatedAt));
+        (a, b) => state.isSortAscending ? a.updatedAt.compareTo(b.updatedAt) : b.updatedAt.compareTo(a.updatedAt),
+      );
     }
 
     final DeckList deckList = DeckList(
@@ -175,7 +184,7 @@ class DeckListNotifier extends _$DeckListNotifier {
   void updateLeader(String slug, String thumbnail) {
     final decks = state.decks;
     final index = decks.indexWhere((d) => d.slug == slug);
-    decks[index].leader.thumbnail = thumbnail;
+    decks[index].legend.thumbnail = thumbnail;
 
     final DeckList deckList = DeckList(
       decks: decks,

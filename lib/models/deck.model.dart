@@ -10,7 +10,8 @@ class Deck with ChangeNotifier {
   final String slug;
   final String? userUid;
   final int? order;
-  final CardListItem leader;
+  final CardListItem legend;
+  final CardListItem champion;
   final List<CardListItem> cards;
   num? cardCount;
   Note? note;
@@ -29,7 +30,8 @@ class Deck with ChangeNotifier {
     required this.slug,
     this.userUid,
     this.order,
-    required this.leader,
+    required this.legend,
+    required this.champion,
     required this.cards,
     this.cardCount,
     required this.note,
@@ -49,7 +51,8 @@ class Deck with ChangeNotifier {
         'slug': slug,
         'user_uid': userUid,
         'order': order,
-        'leader': leader.toJson(),
+        'legend': legend.toJson(),
+        'champion': champion.toJson(),
         'cards': cards.map((c) => c.toJson()).toList(),
         'cardCount': cardCount,
         'note': note?.toJson(),
@@ -69,7 +72,8 @@ class Deck with ChangeNotifier {
         slug: map['slug'],
         userUid: map['user_uid'],
         order: map['order'],
-        leader: CardListItem.fromMap(map['leader']),
+        legend: CardListItem.fromMap(map['legend']),
+        champion: CardListItem.fromMap(map['champion']),
         cards: map['cards'] == null
             ? []
             : List<CardListItem>.from(map['cards'].map<CardListItem>((c) => CardListItem.fromMap(c))),

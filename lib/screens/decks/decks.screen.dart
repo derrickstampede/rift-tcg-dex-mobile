@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:rift/widgets/misc/domain-icon.widget.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -108,7 +109,7 @@ class _DecksScreenState extends ConsumerState<DecksScreen> {
 
   void _goToDeck(int index, DeckList decklist) async {
     final deck = decklist.decks[index];
-    final encodedColor = Uri.encodeComponent(deck.leader.color!);
+    final encodedColor = Uri.encodeComponent(deck.legend.color!);
 
     await Config.router.navigateTo(context, '/decks/edit?slug=${deck.slug}&name=${deck.name}&color=$encodedColor');
 
@@ -203,8 +204,13 @@ class _DecksScreenState extends ConsumerState<DecksScreen> {
                               },
                               child: ListTile(
                                 leading: SizedBox(
-                                  width: 42,
-                                  child: CardImage(imageUrl: deckList$.decks[index].leader.thumbnail),
+                                  width: 90,
+                                  child: Row(
+                                    children: [
+                                      Expanded(child: CardImage(imageUrl: deckList$.decks[index].legend.thumbnail)),
+                                      Expanded(child: CardImage(imageUrl: deckList$.decks[index].champion.thumbnail)),
+                                    ],
+                                  ),
                                 ),
                                 title: RichText(
                                   maxLines: 1,
@@ -245,13 +251,18 @@ class _DecksScreenState extends ConsumerState<DecksScreen> {
                                         child: Icon(visibilityIcon, size: 16),
                                       ),
                                       TextSpan(text: ' $visibility'),
+                                      TextSpan(text: ' \u2981 '),
+                                      for (var domain in deckList$.decks[index].legend.color!.split('/'))
+                                        WidgetSpan(
+                                          alignment: PlaceholderAlignment.middle,
+                                          child: DomainIcon(domain: domain),
+                                        ),
                                     ],
                                   ),
                                 ),
                                 onTap: () {
                                   _goToDeck(index, deckList$);
                                 },
-                                trailing: ColorHexagon(size: 24, colors: deckList$.decks[index].leader.color!),
                               ),
                             );
                           },

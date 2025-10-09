@@ -62,7 +62,7 @@ class _CardDeckListState extends ConsumerState<CardDeckList> {
     final deckList$ = ref.watch(deckListNotifierProvider);
     List<Deck> allowedDecks = deckList$.decks;
     if (widget.card.color != null) {
-      allowedDecks = deckList$.decks.where((d) => d.leader.color!.contains(widget.card.color!)).toList();
+      allowedDecks = deckList$.decks.where((d) => d.legend.color!.contains(widget.card.color!)).toList();
     }
 
     return (widget.card.type == 'leader')
@@ -89,7 +89,7 @@ class _CardDeckListState extends ConsumerState<CardDeckList> {
               children: [
                 for (int i = 0; i < allowedDecks.length; i++)
                   ListTile(
-                    leading: SizedBox(width: 42, child: CardImage(imageUrl: allowedDecks[i].leader.thumbnail)),
+                    leading: SizedBox(width: 42, child: CardImage(imageUrl: allowedDecks[i].legend.thumbnail)),
                     title: Text(
                       allowedDecks[i].name,
                       style: const TextStyle(fontWeight: FontWeight.w700),
@@ -97,12 +97,12 @@ class _CardDeckListState extends ConsumerState<CardDeckList> {
                       overflow: TextOverflow.ellipsis,
                     ),
                     subtitle: Text(
-                      '${allowedDecks[i].leader.name} \u2981 ${allowedDecks[i].cardCount} cards',
+                      '${allowedDecks[i].legend.name} \u2981 ${allowedDecks[i].cardCount} cards',
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
                     onTap: () => _selectDeck(allowedDecks[i].slug),
-                    trailing: ColorHexagon(size: 24, colors: allowedDecks[i].leader.color!),
+                    trailing: ColorHexagon(size: 24, colors: allowedDecks[i].legend.color!),
                   ),
               ],
             )

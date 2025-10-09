@@ -204,7 +204,7 @@ class _DeckCardsScreenState extends ConsumerState<DeckCardsScreen> {
   void _goToSelectCards(Deck deck) async {
     await Config.router.navigateTo(
       context,
-      '/decks/pick?slug=${deck.slug}&color=${Uri.encodeComponent(deck.leader.color!)}',
+      '/decks/pick?slug=${deck.slug}&color=${Uri.encodeComponent(deck.legend.color!)}',
     );
   }
 
@@ -249,7 +249,7 @@ class _DeckCardsScreenState extends ConsumerState<DeckCardsScreen> {
               ListTile(
                 contentPadding: const EdgeInsets.symmetric(horizontal: 12),
                 title: Text(
-                  '${widget.deck.leader.name} (${widget.deck.leader.cardId})',
+                  '${widget.deck.legend.name} (${widget.deck.legend.cardId})',
                   style: const TextStyle(fontWeight: FontWeight.bold),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,

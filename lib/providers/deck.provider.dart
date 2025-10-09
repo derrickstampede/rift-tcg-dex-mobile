@@ -37,7 +37,7 @@ class DeckBuildNotifier extends _$DeckBuildNotifier {
   Future<void> find(String slug) async {
     try {
       final deck = await deckRepository.findDeck(slug);
-      deck.cards.insert(0, deck.leader);
+      deck.cards.insert(0, deck.legend);
       update(deck);
       computeTotals();
     } catch (e) {

@@ -50,7 +50,7 @@ class _CardAddRemoveState extends ConsumerState<CardAddRemove> {
 
     Color backgroundColor = Theme.of(context).colorScheme.secondary;
     Color foregroundColor = Theme.of(context).colorScheme.onSecondary;
-    final colorSplits = deck$.leader.color!.split('/');
+    final colorSplits = deck$.legend.color!.split('/');
     backgroundColor = getColor(colorSplits[0]);
     foregroundColor = backgroundColor.computeLuminance() > 0.5 ? Colors.black : Colors.white;
 

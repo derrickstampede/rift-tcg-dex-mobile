@@ -143,9 +143,9 @@ class _CardDeckEditState extends ConsumerState<CardDeckEdit> {
       return loadingWidget;
     }
     _cardSearch.cards = deck$.cards;
-    final leaders = deck$.cards.where((c) => c.type == "LEADER");
-    if (leaders.isEmpty) {
-      _cardSearch.cards.insert(0, deck$.leader);
+    final legends = deck$.cards.where((c) => c.type == "Legend");
+    if (legends.isEmpty) {
+      _cardSearch.cards.insert(0, deck$.legend);
     }
     final search$ = ref.watch(cardSearchNotifierProvider(screen: _searchScreen, cardSearch: _cardSearch));
 

@@ -83,7 +83,7 @@ class _CardWhereState extends State<CardWhere> {
   }
 
   void _goToDeck(Deck deck) async {
-    final encodedColor = Uri.encodeComponent(deck.leader.color!);
+    final encodedColor = Uri.encodeComponent(deck.legend.color!);
     await Config.router.navigateTo(context, '/decks/edit?slug=${deck.slug}&name=${deck.name}&color=$encodedColor');
   }
 
@@ -126,7 +126,7 @@ class _CardWhereState extends State<CardWhere> {
                     ),
                     subtitle: Text('${d.cardCount} cards', maxLines: 2, overflow: TextOverflow.ellipsis),
                     onTap: () => _goToDeck(d),
-                    trailing: ColorHexagon(size: 24, colors: d.leader.color!),
+                    trailing: ColorHexagon(size: 24, colors: d.legend.color!),
                   ),
                 ),
                 const SizedBox(height: 8),
