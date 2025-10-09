@@ -58,19 +58,20 @@ class DeckBuildNotifier extends _$DeckBuildNotifier {
     final deckForm = {
       "name": deck['name'],
       "leader_id": deck['leader']['id'],
-      "cards": deck['cards'].where((c) => c['type'] != 'LEADER').map((c) {
-        return {
-          "card_id": c['id'],
-          "count": c['count'],
-        };
-      }).toList()
+      "cards":
+          deck['cards'].where((c) => c['type'] != 'LEADER').map((c) {
+            return {"card_id": c['id'], "count": c['count']};
+          }).toList(),
     };
     final response = await updateDeck(deckForm, deck['slug']);
-    response.fold((l) {
-      // print(l);
-    }, (r) {
-      print(r);
-    });
+    response.fold(
+      (l) {
+        // print(l);
+      },
+      (r) {
+        print(r);
+      },
+    );
   }
 
   Future<void> updateCountryId(int? countryId) async {
@@ -128,11 +129,14 @@ class DeckBuildNotifier extends _$DeckBuildNotifier {
 
     totalCards++;
     if (totalCards >= _cardPerDeckLimit) {
-      logEvent(name: 'deck_complete', parameters: {
-        'id': deck['leader']['id'],
-        'card_id': deck['leader']['card_id'],
-        'leader': deck['leader']['name']
-      });
+      logEvent(
+        name: 'deck_complete',
+        parameters: {
+          'id': deck['leader']['id'],
+          'card_id': deck['leader']['card_id'],
+          'leader': deck['leader']['name'],
+        },
+      );
       incrementReviewPreq('deck_complete');
     }
 
@@ -184,14 +188,13 @@ class DeckBuildNotifier extends _$DeckBuildNotifier {
       final deck = state!.toJson();
       final deckForm = {
         "name": deck['name'],
-        "leader_id": deck['leader']['id'],
-        "cards": deck['cards']
-            .where((c) => c['type'] != 'LEADER')
-            .map((c) => {
-                  "card_id": c['id'],
-                  "count": c['count'],
-                })
-            .toList()
+        "legend_id": deck['legend']['id'],
+        "champion_id": deck['champion']['id'],
+        "cards":
+            deck['cards']
+                .where((c) => c['type'] != 'Legend' && c['type'] != 'Champion Unit')
+                .map((c) => {"card_id": c['id'], "count": c['count']})
+                .toList(),
       };
       updateDeck(deckForm, deck['slug']);
     });

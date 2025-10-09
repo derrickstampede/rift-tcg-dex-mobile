@@ -7,6 +7,7 @@ import 'package:rift/screens/cards/card-full.screen.dart';
 import 'package:rift/screens/decks/new-deck.screen.dart';
 import 'package:rift/screens/decks/select-leader.screen.dart';
 import 'package:rift/screens/decks/select-champion.screen.dart';
+import 'package:rift/screens/decks/select-battlefield.screen.dart';
 import 'package:rift/screens/vaults/vault-form.screen.dart';
 import 'package:rift/screens/vaults/vault.screen.dart';
 import 'package:rift/screens/vaults/add-cards.screen.dart';
@@ -85,6 +86,15 @@ class FluroRoutes {
             color = Uri.decodeComponent(params['color'].first);
           }
           return SelectChampionScreen(color: color);
+        },
+      ),
+      transitionType: TransitionType.native,
+    );
+    router.define(
+      '/decks/select-battlefield',
+      handler: Handler(
+        handlerFunc: (BuildContext? context, Map<String, dynamic> params) {
+          return const SelectBattlefieldScreen();
         },
       ),
       transitionType: TransitionType.native,

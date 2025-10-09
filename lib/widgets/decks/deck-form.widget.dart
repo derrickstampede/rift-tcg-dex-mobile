@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -56,6 +58,8 @@ class _DeckCreateFormState extends ConsumerState<DeckCreateForm> {
   CardListItem? _legendCard;
   bool _isChampionValid = true;
   CardListItem? _championCard;
+  bool _isBattlefieldValid = true;
+  CardListItem? _battlefieldCard;
 
   bool _isPro = bool.parse(dotenv.env['IS_PRO']!);
 
@@ -87,6 +91,13 @@ class _DeckCreateFormState extends ConsumerState<DeckCreateForm> {
     });
   }
 
+  void _goToSelectBattlefield() async {
+    CardListItem? battlefieldCard = await Config.router.navigateTo(context, '/decks/select-battlefield');
+    setState(() {
+      _battlefieldCard = battlefieldCard;
+    });
+  }
+
   Future<void> _submit(WidgetRef ref) async {
     final isValid = _formKey.currentState!.validate();
     if (!isValid || _isSaving) {
@@ -102,6 +113,7 @@ class _DeckCreateFormState extends ConsumerState<DeckCreateForm> {
       });
       return;
     }
+    setState(() => _isLegendValid = true);
     if (_championCard == null) {
       setState(() {
         _isChampionValid = false;
@@ -109,11 +121,21 @@ class _DeckCreateFormState extends ConsumerState<DeckCreateForm> {
       });
       return;
     }
+    setState(() => _isChampionValid = true);
+    if (_battlefieldCard == null) {
+      setState(() {
+        _isBattlefieldValid = false;
+        _isSaving = false;
+      });
+      return;
+    }
+    setState(() => _isBattlefieldValid = true);
 
     final deckForm = {
       "name": _filterForm.name!,
       "legend_id": _legendCard!.id,
       "champion_id": _championCard!.id,
+      "battlefield_id": _battlefieldCard!.id,
       "cards": [],
       "is_pro": _isPro,
     };
@@ -122,7 +144,12 @@ class _DeckCreateFormState extends ConsumerState<DeckCreateForm> {
       (l) {
         logEvent(
           name: 'deck_create',
-          parameters: {'id': _legendCard!.id, 'card_id': _legendCard!.cardId, 'legend': _legendCard!.name},
+          parameters: {
+            'id': _legendCard!.id,
+            'card_id': _legendCard!.cardId,
+            'legend': _legendCard!.name,
+            'champion': _championCard!.name,
+          },
         );
         final Deck deck = Deck.fromMap(l['deck']);
 
@@ -306,6 +333,64 @@ class _DeckCreateFormState extends ConsumerState<DeckCreateForm> {
                         ],
                       ),
                     ],
+                  ),
+                const SizedBox(height: 8),
+                Text(
+                  "Battlefield",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 14,
+                    color: Theme.of(context).colorScheme.outline,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                if (_battlefieldCard == null)
+                  GestureDetector(
+                    onTap: _goToSelectBattlefield,
+                    child: DottedBorder(
+                      color:
+                          _isBattlefieldValid
+                              ? Theme.of(context).colorScheme.onSecondaryContainer
+                              : Theme.of(context).colorScheme.onErrorContainer,
+                      strokeWidth: 1,
+                      child: Container(
+                        width: double.infinity,
+                        color:
+                            _isBattlefieldValid
+                                ? Theme.of(context).colorScheme.secondaryContainer
+                                : Theme.of(context).colorScheme.errorContainer,
+                        height: 100,
+                        child: const Center(
+                          child: Text("Tap to Select Your Battlefield", style: TextStyle(fontSize: 16)),
+                        ),
+                      ),
+                    ),
+                  ),
+                if (_battlefieldCard != null)
+                  SizedBox(
+                    width: double.infinity,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          width: 300,
+                          child: Transform.rotate(
+                            angle: pi / 2,
+                            child: AspectRatio(
+                              aspectRatio: 420 / 300,
+                              child: CardItem(card: _battlefieldCard!, showTiled: false),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        TextButton(onPressed: _goToSelectBattlefield, child: const Text('Change Battlefield')),
+                      ],
+                    ),
+                  ),
+                if (!_isBattlefieldValid)
+                  Padding(
+                    padding: const EdgeInsets.only(left: 12.0, top: 6),
+                    child: Text('Battlefield is required', style: TextStyle(fontSize: 12, color: Colors.red[500])),
                   ),
                 const SizedBox(height: 12),
                 SizedBox(

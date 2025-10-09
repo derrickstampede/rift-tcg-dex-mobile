@@ -41,6 +41,7 @@ class _SelectChampionScreenState extends ConsumerState<SelectChampionScreen> {
 
   final _searchScreen = 'select-leader';
   late final CardSearch _cardSearch;
+  final _allColors = ['Red', 'Green', 'Blue', 'Orange', 'Purple', 'Yellow', 'No Color'];
 
   bool _isPro = bool.parse(dotenv.env['IS_PRO']!);
 
@@ -48,7 +49,6 @@ class _SelectChampionScreenState extends ConsumerState<SelectChampionScreen> {
   void initState() {
     super.initState();
 
-    print(widget.color);
     _cardSearch = CardSearch(
       cards: [],
       cardBatches: [],
@@ -88,10 +88,20 @@ class _SelectChampionScreenState extends ConsumerState<SelectChampionScreen> {
       ),
       config: CardSearchConfig(
         disableCollection: false,
-        disableRarity: const ["SCR", "SR", "UC", "C", "R"],
-        disableType: const ["battle", "extra"],
-        disableColor: const [],
-        initialResetColor: const [],
+        disableRarity: const [],
+        disableType: const [
+          "Battlefield",
+          "Legend",
+          "Signature Spell",
+          "Signature Unit",
+          "Unit",
+          "Spell",
+          "Gear",
+          "Rune",
+          "Token Unit",
+        ],
+        disableColor: _allColors.where((color) => !widget.color.split("/").contains(color)).toList(),
+        initialResetColor: [...widget.color.split("/")],
         initialResetType: const [],
         initialResetRarity: const [],
         requireOneType: false,
