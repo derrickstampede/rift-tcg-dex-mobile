@@ -66,7 +66,15 @@ class DeckListNotifier extends _$DeckListNotifier {
                 : b.legend.name.toUpperCase().compareTo(a.legend.name.toUpperCase()),
       );
     }
-    if (state.sortBy == 'color') {
+    if (state.sortBy == 'champion') {
+      decks.sort(
+        (a, b) =>
+            state.isSortAscending
+                ? a.champion.name.toUpperCase().compareTo(b.champion.name.toUpperCase())
+                : b.champion.name.toUpperCase().compareTo(a.champion.name.toUpperCase()),
+      );
+    }
+    if (state.sortBy == 'domain') {
       decks.sort((a, b) => a.name.compareTo(b.name));
       final red = decks.where((d) => d.legend.color!.split('/')[0] == 'Red');
       final green = decks.where((d) => d.legend.color!.split('/')[0] == 'Green');

@@ -48,8 +48,9 @@ class _DecksScreenState extends ConsumerState<DecksScreen> {
 
   final List<Filter> _sortingOptions = [
     Filter(label: 'Name', value: 'name'),
-    Filter(label: 'Leader', value: 'leader'),
-    Filter(label: 'Color', value: 'color'),
+    Filter(label: 'Legend', value: 'legend'),
+    Filter(label: 'Champion', value: 'champion'),
+    Filter(label: 'Domain', value: 'domain'),
     Filter(label: 'Created', value: 'date_created'),
     Filter(label: 'Updated', value: 'date_updated'),
   ];
@@ -246,17 +247,17 @@ class _DecksScreenState extends ConsumerState<DecksScreen> {
                                     style: DefaultTextStyle.of(context).style,
                                     children: [
                                       TextSpan(text: '${deckList$.decks[index].cardCount} cards \u2981 '),
-                                      WidgetSpan(
-                                        alignment: PlaceholderAlignment.middle,
-                                        child: Icon(visibilityIcon, size: 16),
-                                      ),
-                                      TextSpan(text: ' $visibility'),
-                                      TextSpan(text: ' \u2981 '),
                                       for (var domain in deckList$.decks[index].legend.color!.split('/'))
                                         WidgetSpan(
                                           alignment: PlaceholderAlignment.middle,
                                           child: DomainIcon(domain: domain),
                                         ),
+                                      TextSpan(text: ' \u2981 '),
+                                      WidgetSpan(
+                                        alignment: PlaceholderAlignment.middle,
+                                        child: Icon(visibilityIcon, size: 16),
+                                      ),
+                                      TextSpan(text: ' $visibility'),
                                     ],
                                   ),
                                 ),
