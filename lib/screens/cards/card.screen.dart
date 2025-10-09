@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart' hide CarouselController;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -252,6 +253,14 @@ class _CardScreenState extends ConsumerState<CardScreen> {
     int? nextCard;
     int? prevCard;
 
+    double cardWidth = MediaQuery.of(context).size.width;
+    double cardHeight = 480.0;
+
+    if (!_isLoading && _card.orientation == 'landscape') {
+      cardWidth = MediaQuery.of(context).size.width - 16;
+      cardHeight = 400.0;
+    }
+
     if (widget.searchScreen != null && widget.cardSearch != null) {
       searchNotifier$ = ref.watch(
         cardSearchNotifierProvider(screen: widget.searchScreen!, cardSearch: widget.cardSearch!).notifier,
@@ -306,7 +315,7 @@ class _CardScreenState extends ConsumerState<CardScreen> {
                     children: [
                       if (!_hideImage)
                         Container(
-                          height: 480,
+                          height: cardHeight,
                           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 24),
                           child: CardImage(imageUrl: _previewImage),
                         ),
@@ -320,9 +329,22 @@ class _CardScreenState extends ConsumerState<CardScreen> {
                     children: [
                       if (!_hideImage)
                         CarouselSlider(
-                          options: CarouselOptions(height: 480.0, enableInfiniteScroll: false),
+                          options: CarouselOptions(height: cardHeight, enableInfiniteScroll: false),
                           items:
                               _card.variants.map((v) {
+                                final cardView = FlippableCard(
+                                  frontImageUrl: v.image!,
+                                  backImageUrl: v.backImage,
+                                  width: cardWidth,
+                                  height: cardHeight,
+                                  onTapWithSide: (isShowingFront, currentImageUrl) {
+                                    final fullImageUrl = isShowingFront ? v.image! : (v.backImage ?? v.image!);
+                                    final encodedImage = Uri.encodeComponent(fullImageUrl);
+                                    final route = '/card/full?image=$encodedImage';
+                                    Config.router.navigateTo(context, route);
+                                  },
+                                );
+
                                 return Builder(
                                   builder: (BuildContext context) {
                                     return Container(
@@ -332,20 +354,11 @@ class _CardScreenState extends ConsumerState<CardScreen> {
                                         children: [
                                           SizedBox(
                                             width: MediaQuery.of(context).size.width,
-                                            height: 480.0,
-                                            child: FlippableCard(
-                                              frontImageUrl: v.image!,
-                                              backImageUrl: v.backImage,
-                                              width: MediaQuery.of(context).size.width,
-                                              height: 480.0,
-                                              onTapWithSide: (isShowingFront, currentImageUrl) {
-                                                final fullImageUrl =
-                                                    isShowingFront ? v.image! : (v.backImage ?? v.image!);
-                                                final encodedImage = Uri.encodeComponent(fullImageUrl);
-                                                final route = '/card/full?image=$encodedImage';
-                                                Config.router.navigateTo(context, route);
-                                              },
-                                            ),
+                                            height: 480,
+                                            child:
+                                                _card.orientation == 'landscape'
+                                                    ? Transform.rotate(angle: pi / 2, child: cardView)
+                                                    : cardView,
                                           ),
                                           Positioned(
                                             right: 0,
@@ -875,7 +888,10 @@ class _CardScreenState extends ConsumerState<CardScreen> {
                                           children: [
                                             const Subheader(text: 'Text'),
                                             _card.flavorText != null
-                                                ? TitleCase(text: _card.flavorText!, style: const TextStyle(fontSize: 16))
+                                                ? TitleCase(
+                                                  text: _card.flavorText!,
+                                                  style: const TextStyle(fontSize: 16),
+                                                )
                                                 : const Text('-', style: TextStyle(fontSize: 16)),
                                           ],
                                         ),
