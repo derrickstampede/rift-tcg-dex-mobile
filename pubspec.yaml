@@ -53,8 +53,8 @@ dependencies:
   flutter_local_notifications: ^16.3.2
   flutter_native_splash: ^2.3.0
   flutter_riverpod: ^2.6.1
-  # gma_mediation_unity: ^1.4.0
-  # google_mobile_ads: ^6.0.0
+  gma_mediation_unity: ^1.4.0
+  google_mobile_ads: ^6.0.0
   google_sign_in: ^6.3.0
   http: ^1.4.0
   image_picker: ^1.1.2

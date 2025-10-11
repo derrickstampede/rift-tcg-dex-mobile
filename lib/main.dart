@@ -8,7 +8,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-// import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 import 'globals.dart';
@@ -78,17 +78,17 @@ Future<void> main() async {
   }
 
   try {
-    // await MobileAds.instance.initialize().then((initializationStatus) {
-    //   final adapterStatuses = initializationStatus.adapterStatuses;
-    //   adapterStatuses.forEach((adapter, status) {
-    //     print('Adapter status for $adapter: ${status.state}');
-    //   });
+    await MobileAds.instance.initialize().then((initializationStatus) {
+      final adapterStatuses = initializationStatus.adapterStatuses;
+      adapterStatuses.forEach((adapter, status) {
+        print('Adapter status for $adapter: ${status.state}');
+      });
 
-    //   // Add test device ID
-    //   MobileAds.instance.updateRequestConfiguration(
-    //     RequestConfiguration(testDeviceIds: ['f0a1326b7a2ca2d1f8bb1999677a91e8']),
-    //   );
-    // });
+      // Add test device ID
+      MobileAds.instance.updateRequestConfiguration(
+        RequestConfiguration(testDeviceIds: ['f0a1326b7a2ca2d1f8bb1999677a91e8']),
+      );
+    });
   } catch (e, stack) {
     print("Failed to initialize Google Mobile Ads: $e");
     print("Stack trace: $stack");

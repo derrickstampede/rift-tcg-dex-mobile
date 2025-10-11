@@ -63,5 +63,30 @@
       </array>
     </dict>
   </array>
+	<key>GADApplicationIdentifier</key>
+	<string>ca-app-pub-5747268466930988~3757847068</string>
+	<key>SKAdNetworkItems</key>
+	<array>
+		<dict>
+			<key>SKAdNetworkIdentifier</key>
+			<string>cstr6suwn9.skadnetwork</string>
+		</dict>
+	</array>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>https</string>
+	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>This app needs camera access to capture photos for updating your profile photo, scanning QR codes, and adding vault photos</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app needs photo library access to upload photos for updating your profile photo, scanning QR codes, and adding vault photos</string>
+	<!-- Privacy permissions for ads -->
+	<key>NSUserTrackingUsageDescription</key>
+	<string>This identifier will be used to deliver personalized ads to you.</string>
+	<!-- Required Unity Ads configuration -->
+	<key>GADMediationProviderUnity</key>
+	<string>UNITY</string>
+	<key>UIStatusBarHidden</key>
+	<false/>
 </dict>
 </plist>
