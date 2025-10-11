@@ -22,14 +22,10 @@ import 'package:rift/models/card-search.model.dart';
 import 'package:rift/widgets/cards/card-filter-drawer.widget.dart';
 import 'package:rift/widgets/cards/card-grid.widget.dart';
 import 'package:rift/widgets/cards/card-sort-header.widget.dart';
-// import 'package:rift/widgets/ads/ad-banner.widget.dart';
+import 'package:rift/widgets/ads/ad-banner.widget.dart';
 
 class CardsScreen extends ConsumerStatefulWidget {
-  const CardsScreen({
-    super.key,
-    required this.cardSearch,
-    required this.searchScreen,
-  });
+  const CardsScreen({super.key, required this.cardSearch, required this.searchScreen});
 
   final CardSearch cardSearch;
   final String searchScreen;
@@ -109,27 +105,26 @@ class _CardsScreenState extends ConsumerState<CardsScreen> {
     final alerts$ = ref.watch(alertsNotifierProvider);
 
     return Scaffold(
-        key: _scaffoldKey,
-        appBar: AppBar(
-          leading: session != null
-              ? PopupMenuButton(
+      key: _scaffoldKey,
+      appBar: AppBar(
+        leading:
+            session != null
+                ? PopupMenuButton(
                   itemBuilder: (context) {
                     return [
                       for (int i = 0; i < alerts$.alerts.length; i++)
                         PopupMenuItem<int>(
-                            value: i,
-                            padding: const EdgeInsets.all(0),
-                            child: ListTile(
-                              title: Text(
-                                alerts$.alerts[i].title,
-                                style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 14),
-                              ),
-                              subtitle: Text(
-                                alerts$.alerts[i].subtitle,
-                                style: const TextStyle(fontSize: 12),
-                              ),
-                              trailing: !alerts$.alerts[i].hasViewed
-                                  ? Container(
+                          value: i,
+                          padding: const EdgeInsets.all(0),
+                          child: ListTile(
+                            title: Text(
+                              alerts$.alerts[i].title,
+                              style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 14),
+                            ),
+                            subtitle: Text(alerts$.alerts[i].subtitle, style: const TextStyle(fontSize: 12)),
+                            trailing:
+                                !alerts$.alerts[i].hasViewed
+                                    ? Container(
                                       width: 12,
                                       height: 12,
                                       margin: const EdgeInsets.only(right: 4),
@@ -138,17 +133,15 @@ class _CardsScreenState extends ConsumerState<CardsScreen> {
                                         borderRadius: const BorderRadius.all(Radius.circular(16)),
                                       ),
                                     )
-                                  : null,
-                              contentPadding: const EdgeInsets.symmetric(horizontal: 8),
-                            )),
+                                    : null,
+                            contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+                          ),
+                        ),
                       if (alerts$.alerts.isEmpty)
                         const PopupMenuItem<int>(
                           value: -1,
                           child: ListTile(
-                            title: Text(
-                              'No notifications',
-                              style: TextStyle(fontSize: 14),
-                            ),
+                            title: Text('No notifications', style: TextStyle(fontSize: 14)),
                             contentPadding: EdgeInsets.symmetric(horizontal: 8),
                           ),
                         ),
@@ -159,132 +152,112 @@ class _CardsScreenState extends ConsumerState<CardsScreen> {
                     ref.watch(alertsNotifierProvider.notifier).viewAlert(value);
                     _launchUrl(alerts$.alerts[value].link);
                   },
-                  icon: alerts$.unread > 0
-                      ? badges.Badge(
-                          badgeContent: Text(
-                            alerts$.unread.toString(),
-                            style: TextStyle(
+                  icon:
+                      alerts$.unread > 0
+                          ? badges.Badge(
+                            badgeContent: Text(
+                              alerts$.unread.toString(),
+                              style: TextStyle(
                                 color: Theme.of(context).colorScheme.onError,
                                 fontSize: 12,
-                                fontWeight: FontWeight.w700),
-                          ),
-                          badgeStyle: badges.BadgeStyle(
-                              badgeColor: Theme.of(context).colorScheme.error, padding: const EdgeInsets.all(6)),
-                          child: const Icon(
-                            Symbols.notifications,
-                          ),
-                        )
-                      : const Icon(
-                          Symbols.notifications,
-                        ),
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            badgeStyle: badges.BadgeStyle(
+                              badgeColor: Theme.of(context).colorScheme.error,
+                              padding: const EdgeInsets.all(6),
+                            ),
+                            child: const Icon(Symbols.notifications),
+                          )
+                          : const Icon(Symbols.notifications),
                 )
-              : null,
-          title: const Text("Search Cards"),
-          elevation: 1,
-          actions: [
-            Builder(
-              builder: (BuildContext context) {
-                return IconButton(
-                  icon: const Icon(
-                    Symbols.filter_list,
-                  ),
-                  onPressed: () {
-                    _scaffoldKey.currentState!.openEndDrawer();
-                  },
-                  tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-                );
-              },
+                : null,
+        title: const Text("Search Cards"),
+        elevation: 1,
+        actions: [
+          Builder(
+            builder: (BuildContext context) {
+              return IconButton(
+                icon: const Icon(Symbols.filter_list),
+                onPressed: () {
+                  _scaffoldKey.currentState!.openEndDrawer();
+                },
+                tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+              );
+            },
+          ),
+          // Builder(
+          //   builder: (BuildContext context) {
+          //     return IconButton(
+          //       icon: const Icon(
+          //         Symbols.ads_click,
+          //       ),
+          //       onPressed: _showAd,
+          //       tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+          //     );
+          //   },
+          // ),
+        ],
+      ),
+      persistentFooterButtons: [CardSortHeader(searchScreen: widget.searchScreen, cardSearch: widget.cardSearch)],
+      endDrawer: CardFilterDrawer(searchScreen: widget.searchScreen, cardSearch: widget.cardSearch),
+      body: RefreshIndicator(
+        onRefresh: () => _refresh(),
+        child: CustomScrollView(
+          controller: _scrollController,
+          slivers: [
+            MultiSliver(
+              children: [
+                if (!search$.status.isInitializing) ...[
+                  for (int i = 0; i < search$.cardBatches.length; i++) ...[
+                    CardGrid(
+                      cards: search$.cardBatches[i],
+                      searchScreen: widget.searchScreen,
+                      cardSearch: widget.cardSearch,
+                      columns: 3,
+                    ),
+                    if (!_isPro &&
+                        (i == 0 || search$.cardBatches[i].length >= int.parse(dotenv.env['AD_BANNER_CARDS_PER_AD']!)))
+                      const Padding(padding: EdgeInsets.symmetric(vertical: 2), child: Center(child: AdBanner())),
+                  ],
+                  if (!search$.status.hasReachedLimit && search$.cards.isNotEmpty)
+                    const SliverPadding(
+                      padding: EdgeInsets.all(16),
+                      sliver: SliverToBoxAdapter(child: Center(child: CircularProgressIndicator())),
+                    ),
+                  if (search$.cards.isEmpty)
+                    SliverFillRemaining(
+                      hasScrollBody: false,
+                      child: Center(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.only(bottom: 8),
+                              child: const Text('No cards found', style: TextStyle(fontWeight: FontWeight.w500)),
+                            ),
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(backgroundColor: Theme.of(context).colorScheme.secondary),
+                              onPressed: () {
+                                _scaffoldKey.currentState!.openEndDrawer();
+                              },
+                              child: Text(
+                                'Update filters',
+                                style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                ],
+                if (search$.status.isInitializing)
+                  const SliverFillRemaining(child: Center(child: CircularProgressIndicator())),
+              ],
             ),
-            // Builder(
-            //   builder: (BuildContext context) {
-            //     return IconButton(
-            //       icon: const Icon(
-            //         Symbols.ads_click,
-            //       ),
-            //       onPressed: _showAd,
-            //       tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-            //     );
-            //   },
-            // ),
           ],
         ),
-        persistentFooterButtons: [
-          CardSortHeader(
-            searchScreen: widget.searchScreen,
-            cardSearch: widget.cardSearch,
-          ),
-        ],
-        endDrawer: CardFilterDrawer(
-          searchScreen: widget.searchScreen,
-          cardSearch: widget.cardSearch,
-        ),
-        body: RefreshIndicator(
-          onRefresh: () => _refresh(),
-          child: CustomScrollView(
-            controller: _scrollController,
-            slivers: [
-              MultiSliver(
-                children: [
-                  if (!search$.status.isInitializing) ...[
-                    for (int i = 0; i < search$.cardBatches.length; i++) ...[
-                      CardGrid(
-                        cards: search$.cardBatches[i],
-                        searchScreen: widget.searchScreen,
-                        cardSearch: widget.cardSearch,
-                        columns: 3,
-                      ),
-                      // if (!_isPro &&
-                      //     (i == 0 || search$.cardBatches[i].length >= int.parse(dotenv.env['AD_BANNER_CARDS_PER_AD']!)))
-                      //   const Padding(padding: EdgeInsets.symmetric(vertical: 2), child: Center(child: AdBanner())),
-                    ],
-                    if (!search$.status.hasReachedLimit && search$.cards.isNotEmpty)
-                      const SliverPadding(
-                        padding: EdgeInsets.all(16),
-                        sliver: SliverToBoxAdapter(
-                          child: Center(
-                            child: CircularProgressIndicator(),
-                          ),
-                        ),
-                      ),
-                    if (search$.cards.isEmpty)
-                      SliverFillRemaining(
-                        hasScrollBody: false,
-                        child: Center(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.only(bottom: 8),
-                                child: const Text(
-                                  'No cards found',
-                                  style: TextStyle(fontWeight: FontWeight.w500),
-                                ),
-                              ),
-                              ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                      backgroundColor: Theme.of(context).colorScheme.secondary),
-                                  onPressed: () {
-                                    _scaffoldKey.currentState!.openEndDrawer();
-                                  },
-                                  child: Text(
-                                    'Update filters',
-                                    style: TextStyle(
-                                      color: Theme.of(context).colorScheme.onPrimary,
-                                    ),
-                                  ))
-                            ],
-                          ),
-                        ),
-                      )
-                  ],
-                  if (search$.status.isInitializing)
-                    const SliverFillRemaining(
-                      child: Center(child: CircularProgressIndicator()),
-                    )
-                ],
-              ),
-            ],
-          ),
-        ));
+      ),
+    );
   }
 }

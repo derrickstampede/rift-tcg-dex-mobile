@@ -7,7 +7,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'package:rift/widgets/card-options/card-deck-list.widget.dart';
 import 'package:rift/widgets/card-options/card-deck-edit.widget.dart';
-// import 'package:rift/widgets/ads/ad-banner.widget.dart';
+import 'package:rift/widgets/ads/ad-banner.widget.dart';
 
 import 'package:rift/models/card.model.dart';
 
@@ -89,7 +89,7 @@ class _CardSingleAddToDeckState extends ConsumerState<CardSingleAddToDeck> {
                     ],
                   ),
                 ),
-                // if (!_isPro) const AdBanner(),
+                if (!_isPro) const AdBanner(),
                 _isSelectingDeck
                     ? CardDeckList(
                         card: widget.card,

@@ -44,8 +44,8 @@ import 'package:rift/widgets/card-options/card-option-vault.widget.dart';
 import 'package:rift/widgets/cards/card-where.widget.dart';
 import 'package:rift/widgets/misc/titlecase.widget.dart';
 import 'package:rift/widgets/notes/note-box.widget.dart';
-// import 'package:rift/widgets/ads/ad-banner.widget.dart';
-// import 'package:rift/widgets/ads/ad-mdrect-banner.widget.dart';
+import 'package:rift/widgets/ads/ad-banner.widget.dart';
+import 'package:rift/widgets/ads/ad-mdrect-banner.widget.dart';
 import 'package:rift/widgets/preferences/currency-dropdown.widget.dart';
 import 'package:rift/widgets/misc/pro-badge.widget.dart';
 import 'package:rift/widgets/misc/subheader.widget.dart';
@@ -334,7 +334,7 @@ class _CardScreenState extends ConsumerState<CardScreen> {
                               _card.variants.map((v) {
                                 final cardView = FlippableCard(
                                   frontImageUrl: v.image!,
-                                  backImageUrl: v.backImage,
+                                  backImageUrl: v.backImage, 
                                   width: cardWidth,
                                   height: cardHeight,
                                   onTapWithSide: (isShowingFront, currentImageUrl) {
@@ -548,7 +548,7 @@ class _CardScreenState extends ConsumerState<CardScreen> {
                                   ],
                                 ),
                                 const SizedBox(height: 12),
-                                // if (!_isPro) const AdMdRectBanner(),
+                                if (!_isPro) const AdMdRectBanner(),
                                 if (_markets.isNotEmpty)
                                   Padding(
                                     padding: const EdgeInsets.only(top: 12.0),
@@ -899,7 +899,7 @@ class _CardScreenState extends ConsumerState<CardScreen> {
                                     ],
                                   ),
                                 ),
-                                // if (!_isPro) const AdBanner(),
+                                if (!_isPro) const AdBanner(),
                                 if (session != null) CardWhere(id: _id),
                                 const SizedBox(height: 20),
                               ],

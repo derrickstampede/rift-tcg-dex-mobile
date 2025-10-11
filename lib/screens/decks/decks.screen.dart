@@ -20,7 +20,7 @@ import 'package:rift/models/filter.model.dart';
 import 'package:rift/widgets/cards/card-image.widget.dart';
 import 'package:rift/widgets/auth/signin-button.widget.dart';
 import 'package:rift/widgets/misc/color-hexagon.widget.dart';
-// import 'package:rift/widgets/ads/ad-banner.widget.dart';
+import 'package:rift/widgets/ads/ad-banner.widget.dart';
 
 import 'package:rift/helpers/util.helper.dart';
 import 'package:rift/helpers/profile.helper.dart';
@@ -29,7 +29,7 @@ import 'package:rift/helpers/review.helper.dart';
 // import 'package:rift/helpers/revenuecat.helper.dart';
 
 import 'package:rift/providers/decks.provider.dart';
-// import 'package:rift/providers/ad.provider.dart';
+import 'package:rift/providers/ad.provider.dart';
 
 class DecksScreen extends ConsumerStatefulWidget {
   const DecksScreen({super.key});
@@ -114,7 +114,7 @@ class _DecksScreenState extends ConsumerState<DecksScreen> {
 
     await Config.router.navigateTo(context, '/decks/edit?slug=${deck.slug}&name=${deck.name}&color=$encodedColor');
 
-    // if (!_isPro) ref.watch(adNotifierProvider.notifier).showInterstitialAd();
+    if (!_isPro) ref.watch(adNotifierProvider.notifier).showInterstitialAd();
     askReview();
   }
 
@@ -161,10 +161,10 @@ class _DecksScreenState extends ConsumerState<DecksScreen> {
       appBar: AppBar(
         title: const Text('Deck List'),
         elevation: 1,
-        // bottom:
-        //     session != null && !deckList$.isLoading && !_isPro
-        //         ? const PreferredSize(preferredSize: Size.fromHeight(50.0), child: AdBanner())
-        //         : null,
+        bottom:
+            session != null && !deckList$.isLoading && !_isPro
+                ? const PreferredSize(preferredSize: Size.fromHeight(50.0), child: AdBanner())
+                : null,
       ),
       body:
           session != null

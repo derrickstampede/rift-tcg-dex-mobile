@@ -23,7 +23,7 @@ import 'package:rift/screens/decks/deck-full.screen.dart';
 
 import 'package:rift/widgets/cards/card-sort-header.widget.dart';
 import 'package:rift/widgets/cards/card-grid.widget.dart';
-// import 'package:rift/widgets/ads/ad-banner.widget.dart';
+import 'package:rift/widgets/ads/ad-banner.widget.dart';
 
 import 'package:rift/helpers/deck.helper.dart';
 import 'package:rift/helpers/card.helper.dart';
@@ -383,8 +383,8 @@ class _DeckCardsScreenState extends ConsumerState<DeckCardsScreen> {
                   columns: 3,
                   deck: widget.deck,
                 ),
-                // if (!_isPro && (i == 0 || cardBatches[i].length >= int.parse(dotenv.env['AD_BANNER_CARDS_PER_AD']!)))
-                //   const Padding(padding: EdgeInsets.symmetric(vertical: 2), child: Center(child: AdBanner())),
+                if (!_isPro && (i == 0 || cardBatches[i].length >= int.parse(dotenv.env['AD_BANNER_CARDS_PER_AD']!)))
+                  const Padding(padding: EdgeInsets.symmetric(vertical: 2), child: Center(child: AdBanner())),
               ],
               if (cards.isEmpty)
                 SliverFillRemaining(

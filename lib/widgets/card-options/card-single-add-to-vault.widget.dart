@@ -13,7 +13,7 @@ import 'package:rift/models/vault.model.dart';
 import 'package:rift/widgets/card-options/card-vault-list.widget.dart';
 import 'package:rift/widgets/cards/card-variant-stamp.widget.dart';
 import 'package:rift/widgets/cards/card-vault-button.widget.dart';
-// import 'package:rift/widgets/ads/ad-banner.widget.dart';
+import 'package:rift/widgets/ads/ad-banner.widget.dart';
 
 class CardSingleAddToVault extends ConsumerStatefulWidget {
   const CardSingleAddToVault({super.key, required this.card});
@@ -124,7 +124,7 @@ class _CardSingleAddToVaultState extends ConsumerState<CardSingleAddToVault> {
                     ],
                   ),
                 ),
-                // if (!_isPro) const AdBanner(),
+                if (!_isPro) const AdBanner(),
                 !_isLoadingVaults
                     ? _cardProfiles.isNotEmpty
                         ? _isSelectingVault

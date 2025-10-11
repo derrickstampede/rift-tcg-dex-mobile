@@ -23,7 +23,7 @@ import 'package:rift/widgets/cards/card-image.widget.dart';
 import 'package:rift/widgets/cards/card-price.widget.dart';
 import 'package:rift/widgets/stocks/stock-graph.widget.dart';
 import 'package:rift/widgets/auth/signin-button.widget.dart';
-// import 'package:rift/widgets/ads/ad-banner.widget.dart';
+import 'package:rift/widgets/ads/ad-banner.widget.dart';
 import 'package:rift/widgets/misc/pro-badge.widget.dart';
 import 'package:rift/widgets/subscription/subscription-box-sm.widget.dart';
 
@@ -150,7 +150,7 @@ class _StockScreenState extends State<StockScreen> {
       appBar: AppBar(
         title: const Text('Price Trend'),
         elevation: 1,
-        // bottom: !_isPro ? const PreferredSize(preferredSize: Size.fromHeight(50.0), child: AdBanner()) : null,
+        bottom: !_isPro ? const PreferredSize(preferredSize: Size.fromHeight(50.0), child: AdBanner()) : null,
       ),
       body:
           _isLoading

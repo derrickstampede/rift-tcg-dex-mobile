@@ -18,7 +18,7 @@ import 'package:rift/models/filter.model.dart';
 import 'package:rift/widgets/auth/signin-button.widget.dart';
 import 'package:rift/widgets/misc/color-circle.widget.dart';
 import 'package:rift/widgets/misc/titlecase.widget.dart';
-// import 'package:rift/widgets/ads/ad-banner.widget.dart';
+import 'package:rift/widgets/ads/ad-banner.widget.dart';
 
 import 'package:rift/helpers/util.helper.dart';
 import 'package:rift/helpers/profile.helper.dart';
@@ -26,7 +26,7 @@ import 'package:rift/helpers/analytics.helper.dart';
 // import 'package:rift/helpers/revenuecat.helper.dart';
 
 import 'package:rift/providers/vaults.provider.dart';
-// import 'package:rift/providers/ad.provider.dart';
+import 'package:rift/providers/ad.provider.dart';
 
 class VaultsScreen extends ConsumerStatefulWidget {
   const VaultsScreen({super.key});
@@ -108,7 +108,7 @@ class _VaultsScreenState extends ConsumerState<VaultsScreen> {
     final vault = vaultlist.vaults[index];
     await Config.router.navigateTo(context, '/vaults/view?slug=${vault.slug}&name=${vault.name}&color=${vault.color}');
 
-    // if (!_isPro) ref.watch(adNotifierProvider.notifier).showInterstitialAd();
+    if (!_isPro) ref.watch(adNotifierProvider.notifier).showInterstitialAd();
   }
 
   void _removeVault(Vault vault, WidgetRef ref) async {
@@ -154,10 +154,10 @@ class _VaultsScreenState extends ConsumerState<VaultsScreen> {
       appBar: AppBar(
         title: const Text('Vaults'),
         elevation: 1,
-        // bottom:
-        //     session != null && !vaultList$.isLoading && !_isPro
-        //         ? const PreferredSize(preferredSize: Size.fromHeight(50.0), child: AdBanner())
-        //         : null,
+        bottom:
+            session != null && !vaultList$.isLoading && !_isPro
+                ? const PreferredSize(preferredSize: Size.fromHeight(50.0), child: AdBanner())
+                : null,
       ),
       body:
           session != null

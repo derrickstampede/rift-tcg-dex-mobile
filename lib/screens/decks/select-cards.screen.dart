@@ -22,7 +22,7 @@ import 'package:rift/helpers/util.helper.dart';
 import 'package:rift/widgets/cards/card-filter-drawer.widget.dart';
 import 'package:rift/widgets/cards/card-grid.widget.dart';
 import 'package:rift/widgets/cards/card-sort-header.widget.dart';
-// import 'package:rift/widgets/ads/ad-banner.widget.dart';
+import 'package:rift/widgets/ads/ad-banner.widget.dart';
 
 class SelectCardsScreen extends ConsumerStatefulWidget {
   const SelectCardsScreen({super.key, this.slug, this.color});
@@ -201,9 +201,9 @@ class _SelectCardsScreenState extends ConsumerState<SelectCardsScreen> {
                       columns: 3,
                       deck: deck$,
                     ),
-                    // if (!_isPro &&
-                    //     (i == 0 || search$.cardBatches[i].length >= int.parse(dotenv.env['AD_BANNER_CARDS_PER_AD']!)))
-                    //   const Padding(padding: EdgeInsets.symmetric(vertical: 2), child: Center(child: AdBanner())),
+                    if (!_isPro &&
+                        (i == 0 || search$.cardBatches[i].length >= int.parse(dotenv.env['AD_BANNER_CARDS_PER_AD']!)))
+                      const Padding(padding: EdgeInsets.symmetric(vertical: 2), child: Center(child: AdBanner())),
                   ],
                   if (!search$.status.hasReachedLimit && search$.cards.isNotEmpty)
                     const SliverPadding(

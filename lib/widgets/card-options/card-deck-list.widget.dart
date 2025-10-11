@@ -65,7 +65,7 @@ class _CardDeckListState extends ConsumerState<CardDeckList> {
       allowedDecks = deckList$.decks.where((d) => d.legend.color!.contains(widget.card.color!)).toList();
     }
 
-    return (widget.card.type == 'leader')
+    return (widget.card.type == 'Legend' || widget.card.type == 'Champion Unit' || widget.card.type == 'Battlefield')
         ? Padding(
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16.0),
           child: Container(
@@ -76,7 +76,7 @@ class _CardDeckListState extends ConsumerState<CardDeckList> {
             ),
             child: Center(
               child: Text(
-                'Only BATTLE, EXTRA, or ENERGY can be added to a deck',
+                'Legend, Champion Unit, or Battlefield cards cannot be added to a deck',
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 16, color: Theme.of(context).colorScheme.onSecondaryContainer),
               ),

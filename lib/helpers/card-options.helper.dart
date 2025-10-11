@@ -10,8 +10,8 @@ import 'package:rift/widgets/card-options/card-single-add-to-deck.widget.dart';
 import 'package:rift/widgets/card-options/card-single-add-to-vault.widget.dart';
 import 'package:rift/widgets/cards/card-image.widget.dart';
 import 'package:rift/widgets/cards/card-variant-stamp.widget.dart';
-// import 'package:rift/widgets/ads/ad-banner.widget.dart';
-// import 'package:rift/widgets/ads/ad-mdrect-banner.widget.dart';
+import 'package:rift/widgets/ads/ad-banner.widget.dart';
+import 'package:rift/widgets/ads/ad-mdrect-banner.widget.dart';
 
 import 'package:rift/models/card.model.dart';
 
@@ -103,7 +103,7 @@ Future<List<CardsProfiles>?> addToCollectionModal(BuildContext context, CardItem
                     ],
                   ),
                 ),
-                // if (!isPro) const AdBanner(),
+                if (!isPro) const AdBanner(),
                 for (int i = 0; i < card.variants.length; i++)
                   ListTile(
                     title: RichText(

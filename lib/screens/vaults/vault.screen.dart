@@ -31,7 +31,7 @@ import 'package:rift/widgets/vaults/vault-drawer.widget.dart';
 import 'package:rift/widgets/cards/card-grid.widget.dart';
 import 'package:rift/widgets/cards/card-sort-header.widget.dart';
 import 'package:rift/widgets/misc/titlecase.widget.dart';
-// import 'package:rift/widgets/ads/ad-banner.widget.dart';
+import 'package:rift/widgets/ads/ad-banner.widget.dart';
 
 class VaultScreen extends ConsumerStatefulWidget {
   const VaultScreen({super.key, required this.slug, required this.name, required this.color});
@@ -467,9 +467,9 @@ class _VaultScreenState extends ConsumerState<VaultScreen> {
                       columns: 3,
                       vault: vault$,
                     ),
-                    // if (!_isPro &&
-                    //     (i == 0 || cardBatches[i].length >= int.parse(dotenv.env['AD_BANNER_CARDS_PER_AD']!)))
-                    //   const Padding(padding: EdgeInsets.symmetric(vertical: 2), child: Center(child: AdBanner())),
+                    if (!_isPro &&
+                        (i == 0 || cardBatches[i].length >= int.parse(dotenv.env['AD_BANNER_CARDS_PER_AD']!)))
+                      const Padding(padding: EdgeInsets.symmetric(vertical: 2), child: Center(child: AdBanner())),
                   ],
                   if (!vault$.hasReachedLimit && vault$.cards.isNotEmpty)
                     const SliverPadding(
