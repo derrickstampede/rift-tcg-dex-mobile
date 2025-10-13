@@ -93,26 +93,25 @@ dev_dependencies:
   json_serializable: ^6.7.1
   riverpod_generator: ^2.3.11
 
-# # dart run flutter_launcher_icons
-# flutter_launcher_icons:
-#   android: "launcher_icon"
-#   ios: true
-#   image_path: "assets/icons/app-icon.png"
-#   min_sdk_android: 21 # android min sdk min:16, default 21
-#   remove_alpha_ios: true
-#   adaptive_icon_background: "#ed4700" 
-#   adaptive_icon_foreground: "assets/icons/app-icon.png"
-#   android_notification_icon:
-#     image_path: "assets/icons/app-icon.png"
+# dart run flutter_launcher_icons
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icons/app-icon.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  remove_alpha_ios: true
+  adaptive_icon_background: "#091428" 
+  adaptive_icon_foreground: "assets/icons/app-icon.png"
+  android_notification_icon:
+    image_path: "assets/icons/app-icon.png"
 
-# # dart run flutter_native_splash:create
-# flutter_native_splash:
-#   color: "#ed4700"
-#   color_dark: "#ed4700"
-#   # background_image: "assets/background.png"
-#   image: "assets/icons/app-splash.png"
-#   android_12:
-#     color: "#ed4700"
+# dart run flutter_native_splash:create
+flutter_native_splash:
+  color: "#091428"
+  color_dark: "#091428"
+  image: "assets/icons/app-splash.png"
+  android_12:
+    color: "#091428"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
