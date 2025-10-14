@@ -136,6 +136,8 @@ class CardSearchStatus {
   final bool addToDeck;
   final bool addToDeckSelect;
   final bool addToVault;
+  final num? switchChampion;
+  final num? switchBattlefield;
 
   CardSearchStatus({
     required this.isInitializing,
@@ -152,6 +154,8 @@ class CardSearchStatus {
     required this.addToDeck,
     required this.addToDeckSelect,
     required this.addToVault,
+    this.switchChampion,
+    this.switchBattlefield,
   });
 
   Map<String, dynamic> toJson() => {
@@ -169,6 +173,8 @@ class CardSearchStatus {
     'addToDeck': addToDeck,
     'addToDeckSelect': addToDeckSelect,
     'addToVault': addToVault,
+    'switchChampion': switchChampion,
+    'switchBattlefield': switchBattlefield,
   };
 
   factory CardSearchStatus.fromMap(Map<String, dynamic> map) => CardSearchStatus(
@@ -186,6 +192,8 @@ class CardSearchStatus {
     addToDeck: map['addToDeck'],
     addToDeckSelect: map['addToDeckSelect'],
     addToVault: map['addToVault'],
+    switchChampion: map['switchChampion'],
+    switchBattlefield: map['switchBattlefield'],
   );
 }
 

@@ -468,7 +468,11 @@ class _VaultScreenState extends ConsumerState<VaultScreen> {
                     ),
                     if (!_isPro &&
                         (i == 0 || cardBatches[i].length >= int.parse(dotenv.env['AD_BANNER_CARDS_PER_AD']!)))
-                      const Padding(padding: EdgeInsets.symmetric(vertical: 2), child: Center(child: AdBanner())),
+                      Padding(
+                        key: ValueKey('ad_banner_vault_$i'),
+                        padding: const EdgeInsets.symmetric(vertical: 2),
+                        child: Center(child: AdBanner(key: ValueKey('ad_banner_vault_inner_$i'))),
+                      ),
                   ],
                   if (!vault$.hasReachedLimit && vault$.cards.isNotEmpty)
                     const SliverPadding(

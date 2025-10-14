@@ -49,6 +49,10 @@ class DeckBuildNotifier extends _$DeckBuildNotifier {
     }
   }
 
+  Future<void> nullify() async {
+    update(null);
+  }
+
   void update(Deck? value) => state = value;
 
   Future<void> updateName(String name) async {
@@ -264,7 +268,9 @@ class DeckBuildNotifier extends _$DeckBuildNotifier {
     if (deck == null) return total;
 
     for (var i = 0; i < deck.cards.length; i++) {
-      if (deck.cards[i].type != "ENERGY MARKER") {
+      if (deck.cards[i].type != "Legend" &&
+          deck.cards[i].type != "Champion Unit" &&
+          deck.cards[i].type != "Battlefield") {
         total += deck.cards[i].count;
       }
     }

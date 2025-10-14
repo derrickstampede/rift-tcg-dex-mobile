@@ -13,7 +13,10 @@ import 'package:rift/helpers/card.helper.dart';
 
 import 'package:rift/widgets/cards/card-deck-count.widget.dart';
 
+import 'package:rift/helpers/deck.helper.dart';
 import 'package:rift/helpers/card-options.helper.dart';
+
+import 'package:rift/routes/config.dart';
 
 class CardAddRemove extends ConsumerStatefulWidget {
   const CardAddRemove({super.key, required this.card, required this.deck});
@@ -57,35 +60,25 @@ class _CardAddRemoveState extends ConsumerState<CardAddRemove> {
     );
   }
 
-  Future<void> _getChampions(
-    String deckSlug,
-    int currenChampionId,
-    String cardId,
-    Color backgroundColor,
-    Color foregroundColor,
-  ) async {
-    final cardResponse = await findCardByCardId(cardId);
-    return cardResponse.fold(
-      (l) async {
-        final List<CardItemView> cards = l['cards'];
+  _goToSwitchChampion(String color, int championId) async {
+    final slug = widget.deck.slug;
+    final deckBuildNotifier = ref.read(deckBuildNotifierProvider(slug).notifier);
+    final deckListNotifier = ref.read(deckListNotifierProvider.notifier);
 
-        final response = await switchChampionModal(
-          context,
-          deckSlug,
-          currenChampionId,
-          cards,
-          backgroundColor,
-          foregroundColor,
-        );
-        if (response != null) {
-          ref.watch(deckBuildNotifierProvider(deckSlug).notifier).find(deckSlug);
-          ref.read(deckListNotifierProvider.notifier).updateLeader(deckSlug, response);
-        }
-      },
-      (r) {
-        print(r);
-      },
-    );
+    final encodedColor = Uri.encodeComponent(color);
+    final url = '/decks/switch-champion?color=$encodedColor&championId=$championId';
+    final CardListItem? championCard = await Config.router.navigateTo(context, url);
+
+    if (championCard == null) return;
+
+    await deckBuildNotifier.nullify();
+    final response = await updateChampionDeck(slug, championCard.id);
+    return response.fold((l) {
+      deckBuildNotifier.find(slug);
+      deckListNotifier.updateChampion(slug, championCard.thumbnail);
+
+      // TODO: Remove signature cards of previous champ if not the same champion
+    }, (r) {});
   }
 
   @override
@@ -143,8 +136,9 @@ class _CardAddRemoveState extends ConsumerState<CardAddRemove> {
             SizedBox(
               width: 42,
               child: RawMaterialButton(
-                onPressed: () async {
-                  _getChampions(widget.deck.slug, widget.card.id, widget.card.cardId, backgroundColor, foregroundColor);
+                onPressed: () {
+                  // _getChampions(widget.deck.slug, widget.card.id, widget.card.cardId, backgroundColor, foregroundColor);
+                  _goToSwitchChampion(widget.deck.legend.color ?? '', widget.card.id);
                 },
                 elevation: 2.0,
                 fillColor: foregroundColor.withOpacity(0.9),

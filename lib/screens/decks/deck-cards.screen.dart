@@ -384,7 +384,11 @@ class _DeckCardsScreenState extends ConsumerState<DeckCardsScreen> {
                   deck: widget.deck,
                 ),
                 if (!_isPro && (i == 0 || cardBatches[i].length >= int.parse(dotenv.env['AD_BANNER_CARDS_PER_AD']!)))
-                  const Padding(padding: EdgeInsets.symmetric(vertical: 2), child: Center(child: AdBanner())),
+                  Padding(
+                    key: ValueKey('ad_banner_deck_cards_$i'),
+                    padding: const EdgeInsets.symmetric(vertical: 2),
+                    child: Center(child: AdBanner(key: ValueKey('ad_banner_deck_cards_inner_$i'))),
+                  ),
               ],
               if (cards.isEmpty)
                 SliverFillRemaining(

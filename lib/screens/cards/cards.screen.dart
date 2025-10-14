@@ -207,7 +207,11 @@ class _CardsScreenState extends ConsumerState<CardsScreen> {
                     ),
                     if (!_isPro &&
                         (i == 0 || search$.cardBatches[i].length >= int.parse(dotenv.env['AD_BANNER_CARDS_PER_AD']!)))
-                      const Padding(padding: EdgeInsets.symmetric(vertical: 2), child: Center(child: AdBanner())),
+                      Padding(
+                        key: ValueKey('ad_banner_cards_$i'),
+                        padding: const EdgeInsets.symmetric(vertical: 2),
+                        child: Center(child: AdBanner(key: ValueKey('ad_banner_cards_inner_$i'))),
+                      ),
                   ],
                   if (!search$.status.hasReachedLimit && search$.cards.isNotEmpty)
                     const SliverPadding(

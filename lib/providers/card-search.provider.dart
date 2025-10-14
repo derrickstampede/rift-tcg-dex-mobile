@@ -120,6 +120,8 @@ class CardSearchNotifier extends _$CardSearchNotifier {
         addToDeck: state.status.addToDeck,
         addToDeckSelect: state.status.addToDeckSelect,
         addToVault: state.status.addToVault,
+        switchChampion: state.status.switchChampion,
+        switchBattlefield: state.status.switchBattlefield,
       );
       newState.symbol = response.symbol;
 
@@ -168,6 +170,8 @@ class CardSearchNotifier extends _$CardSearchNotifier {
       addToDeck: state.status.addToDeck,
       addToDeckSelect: state.status.addToDeckSelect,
       addToVault: state.status.addToVault,
+      switchChampion: state.status.switchChampion,
+      switchBattlefield: state.status.switchBattlefield,
     );
 
     update(newState);
@@ -190,6 +194,8 @@ class CardSearchNotifier extends _$CardSearchNotifier {
       addToDeck: state.status.addToDeck,
       addToDeckSelect: state.status.addToDeckSelect,
       addToVault: state.status.addToVault,
+      switchChampion: state.status.switchChampion,
+      switchBattlefield: state.status.switchBattlefield,
     );
 
     update(newState);
@@ -258,6 +264,8 @@ class CardSearchNotifier extends _$CardSearchNotifier {
       addToDeck: state.status.addToDeck,
       addToDeckSelect: state.status.addToDeckSelect,
       addToVault: state.status.addToVault,
+      switchChampion: state.status.switchChampion,
+      switchBattlefield: state.status.switchBattlefield,
     );
     newState.filters = CardSearchFilters(
       collection: state.filters.collection,
@@ -311,6 +319,8 @@ class CardSearchNotifier extends _$CardSearchNotifier {
       addToDeck: state.status.addToDeck,
       addToDeckSelect: state.status.addToDeckSelect,
       addToVault: state.status.addToVault,
+      switchChampion: state.status.switchChampion,
+      switchBattlefield: state.status.switchBattlefield,
     );
     newState.filters = CardSearchFilters(
       collection: state.filters.collection,
@@ -356,6 +366,8 @@ class CardSearchNotifier extends _$CardSearchNotifier {
       addToDeck: newState.status.addToDeck,
       addToDeckSelect: newState.status.addToDeckSelect,
       addToVault: newState.status.addToVault,
+      switchChampion: newState.status.switchChampion,
+      switchBattlefield: newState.status.switchBattlefield,
     );
 
     logEvent(name: 'card_change_label', parameters: {'show': value});
@@ -379,6 +391,8 @@ class CardSearchNotifier extends _$CardSearchNotifier {
       addToDeck: state.status.addToDeck,
       addToDeckSelect: state.status.addToDeckSelect,
       addToVault: state.status.addToVault,
+      switchChampion: state.status.switchChampion,
+      switchBattlefield: state.status.switchBattlefield,
     );
 
     update(newState);
@@ -423,6 +437,8 @@ class CardSearchNotifier extends _$CardSearchNotifier {
         addToDeck: state.status.addToDeck,
         addToDeckSelect: state.status.addToDeckSelect,
         addToVault: state.status.addToVault,
+        switchChampion: state.status.switchChampion,
+        switchBattlefield: state.status.switchBattlefield,
       );
 
       update(newState);
@@ -615,6 +631,8 @@ class CardSearchNotifier extends _$CardSearchNotifier {
       addToDeck: state.status.addToDeck,
       addToDeckSelect: state.status.addToDeckSelect,
       addToVault: state.status.addToVault,
+      switchChampion: state.status.switchChampion,
+      switchBattlefield: state.status.switchBattlefield,
     );
 
     logEvent(name: 'filter_color', parameters: {'value': value});
@@ -669,6 +687,8 @@ class CardSearchNotifier extends _$CardSearchNotifier {
       addToDeck: state.status.addToDeck,
       addToDeckSelect: state.status.addToDeckSelect,
       addToVault: state.status.addToVault,
+      switchChampion: state.status.switchChampion,
+      switchBattlefield: state.status.switchBattlefield,
     );
 
     logEvent(name: 'filter_domain', parameters: {'value': value});

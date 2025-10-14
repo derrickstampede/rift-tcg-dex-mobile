@@ -203,6 +203,20 @@ class DeckListNotifier extends _$DeckListNotifier {
     update(deckList);
   }
 
+  void updateChampion(String slug, String thumbnail) {
+    final decks = state.decks;
+    final index = decks.indexWhere((d) => d.slug == slug);
+    decks[index].champion.thumbnail = thumbnail;
+
+    final DeckList deckList = DeckList(
+      decks: decks,
+      sortBy: state.sortBy,
+      isSortAscending: state.isSortAscending,
+      isLoading: state.isLoading,
+    );
+    update(deckList);
+  }
+
   void updatePublic(int id, bool isPublic) {
     final decks = state.decks;
     final index = decks.indexWhere((d) => d.id == id);
