@@ -81,6 +81,24 @@ class _CardAddRemoveState extends ConsumerState<CardAddRemove> {
     }, (r) {});
   }
 
+  _goToSwitchBattlefield(int battlefieldId) async {
+    final slug = widget.deck.slug;
+    final deckBuildNotifier = ref.read(deckBuildNotifierProvider(slug).notifier);
+    final deckListNotifier = ref.read(deckListNotifierProvider.notifier);
+
+    final url = '/decks/switch-battlefield?battlefieldId=$battlefieldId';
+    final CardListItem? battlefieldCard = await Config.router.navigateTo(context, url);
+
+    if (battlefieldCard == null) return;
+
+    await deckBuildNotifier.nullify();
+    final response = await updateBattlefieldDeck(slug, battlefieldCard.id);
+    return response.fold((l) {
+      deckBuildNotifier.find(slug);
+      deckListNotifier.updateChampion(slug, battlefieldCard.thumbnail);
+    }, (r) {});
+  }
+
   @override
   Widget build(BuildContext context) {
     final deck$ = ref.watch(deckBuildNotifierProvider(widget.deck.slug));
@@ -98,7 +116,7 @@ class _CardAddRemoveState extends ConsumerState<CardAddRemove> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          if (widget.card.type != "Legend" && widget.card.type != "Champion Unit")
+          if (widget.card.type != "Legend" && widget.card.type != "Champion Unit" && widget.card.type != "Battlefield")
             SizedBox(
               width: 42,
               child: RawMaterialButton(
@@ -137,8 +155,21 @@ class _CardAddRemoveState extends ConsumerState<CardAddRemove> {
               width: 42,
               child: RawMaterialButton(
                 onPressed: () {
-                  // _getChampions(widget.deck.slug, widget.card.id, widget.card.cardId, backgroundColor, foregroundColor);
                   _goToSwitchChampion(widget.deck.legend.color ?? '', widget.card.id);
+                },
+                elevation: 2.0,
+                fillColor: foregroundColor.withOpacity(0.9),
+                padding: const EdgeInsets.all(8.0),
+                shape: const CircleBorder(),
+                child: Icon(Symbols.loop, size: 24.0, color: backgroundColor),
+              ),
+            ),
+          if (widget.card.type == "Battlefield")
+            SizedBox(
+              width: 42,
+              child: RawMaterialButton(
+                onPressed: () {
+                  _goToSwitchBattlefield(widget.card.id);
                 },
                 elevation: 2.0,
                 fillColor: foregroundColor.withOpacity(0.9),
@@ -158,7 +189,7 @@ class _CardAddRemoveState extends ConsumerState<CardAddRemove> {
               child: CardDeckCount(card: widget.card, deck: widget.deck, foregroundColor: foregroundColor),
             ),
           ),
-          if (widget.card.type != "Legend" && widget.card.type != "Champion Unit")
+          if (widget.card.type != "Legend" && widget.card.type != "Champion Unit" && widget.card.type != "Battlefield")
             SizedBox(
               width: 42,
               child: RawMaterialButton(

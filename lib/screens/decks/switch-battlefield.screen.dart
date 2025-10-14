@@ -23,36 +23,35 @@ import 'package:rift/widgets/cards/card-grid.widget.dart';
 import 'package:rift/widgets/cards/card-sort-header.widget.dart';
 import 'package:rift/widgets/ads/ad-banner.widget.dart';
 
-class SwitchChampionScreen extends ConsumerStatefulWidget {
-  const SwitchChampionScreen({super.key, required this.color, required this.championId});
+class SwitchBattlefieldScreen extends ConsumerStatefulWidget {
+  const SwitchBattlefieldScreen({super.key, required this.battlefieldId});
 
-  final String color;
-  final num championId;
+  final num battlefieldId;
 
   @override
-  ConsumerState<SwitchChampionScreen> createState() => _SwitchChampionScreenState();
+  ConsumerState<SwitchBattlefieldScreen> createState() => _SwitchBattlefieldScreenState();
 }
 
-class _SwitchChampionScreenState extends ConsumerState<SwitchChampionScreen> {
+class _SwitchBattlefieldScreenState extends ConsumerState<SwitchBattlefieldScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final _scrollController = ScrollController();
 
   Session? _session = supabase.auth.currentSession;
   late final StreamSubscription<AuthState> _authStateSubscription;
 
-  final _searchScreen = 'switch-leader';
+  final _searchScreen = 'switch-battlefield';
   late final CardSearch _cardSearch;
   final _allColors = ['Red', 'Green', 'Blue', 'Orange', 'Purple', 'Yellow', 'No Color'];
 
   bool _isPro = bool.parse(dotenv.env['IS_PRO']!);
 
-  late num _currentChampionId;
+  late num _currentBattlefieldId;
 
   @override
   void initState() {
     super.initState();
 
-    _currentChampionId = widget.championId;
+    _currentBattlefieldId = widget.battlefieldId;
     _cardSearch = CardSearch(
       cards: [],
       cardBatches: [],
@@ -61,7 +60,7 @@ class _SwitchChampionScreenState extends ConsumerState<SwitchChampionScreen> {
         isLoading: false,
         hasReachedLimit: false,
         showOwned: false,
-        view: 'power',
+        view: 'name',
         orderBy: 'set',
         isAscending: false,
         showCollectionDisabled: false,
@@ -71,7 +70,7 @@ class _SwitchChampionScreenState extends ConsumerState<SwitchChampionScreen> {
         addToDeck: false,
         addToDeckSelect: false,
         addToVault: false,
-        switchChampion: _currentChampionId,
+        switchBattlefield: _currentBattlefieldId,
       ),
       filters: CardSearchFilters(
         collection: false,
@@ -79,8 +78,8 @@ class _SwitchChampionScreenState extends ConsumerState<SwitchChampionScreen> {
         setId: null,
         rarity: [],
         language: [],
-        type: ["Champion Unit"],
-        color: [...widget.color.split("/")],
+        type: ["Battlefield"],
+        color: [],
         domain: [],
         art: [],
         energy: List<int>.from(json.decode(dotenv.env['CARD_SEARCH_ENERGY_RESET']!)),
@@ -95,7 +94,7 @@ class _SwitchChampionScreenState extends ConsumerState<SwitchChampionScreen> {
         disableCollection: false,
         disableRarity: const [],
         disableType: const [
-          "Battlefield",
+          "Champion Unit",
           "Legend",
           "Signature Spell",
           "Signature Unit",
@@ -105,8 +104,8 @@ class _SwitchChampionScreenState extends ConsumerState<SwitchChampionScreen> {
           "Rune",
           "Token Unit",
         ],
-        disableColor: _allColors.where((color) => !widget.color.split("/").contains(color)).toList(),
-        initialResetColor: [...widget.color.split("/")],
+        disableColor: _allColors.toList(),
+        initialResetColor: [],
         initialResetType: const [],
         initialResetRarity: const [],
         requireOneType: false,
@@ -160,7 +159,7 @@ class _SwitchChampionScreenState extends ConsumerState<SwitchChampionScreen> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: const Text('Switch Champion Card'),
+        title: const Text('Switch Battlefield Card'),
         elevation: 1,
         actions: [
           Builder(
@@ -198,9 +197,9 @@ class _SwitchChampionScreenState extends ConsumerState<SwitchChampionScreen> {
                     if (!_isPro &&
                         (i == 0 || search$.cardBatches[i].length >= int.parse(dotenv.env['AD_BANNER_CARDS_PER_AD']!)))
                       Padding(
-                        key: ValueKey('ad_banner_switch_champion_${i}_${DateTime.now().millisecondsSinceEpoch}'),
+                        key: ValueKey('ad_banner_switch_battlefield_${i}_${DateTime.now().millisecondsSinceEpoch}'),
                         padding: const EdgeInsets.symmetric(vertical: 2),
-                        child: Center(child: AdBanner(key: ValueKey('ad_banner_switch_champion_inner_${i}_${DateTime.now().millisecondsSinceEpoch}'))),
+                        child: Center(child: AdBanner(key: ValueKey('ad_banner_switch_battlefield_inner_${i}_${DateTime.now().millisecondsSinceEpoch}'))),
                       ),
                   ],
                   if (!search$.status.hasReachedLimit && search$.cards.isNotEmpty)

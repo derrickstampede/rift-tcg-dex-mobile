@@ -397,6 +397,31 @@ Future<Either<Map<String, dynamic>, dynamic>> updateChampionDeck(String slug, in
   }
 }
 
+Future<Either<Map<String, dynamic>, dynamic>> updateBattlefieldDeck(String slug, int battlefieldId) async {
+  try {
+    final headers = {...httpHeaders};
+    Session? session = supabase.auth.currentSession;
+    if (session != null) {
+      headers['AccessToken'] = session.accessToken;
+    }
+
+    final url = Uri.https(dotenv.env['API']!, 'api/v1/decks/$slug/update-battlefield');
+    final body = json.encode({"card_id": battlefieldId});
+    final response = await http.patch(url, body: body, headers: headers);
+
+    if (response.statusCode != 200) {
+      final err = json.decode(response.body);
+      throw {"statusCode": response.statusCode, "statusText": err['statusText'], "message": err['error']['message']};
+    }
+
+    final responseData = json.decode(response.body);
+
+    return left({'is_updated': responseData['data']['is_updated']});
+  } catch (e) {
+    return right(e);
+  }
+}
+
 Future<Either<Map<String, dynamic>, dynamic>> updateSortingDeck(String sortBy, bool isAscending, String slug) async {
   try {
     final headers = {...httpHeaders};

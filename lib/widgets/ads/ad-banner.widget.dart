@@ -17,8 +17,11 @@ class AdBanner extends StatefulWidget {
   State<AdBanner> createState() => _AdBannerState();
 }
 
-class _AdBannerState extends State<AdBanner> {
+class _AdBannerState extends State<AdBanner> with AutomaticKeepAliveClientMixin {
   Session? session = supabase.auth.currentSession;
+  
+  @override
+  bool get wantKeepAlive => true;
 
   final String _adUnitId = Platform.isIOS ? dotenv.env['AD_BANNER_IOS']! : dotenv.env['AD_BANNER_ANDROID']!;
 
@@ -124,6 +127,8 @@ class _AdBannerState extends State<AdBanner> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context); // Required for AutomaticKeepAliveClientMixin
+    
     if (_bannerAd != null && !_failedLoad) {
       final double width = _currentAdSize.width > 0 ? _currentAdSize.width.toDouble() : 320.0;
       final double height = (_currentAdSize.height > 0 ? _currentAdSize.height.toDouble() : 50.0).clamp(50.0, 80.0);
