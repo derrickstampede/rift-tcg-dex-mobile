@@ -94,6 +94,10 @@ dependencies {
   implementation("com.google.firebase:firebase-crashlytics")
   implementation("com.google.firebase:firebase-crashlytics-ndk")
 
+  // Force use of Play Billing Library 7.1.1 (latest stable version)
+  // This is required to meet Google Play Console's minimum version requirement
+  implementation("com.android.billingclient:billing:7.1.1")
+
   // Add the dependencies for any other desired Firebase products
   // https://firebase.google.com/docs/android/setup#available-libraries
 }
