@@ -23,8 +23,8 @@ import 'package:rift/screens/home.screen.dart';
 
 import 'package:rift/widgets/analytics/consent-wrapper.widget.dart';
 
-// import 'package:rift/helpers/revenuecat.helper.dart';
-// import 'package:rift/helpers/review.helper.dart';
+import 'package:rift/helpers/revenuecat.helper.dart';
+import 'package:rift/helpers/review.helper.dart';
 
 import 'services/notification.service.dart';
 
@@ -101,6 +101,9 @@ Future<void> main() async {
   } catch (e) {
     print("Failed to clear cache: $e");
   }
+
+  initializePreq();
+  await initializeRevenueCat();
 
   runApp(const MyApp());
 }

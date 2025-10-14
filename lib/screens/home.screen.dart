@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-// import 'package:google_mobile_ads/google_mobile_ads.dart';
-// import 'package:gma_mediation_unity/gma_mediation_unity.dart' as mediation_unity;
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:gma_mediation_unity/gma_mediation_unity.dart' as mediation_unity;
 
 import 'package:rift/main.dart';
 
 import 'package:rift/screens/decks/decks.screen.dart';
 import 'package:rift/screens/cards/cards.screen.dart';
 import 'package:rift/screens/vaults/vaults.screen.dart';
-// import 'package:rift/screens/battle/battle.screen.dart';
 import 'package:rift/screens/account/profile.screen.dart';
 
 import 'package:rift/providers/card-search.provider.dart';
@@ -21,10 +20,10 @@ import 'package:rift/providers/decks.provider.dart';
 import 'package:rift/providers/vaults.provider.dart';
 import 'package:rift/providers/conversions.provider.dart';
 import 'package:rift/providers/alerts.provider.dart';
-// import 'package:rift/providers/ad.provider.dart';
+import 'package:rift/providers/ad.provider.dart';
 import 'package:rift/providers/promoted-trial-code.provider.dart';
 
-// import 'package:rift/helpers/revenuecat.helper.dart';
+import 'package:rift/helpers/revenuecat.helper.dart';
 
 import 'package:rift/constants/main-card-search.constant.dart';
 
@@ -44,30 +43,30 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   void initState() {
     // Setup RC app id, get current user if available
-    // supabase.auth.onAuthStateChange.listen((data) {
-    //   setState(() {
-    //     session = data.session;
-    //     if (session != null) {
-    //       loginRevenueCat(session!.user.id);
-    //     } else {
-    //       logoutRevenueCat();
-    //     }
-    //   });
-    // });
+    supabase.auth.onAuthStateChange.listen((data) {
+      setState(() {
+        session = data.session;
+        if (session != null) {
+          loginRevenueCat(session!.user.id);
+        } else {
+          logoutRevenueCat();
+        }
+      });
+    });
 
     // Admob consent form
-    // ConsentInformation.instance.requestConsentInfoUpdate(
-    //   ConsentRequestParameters(),
-    //   () async {
-    //     bool isFormAvailable = await ConsentInformation.instance.isConsentFormAvailable();
-    //     if (isFormAvailable) {
-    //       _loadConsentForm();
-    //     }
-    //   },
-    //   (FormError formError) {},
-    // );
-    // mediation_unity.GmaMediationUnity().setGDPRConsent(true);
-    // mediation_unity.GmaMediationUnity().setCCPAConsent(true);
+    ConsentInformation.instance.requestConsentInfoUpdate(
+      ConsentRequestParameters(),
+      () async {
+        bool isFormAvailable = await ConsentInformation.instance.isConsentFormAvailable();
+        if (isFormAvailable) {
+          _loadConsentForm();
+        }
+      },
+      (FormError formError) {},
+    );
+    mediation_unity.GmaMediationUnity().setGDPRConsent(true);
+    mediation_unity.GmaMediationUnity().setCCPAConsent(true);
 
     _pages = [
       CardsScreen(
@@ -83,15 +82,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   void _loadConsentForm() {
-    // ConsentForm.loadConsentForm(
-    //   (ConsentForm consentForm) async {
-    //     final consentStatus = await ConsentInformation.instance.getConsentStatus();
-    //     if (consentStatus == ConsentStatus.required) {
-    //       consentForm.show((FormError? formError) => _loadConsentForm());
-    //     }
-    //   },
-    //   (FormError formError) {},
-    // );
+    ConsentForm.loadConsentForm(
+      (ConsentForm consentForm) async {
+        final consentStatus = await ConsentInformation.instance.getConsentStatus();
+        if (consentStatus == ConsentStatus.required) {
+          consentForm.show((FormError? formError) => _loadConsentForm());
+        }
+      },
+      (FormError formError) {},
+    );
   }
 
   @override
@@ -102,7 +101,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     ref.watch(marketProvider);
     ref.watch(conversionsNotifierProvider);
     ref.watch(alertsNotifierProvider);
-    // ref.watch(adNotifierProvider);
+    ref.watch(adNotifierProvider);
     ref.watch(trialCodesProvider);
 
     ref.watch(deckListNotifierProvider);
