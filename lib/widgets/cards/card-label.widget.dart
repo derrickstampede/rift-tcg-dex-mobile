@@ -97,6 +97,11 @@ class _CardLabelState extends ConsumerState<CardLabel> {
         labelWidget = Text(widget.card.rarity!, maxLines: 1, overflow: TextOverflow.ellipsis, style: style);
       }
     }
+    if (widget.label == 'print') {
+      if (widget.card.print != null) {
+        labelWidget = Text(widget.card.print!, maxLines: 1, overflow: TextOverflow.ellipsis, style: style);
+      }
+    }
 
     markets$.whenData((markets) {
       for (var market in markets) {

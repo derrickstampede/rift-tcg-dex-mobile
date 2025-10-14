@@ -1074,6 +1074,7 @@ final List<Filter> _viewingOptions = [
   Filter(label: 'Power', value: 'power'),
   Filter(label: 'Rarity', value: 'rarity'),
   Filter(label: 'Domain', value: 'domain'),
+  Filter(label: 'Print', value: 'print'),
   Filter(label: 'TCGPlayer', value: 'tcgp_en'),
   // Filter(label: 'Yuyu-tei', value: 'yyt_jp'),
   Filter(label: 'CardMarket', value: 'cm_en'),
