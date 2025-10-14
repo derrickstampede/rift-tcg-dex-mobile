@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:dotted_border/dotted_border.dart';
-// import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 
 import 'package:rift/models/deck.model.dart';
 import 'package:rift/models/card.model.dart';
@@ -15,7 +15,7 @@ import 'package:rift/widgets/cards/card-item.widget.dart';
 import 'package:rift/helpers/analytics.helper.dart';
 import 'package:rift/helpers/util.helper.dart';
 import 'package:rift/helpers/deck.helper.dart';
-// import 'package:rift/helpers/revenuecat.helper.dart';
+import 'package:rift/helpers/revenuecat.helper.dart';
 
 import 'package:rift/routes/config.dart';
 
@@ -67,10 +67,10 @@ class _DeckCreateFormState extends ConsumerState<DeckCreateForm> {
   void initState() {
     super.initState();
 
-    // Purchases.addCustomerInfoUpdateListener((customerInfo) async {
-    //   final isSubscribed = checkIfSubscribed(customerInfo);
-    //   if (isSubscribed) setState(() => _isPro = isSubscribed);
-    // });
+    Purchases.addCustomerInfoUpdateListener((customerInfo) async {
+      final isSubscribed = checkIfSubscribed(customerInfo);
+      if (isSubscribed) setState(() => _isPro = isSubscribed);
+    });
   }
 
   void _goToSelectLegend() async {

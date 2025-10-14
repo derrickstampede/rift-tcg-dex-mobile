@@ -9,7 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
-// import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 
@@ -19,7 +19,7 @@ import 'package:rift/themes/theme-extension.dart';
 
 import 'package:rift/helpers/card.helper.dart';
 import 'package:rift/helpers/analytics.helper.dart';
-// import 'package:rift/helpers/revenuecat.helper.dart';
+import 'package:rift/helpers/revenuecat.helper.dart';
 import 'package:rift/helpers/auth.helper.dart';
 
 import 'package:rift/models/card.model.dart';
@@ -124,10 +124,10 @@ class _CardScreenState extends ConsumerState<CardScreen> {
       });
     });
 
-    // Purchases.addCustomerInfoUpdateListener((customerInfo) async {
-    //   final isSubscribed = checkIfSubscribed(customerInfo);
-    //   if (isSubscribed) setState(() => _isPro = isSubscribed);
-    // });
+    Purchases.addCustomerInfoUpdateListener((customerInfo) async {
+      final isSubscribed = checkIfSubscribed(customerInfo);
+      if (isSubscribed) setState(() => _isPro = isSubscribed);
+    });
   }
 
   @override
@@ -334,7 +334,7 @@ class _CardScreenState extends ConsumerState<CardScreen> {
                               _card.variants.map((v) {
                                 final cardView = FlippableCard(
                                   frontImageUrl: v.image!,
-                                  backImageUrl: v.backImage, 
+                                  backImageUrl: v.backImage,
                                   width: cardWidth,
                                   height: cardHeight,
                                   onTapWithSide: (isShowingFront, currentImageUrl) {
@@ -577,10 +577,10 @@ class _CardScreenState extends ConsumerState<CardScreen> {
                                                           ? GestureDetector(
                                                             onTap: () {
                                                               if (!_isLoggedIn) return;
-                                                              // showSubscribeDialog(
-                                                              //   context: context,
-                                                              //   source: 'cardmarket',
-                                                              // );
+                                                              showSubscribeDialog(
+                                                                context: context,
+                                                                source: 'cardmarket',
+                                                              );
                                                             },
                                                             child: const ProBadge(),
                                                           )
@@ -686,7 +686,7 @@ class _CardScreenState extends ConsumerState<CardScreen> {
                                                       ),
                                                       onPressed: () {
                                                         if (!_isPro) {
-                                                          // showSubscribeDialog(context: context, source: 'card-view');
+                                                          showSubscribeDialog(context: context, source: 'card-view');
                                                           return;
                                                         }
                                                         _showCurrencyConverterDialog();

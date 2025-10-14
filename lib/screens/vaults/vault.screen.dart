@@ -9,7 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 import 'package:image_picker/image_picker.dart';
-// import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 
 import 'package:rift/routes/config.dart';
 
@@ -24,7 +24,7 @@ import 'package:rift/providers/card-search.provider.dart';
 import 'package:rift/helpers/vault.helper.dart';
 import 'package:rift/helpers/util.helper.dart';
 import 'package:rift/helpers/analytics.helper.dart';
-// import 'package:rift/helpers/revenuecat.helper.dart';
+import 'package:rift/helpers/revenuecat.helper.dart';
 import 'package:rift/helpers/card.helper.dart';
 
 import 'package:rift/widgets/vaults/vault-drawer.widget.dart';
@@ -116,10 +116,10 @@ class _VaultScreenState extends ConsumerState<VaultScreen> {
 
     _nameController.text = widget.name;
 
-    // Purchases.addCustomerInfoUpdateListener((customerInfo) async {
-    //   final isSubscribed = checkIfSubscribed(customerInfo);
-    //   if (isSubscribed) setState(() => _isPro = isSubscribed);
-    // });
+    Purchases.addCustomerInfoUpdateListener((customerInfo) async {
+      final isSubscribed = checkIfSubscribed(customerInfo);
+      if (isSubscribed) setState(() => _isPro = isSubscribed);
+    });
 
     super.initState();
   }
@@ -303,7 +303,6 @@ class _VaultScreenState extends ConsumerState<VaultScreen> {
 
     _cardSearch.symbol = vault$.symbol;
     ref.watch(cardSearchNotifierProvider(screen: _searchScreen, cardSearch: _cardSearch));
-    // final cards = _sortCards(vault$.cards, vault$.sortBy!, vault$.isSortAscending!);
     final cardBatches = createCardBatches(vault$.cards);
 
     _nameController.text = vault$.name;

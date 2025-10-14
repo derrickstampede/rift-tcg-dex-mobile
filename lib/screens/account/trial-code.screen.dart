@@ -3,11 +3,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-// import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 
 import 'package:rift/helpers/trial.helper.dart';
 import 'package:rift/helpers/util.helper.dart';
-// import 'package:rift/helpers/revenuecat.helper.dart';
+import 'package:rift/helpers/revenuecat.helper.dart';
 
 class TrialCodeScreen extends StatefulWidget {
   const TrialCodeScreen({super.key});
@@ -27,10 +27,10 @@ class _TrialCodeScreenState extends State<TrialCodeScreen> {
   void initState() {
     super.initState();
 
-    // Purchases.addCustomerInfoUpdateListener((customerInfo) async {
-    //   final isSubscribed = checkIfSubscribed(customerInfo);
-    //   if (isSubscribed && mounted) setState(() => _isPro = isSubscribed);
-    // });
+    Purchases.addCustomerInfoUpdateListener((customerInfo) async {
+      final isSubscribed = checkIfSubscribed(customerInfo);
+      if (isSubscribed && mounted) setState(() => _isPro = isSubscribed);
+    });
   }
 
   @override
@@ -72,27 +72,27 @@ class _TrialCodeScreenState extends State<TrialCodeScreen> {
   }
 
   Future<void> _submitAppleCode(int trialCodeId) async {
-    // try {
-    //   final bool success = await redeemAppleSubscriptionOfferCode();
+    try {
+      final bool success = await redeemAppleSubscriptionOfferCode();
 
-    //   if (success) {
-    //     setState(() => _isPro = true);
-    //     storeTrial(trialCodeId);
-    //     showSnackbar('Subscription offer code applied successfully!');
-    //     _popAtStart();
-    //   } else {
-    //     showSnackbar('Subscription offer code could not be applied');
-    //   }
-    // } catch (e) {
-    //   showSnackbar('Error applying subscription offer code: ${e.toString()}');
-    // }
+      if (success) {
+        setState(() => _isPro = true);
+        storeTrial(trialCodeId);
+        showSnackbar('Subscription offer code applied successfully!');
+        _popAtStart();
+      } else {
+        showSnackbar('Subscription offer code could not be applied');
+      }
+    } catch (e) {
+      showSnackbar('Error applying subscription offer code: ${e.toString()}');
+    }
   }
 
   Future<void> _showPaywall(int trialCodeId, String offering, String entitlement) async {
-    // bool hasPurchased = await showTrialPaywall(trialCodeId, offering, entitlement);
-    // if (hasPurchased) {
-    //   _popAtStart();
-    // }
+    bool hasPurchased = await showTrialPaywall(trialCodeId, offering, entitlement);
+    if (hasPurchased) {
+      _popAtStart();
+    }
   }
 
   void _popAtStart() {

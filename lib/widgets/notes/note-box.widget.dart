@@ -5,7 +5,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:readmore/readmore.dart';
-// import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 
 import 'package:rift/themes/theme-extension.dart';
 
@@ -15,7 +15,7 @@ import 'package:rift/models/card-search.model.dart';
 import 'package:rift/helpers/note.helper.dart';
 import 'package:rift/helpers/util.helper.dart';
 import 'package:rift/helpers/analytics.helper.dart';
-// import 'package:rift/helpers/revenuecat.helper.dart';
+import 'package:rift/helpers/revenuecat.helper.dart';
 
 import 'package:rift/widgets/misc/pro-badge.widget.dart';
 import 'package:rift/widgets/misc/subheader.widget.dart';
@@ -62,10 +62,10 @@ class _NoteBoxState extends ConsumerState<NoteBox> {
 
     _note = widget.note;
 
-    // Purchases.addCustomerInfoUpdateListener((customerInfo) async {
-    //   final isSubscribed = checkIfSubscribed(customerInfo);
-    //   if (isSubscribed == true) setState(() => _isPro = isSubscribed);
-    // });
+    Purchases.addCustomerInfoUpdateListener((customerInfo) async {
+      final isSubscribed = checkIfSubscribed(customerInfo);
+      if (isSubscribed == true) setState(() => _isPro = isSubscribed);
+    });
   }
 
   Future<String?> _showForm(BuildContext context, {required Note? note, required type, required typeId}) async {

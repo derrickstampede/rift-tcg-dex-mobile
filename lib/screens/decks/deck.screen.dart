@@ -5,13 +5,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-// import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 
 import 'package:rift/providers/deck.provider.dart';
 import 'package:rift/providers/decks.provider.dart';
 
 import 'package:rift/helpers/deck.helper.dart';
-// import 'package:rift/helpers/revenuecat.helper.dart';
+import 'package:rift/helpers/revenuecat.helper.dart';
 
 import 'package:rift/models/deck.model.dart';
 
@@ -53,10 +53,10 @@ class _DeckScreenState extends ConsumerState<DeckScreen> {
     _nameController.text = widget.name!;
     logEvent(name: 'deck_view');
 
-    // Purchases.addCustomerInfoUpdateListener((customerInfo) async {
-    //   final isSubscribed = checkIfSubscribed(customerInfo);
-    //   if (isSubscribed) setState(() => _isPro = isSubscribed);
-    // });
+    Purchases.addCustomerInfoUpdateListener((customerInfo) async {
+      final isSubscribed = checkIfSubscribed(customerInfo);
+      if (isSubscribed) setState(() => _isPro = isSubscribed);
+    });
   }
 
   @override
@@ -359,24 +359,24 @@ class _DeckScreenState extends ConsumerState<DeckScreen> {
                       ],
                     ),
                   ),
-                  // PopupMenuItem<int>(
-                  //   value: 2,
-                  //   child: Row(
-                  //     children: [
-                  //       Padding(
-                  //         padding: const EdgeInsets.only(right: 8.0),
-                  //         child: Icon(
-                  //           Symbols.share_windows,
-                  //           size: 18,
-                  //           color: Theme.of(context).colorScheme.onSurface,
-                  //         ),
-                  //       ),
-                  //       const Text(
-                  //         'Export',
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
+                  PopupMenuItem<int>(
+                    value: 2,
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: Icon(
+                            Symbols.share_windows,
+                            size: 18,
+                            color: Theme.of(context).colorScheme.onSurface,
+                          ),
+                        ),
+                        const Text(
+                          'Export',
+                        ),
+                      ],
+                    ),
+                  ),
                   PopupMenuItem<int>(
                     value: 3,
                     child: Row(
@@ -403,9 +403,9 @@ class _DeckScreenState extends ConsumerState<DeckScreen> {
                 if (value == 1) {
                   _copyDeck(deck$);
                 }
-                // if (value == 2) {
-                //   _fetchExport(deck$);
-                // }
+                if (value == 2) {
+                  _fetchExport(deck$);
+                }
                 if (value == 3) {
                   _showDeleteDialog(deck$, ref);
                 }

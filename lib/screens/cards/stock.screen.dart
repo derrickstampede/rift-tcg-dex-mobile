@@ -4,7 +4,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-// import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 
 import 'package:rift/main.dart';
@@ -13,11 +13,10 @@ import 'package:rift/themes/theme-extension.dart';
 
 import 'package:rift/models/card.model.dart';
 import 'package:rift/models/stock.model.dart' as stock_model;
-import 'package:rift/models/market.model.dart';
 
 import 'package:rift/helpers/stock.helper.dart';
 import 'package:rift/helpers/analytics.helper.dart';
-// import 'package:rift/helpers/revenuecat.helper.dart';
+import 'package:rift/helpers/revenuecat.helper.dart';
 
 import 'package:rift/widgets/cards/card-image.widget.dart';
 import 'package:rift/widgets/cards/card-price.widget.dart';
@@ -58,10 +57,10 @@ class _StockScreenState extends State<StockScreen> {
       });
     });
 
-    // Purchases.addCustomerInfoUpdateListener((customerInfo) async {
-    //   final isSubscribed = checkIfSubscribed(customerInfo);
-    //   if (isSubscribed && mounted) setState(() => _isPro = isSubscribed);
-    // });
+    Purchases.addCustomerInfoUpdateListener((customerInfo) async {
+      final isSubscribed = checkIfSubscribed(customerInfo);
+      if (isSubscribed && mounted) setState(() => _isPro = isSubscribed);
+    });
   }
 
   @override

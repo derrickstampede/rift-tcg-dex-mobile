@@ -3,7 +3,7 @@ import 'package:material_symbols_icons/symbols.dart';
 
 import 'package:rift/themes/theme-extension.dart';
 
-// import 'package:rift/helpers/revenuecat.helper.dart';
+import 'package:rift/helpers/revenuecat.helper.dart';
 
 import 'package:rift/widgets/misc/pro-badge.widget.dart';
 
@@ -15,7 +15,7 @@ class SubscriptionLockVertical extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      // onTap: () => showSubscribeDialog(context: context, source: source),
+      onTap: () => showSubscribeDialog(context: context, source: source),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

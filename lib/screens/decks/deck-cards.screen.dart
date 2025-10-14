@@ -8,7 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:material_symbols_icons/symbols.dart';
-// import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 
 import 'package:rift/main.dart';
 
@@ -29,7 +29,7 @@ import 'package:rift/helpers/deck.helper.dart';
 import 'package:rift/helpers/card.helper.dart';
 import 'package:rift/helpers/util.helper.dart';
 import 'package:rift/helpers/analytics.helper.dart';
-// import 'package:rift/helpers/revenuecat.helper.dart';
+import 'package:rift/helpers/revenuecat.helper.dart';
 
 import 'package:rift/models/card-search.model.dart';
 
@@ -126,10 +126,10 @@ class _DeckCardsScreenState extends ConsumerState<DeckCardsScreen> {
       });
     });
 
-    // Purchases.addCustomerInfoUpdateListener((customerInfo) async {
-    //   final isSubscribed = checkIfSubscribed(customerInfo);
-    //   if (isSubscribed) setState(() => _isPro = isSubscribed);
-    // });
+    Purchases.addCustomerInfoUpdateListener((customerInfo) async {
+      final isSubscribed = checkIfSubscribed(customerInfo);
+      if (isSubscribed) setState(() => _isPro = isSubscribed);
+    });
 
     _initDeck();
 

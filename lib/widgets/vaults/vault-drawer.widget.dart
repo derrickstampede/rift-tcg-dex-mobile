@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:material_symbols_icons/symbols.dart';
-// import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:collection/collection.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 
@@ -21,7 +21,7 @@ import 'package:rift/widgets/cards/card-image.widget.dart';
 import 'package:rift/models/vault.model.dart';
 import 'package:rift/models/card.model.dart';
 
-// import 'package:rift/helpers/revenuecat.helper.dart';
+import 'package:rift/helpers/revenuecat.helper.dart';
 
 class VaultDrawer extends ConsumerStatefulWidget {
   const VaultDrawer({super.key, required this.slug});
@@ -37,10 +37,10 @@ class _VaultDrawerState extends ConsumerState<VaultDrawer> {
 
   @override
   void initState() {
-    // Purchases.addCustomerInfoUpdateListener((customerInfo) async {
-    //   final isSubscribed = checkIfSubscribed(customerInfo);
-    //   if (isSubscribed) setState(() => _isPro = isSubscribed);
-    // });
+    Purchases.addCustomerInfoUpdateListener((customerInfo) async {
+      final isSubscribed = checkIfSubscribed(customerInfo);
+      if (isSubscribed) setState(() => _isPro = isSubscribed);
+    });
 
     super.initState();
   }
@@ -90,10 +90,6 @@ class _VaultDrawerState extends ConsumerState<VaultDrawer> {
     final market = vault.markets.firstWhere((m) => m.slug == slug);
     final symbol = market.currency;
     num total = market.value;
-
-    // if (_isPro) {
-    //   total = total * ref.read(conversionsNotifierProvider.notifier).findRate(symbol).rate;
-    // }
 
     final conversions$ = ref.watch(conversionsNotifierProvider);
     List<CardListItem> cards = vault.cards.where((c) => c.variant == market.language.toLowerCase()).toList();
@@ -293,7 +289,7 @@ class _VaultDrawerState extends ConsumerState<VaultDrawer> {
                           ),
                           onPressed: () {
                             if (!_isPro) {
-                              // showSubscribeDialog(context: context, source: 'card-view');
+                              showSubscribeDialog(context: context, source: 'card-view');
                               return;
                             }
                             _showCurrencyConverterDialog();

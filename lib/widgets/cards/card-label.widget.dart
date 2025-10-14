@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-// import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -10,7 +10,7 @@ import 'package:rift/widgets/cards/card-price.widget.dart';
 
 import 'package:rift/providers/market.provider.dart';
 
-// import 'package:rift/helpers/revenuecat.helper.dart';
+import 'package:rift/helpers/revenuecat.helper.dart';
 
 class CardLabel extends ConsumerStatefulWidget {
   const CardLabel({super.key, required this.card, required this.label, this.fontSize = 14, this.symbol});
@@ -38,10 +38,10 @@ class _CardLabelState extends ConsumerState<CardLabel> {
   void initState() {
     super.initState();
 
-    // Purchases.addCustomerInfoUpdateListener((customerInfo) async {
-    //   final isSubscribed = checkIfSubscribed(customerInfo);
-    //   if (isSubscribed) setState(() => _isPro = isSubscribed);
-    // });
+    Purchases.addCustomerInfoUpdateListener((customerInfo) async {
+      final isSubscribed = checkIfSubscribed(customerInfo);
+      if (isSubscribed) setState(() => _isPro = isSubscribed);
+    });
   }
 
   @override
@@ -87,7 +87,6 @@ class _CardLabelState extends ConsumerState<CardLabel> {
         );
       }
     }
-    
     if (widget.label == 'domain') {
       if (widget.card.domain != null) {
         labelWidget = Text(widget.card.domain!, maxLines: 1, overflow: TextOverflow.ellipsis, style: style);

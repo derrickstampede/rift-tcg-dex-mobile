@@ -3,9 +3,7 @@ import 'package:material_symbols_icons/symbols.dart';
 
 import 'package:rift/themes/theme-extension.dart';
 
-// import 'package:rift/helpers/revenuecat.helper.dart';
-
-import 'package:rift/widgets/misc/pro-badge.widget.dart';
+import 'package:rift/helpers/revenuecat.helper.dart';
 
 class SubscriptionBoxSm extends StatefulWidget {
   const SubscriptionBoxSm({super.key, required this.source});
@@ -31,7 +29,7 @@ class _SubscriptionBoxSmState extends State<SubscriptionBoxSm> {
           'Tap to check out PRO features',
           style: TextStyle(color: context.proColor.onColorContainer),
         ),
-        // onTap: () => showSubscribeDialog(context: context, source: widget.source),
+        onTap: () => showSubscribeDialog(context: context, source: widget.source),
         trailing: Container(
           decoration: BoxDecoration(
               color: context.proColor.colorContainer,

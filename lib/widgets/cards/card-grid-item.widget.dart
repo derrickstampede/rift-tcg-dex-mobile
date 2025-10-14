@@ -25,11 +25,11 @@ import 'package:rift/models/card-search.model.dart';
 import 'package:rift/providers/card-search.provider.dart';
 import 'package:rift/providers/deck.provider.dart';
 import 'package:rift/providers/vault.provider.dart';
-// import 'package:rift/providers/ad.provider.dart';
+import 'package:rift/providers/ad.provider.dart';
 
 import 'package:rift/helpers/util.helper.dart';
 import 'package:rift/helpers/review.helper.dart';
-// import 'package:rift/helpers/revenuecat.helper.dart';
+import 'package:rift/helpers/revenuecat.helper.dart';
 import 'package:rift/helpers/cards-profiles.helper.dart';
 
 import 'package:rift/globals.dart';
@@ -37,7 +37,7 @@ import 'package:rift/globals.dart';
 import 'package:rift/main.dart';
 
 import 'package:rift/screens/cards/card.screen.dart';
-// import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 
 class CardGridItem extends ConsumerStatefulWidget {
   const CardGridItem({
@@ -97,10 +97,10 @@ class _CardGridItemState extends ConsumerState<CardGridItem> {
       }
     });
 
-    // Purchases.addCustomerInfoUpdateListener((customerInfo) async {
-    //   final isSubscribed = checkIfSubscribed(customerInfo);
-    //   if (isSubscribed) setState(() => _isPro = isSubscribed);
-    // });
+    Purchases.addCustomerInfoUpdateListener((customerInfo) async {
+      final isSubscribed = checkIfSubscribed(customerInfo);
+      if (isSubscribed) setState(() => _isPro = isSubscribed);
+    });
   }
 
   @override
@@ -143,7 +143,7 @@ class _CardGridItemState extends ConsumerState<CardGridItem> {
       ),
     );
 
-    // if (!_isPro) ref.watch(adNotifierProvider.notifier).showInterstitialAd();
+    if (!_isPro) ref.watch(adNotifierProvider.notifier).showInterstitialAd();
     askReview();
   }
 

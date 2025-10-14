@@ -10,7 +10,7 @@ import 'package:rift/models/trial-code.model.dart';
 
 import 'package:rift/providers/promoted-trial-code.provider.dart';
 
-// import 'package:rift/helpers/revenuecat.helper.dart';
+import 'package:rift/helpers/revenuecat.helper.dart';
 
 class TrialCodePromotedButton extends ConsumerStatefulWidget {
   const TrialCodePromotedButton({super.key});
@@ -21,10 +21,10 @@ class TrialCodePromotedButton extends ConsumerStatefulWidget {
 
 class _TrialCodePromotedButtonState extends ConsumerState<TrialCodePromotedButton> with SingleTickerProviderStateMixin {
   void showPaywall(TrialCode trialCode) async {
-    // bool hasPurchased = await showTrialPaywall(trialCode.id, trialCode.offering!, trialCode.entitlement!);
-    // if (hasPurchased) {
-    //   _popAtStart();
-    // }
+    bool hasPurchased = await showTrialPaywall(trialCode.id, trialCode.offering!, trialCode.entitlement!);
+    if (hasPurchased) {
+      _popAtStart();
+    }
   }
 
   void _popAtStart() {

@@ -9,7 +9,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
-// import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 
 import 'package:rift/main.dart';
 
@@ -18,7 +18,7 @@ import 'package:rift/themes/theme-extension.dart';
 import 'package:rift/helpers/profile.helper.dart';
 import 'package:rift/helpers/analytics.helper.dart';
 import 'package:rift/helpers/util.helper.dart';
-// import 'package:rift/helpers/revenuecat.helper.dart';
+import 'package:rift/helpers/revenuecat.helper.dart';
 
 import 'package:rift/models/profile.model.dart';
 
@@ -84,20 +84,20 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       });
     });
 
-    // Purchases.addCustomerInfoUpdateListener((customerInfo) async {
-    //   final isSubscribed = checkIfSubscribed(customerInfo);
-    //   if (isSubscribed) {
-    //     if (!_initPro && !_isPro) {
-    //       _storeProfile();
-    //     }
-    //     if (!_isPro) {
-    //       _fetchAll();
-    //     }
-    //     if (mounted) setState(() => _isPro = isSubscribed);
-    //   }
+    Purchases.addCustomerInfoUpdateListener((customerInfo) async {
+      final isSubscribed = checkIfSubscribed(customerInfo);
+      if (isSubscribed) {
+        if (!_initPro && !_isPro) {
+          _storeProfile();
+        }
+        if (!_isPro) {
+          _fetchAll();
+        }
+        if (mounted) setState(() => _isPro = isSubscribed);
+      }
 
-    //   if (mounted) setState(() => _initPro = false);
-    // });
+      if (mounted) setState(() => _initPro = false);
+    });
   }
 
   @override
@@ -563,7 +563,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                             ),
                             onPressed: () {
                               if (!_isPro) {
-                                // showSubscribeDialog(context: context, source: 'card-view');
+                                showSubscribeDialog(context: context, source: 'card-view');
                                 return;
                               }
                               _showCurrencyConverterDialog();

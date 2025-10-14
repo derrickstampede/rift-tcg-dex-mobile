@@ -6,7 +6,7 @@ import 'package:rift/widgets/misc/domain-icon.widget.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-// import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 
 import 'package:rift/main.dart';
 
@@ -19,14 +19,13 @@ import 'package:rift/models/filter.model.dart';
 
 import 'package:rift/widgets/cards/card-image.widget.dart';
 import 'package:rift/widgets/auth/signin-button.widget.dart';
-import 'package:rift/widgets/misc/color-hexagon.widget.dart';
 import 'package:rift/widgets/ads/ad-banner.widget.dart';
 
 import 'package:rift/helpers/util.helper.dart';
 import 'package:rift/helpers/profile.helper.dart';
 import 'package:rift/helpers/analytics.helper.dart';
 import 'package:rift/helpers/review.helper.dart';
-// import 'package:rift/helpers/revenuecat.helper.dart';
+import 'package:rift/helpers/revenuecat.helper.dart';
 
 import 'package:rift/providers/decks.provider.dart';
 import 'package:rift/providers/ad.provider.dart';
@@ -75,10 +74,10 @@ class _DecksScreenState extends ConsumerState<DecksScreen> {
       });
     });
 
-    // Purchases.addCustomerInfoUpdateListener((customerInfo) async {
-    //   final isSubscribed = checkIfSubscribed(customerInfo);
-    //   if (isSubscribed && mounted) setState(() => _isPro = isSubscribed);
-    // });
+    Purchases.addCustomerInfoUpdateListener((customerInfo) async {
+      final isSubscribed = checkIfSubscribed(customerInfo);
+      if (isSubscribed && mounted) setState(() => _isPro = isSubscribed);
+    });
   }
 
   @override
@@ -98,7 +97,7 @@ class _DecksScreenState extends ConsumerState<DecksScreen> {
     }
 
     if (decks.length >= limit) {
-      // showSubscribeDialog(context: context, source: 'deck-limit');
+      showSubscribeDialog(context: context, source: 'deck-limit');
       return;
     }
     _goToNewDeck();
@@ -187,7 +186,7 @@ class _DecksScreenState extends ConsumerState<DecksScreen> {
                                   ),
                                 ),
                                 subtitle: const Text('Subscribe to unlock'),
-                                // onTap: () => showSubscribeDialog(context: context, source: 'deck-locked'),
+                                onTap: () => showSubscribeDialog(context: context, source: 'deck-locked'),
                               );
                             }
 

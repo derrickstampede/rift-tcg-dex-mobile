@@ -5,7 +5,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 import 'package:material_symbols_icons/symbols.dart';
-// import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -17,7 +17,7 @@ import 'package:rift/providers/alerts.provider.dart';
 
 import 'package:rift/models/card-search.model.dart';
 
-// import 'package:rift/helpers/revenuecat.helper.dart';
+import 'package:rift/helpers/revenuecat.helper.dart';
 
 import 'package:rift/widgets/cards/card-filter-drawer.widget.dart';
 import 'package:rift/widgets/cards/card-grid.widget.dart';
@@ -62,10 +62,10 @@ class _CardsScreenState extends ConsumerState<CardsScreen> {
       });
     });
 
-    // Purchases.addCustomerInfoUpdateListener((customerInfo) async {
-    //   final isSubscribed = checkIfSubscribed(customerInfo);
-    //   if (isSubscribed && mounted) setState(() => _isPro = isSubscribed);
-    // });
+    Purchases.addCustomerInfoUpdateListener((customerInfo) async {
+      final isSubscribed = checkIfSubscribed(customerInfo);
+      if (isSubscribed && mounted) setState(() => _isPro = isSubscribed);
+    });
 
     super.initState();
   }
@@ -186,17 +186,6 @@ class _CardsScreenState extends ConsumerState<CardsScreen> {
               );
             },
           ),
-          // Builder(
-          //   builder: (BuildContext context) {
-          //     return IconButton(
-          //       icon: const Icon(
-          //         Symbols.ads_click,
-          //       ),
-          //       onPressed: _showAd,
-          //       tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-          //     );
-          //   },
-          // ),
         ],
       ),
       persistentFooterButtons: [CardSortHeader(searchScreen: widget.searchScreen, cardSearch: widget.cardSearch)],

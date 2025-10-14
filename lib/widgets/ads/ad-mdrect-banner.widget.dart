@@ -7,7 +7,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'package:rift/helpers/analytics.helper.dart';
-// import 'package:rift/helpers/revenuecat.helper.dart';
+import 'package:rift/helpers/revenuecat.helper.dart';
 
 import 'package:rift/widgets/ads/ad-banner.widget.dart';
 
@@ -143,35 +143,24 @@ class _AdMdRectBannerState extends State<AdMdRectBanner> {
         ? Column(
           children: [
             SizedBox(width: 320, height: _bannerAd != null ? 250 : 0, child: AdWidget(ad: _bannerAd!)),
-            // if (_isLoggedIn)
-            //   GestureDetector(
-            //     onTap: () => showSubscribeDialog(context: context, source: 'ad-remove'),
-            //     child: SizedBox(
-            //       width: double.infinity,
-            //       child: Text(
-            //         'Remove Ads',
-            //         textAlign: TextAlign.center,
-            //         style: TextStyle(color: Colors.grey[500], fontSize: 12),
-            //       ),
-            //     ),
-            //   ),
+            if (_isLoggedIn)
+              GestureDetector(
+                onTap: () => showSubscribeDialog(context: context, source: 'ad-remove'),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: Text(
+                    'Remove Ads',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.grey[500], fontSize: 12),
+                  ),
+                ),
+              ),
             const SizedBox(height: 4),
           ],
         )
         : const Column(
           children: [
             AdBanner(),
-            // if (_isLoggedIn)
-            //   GestureDetector(
-            //     onTap: () => showSubscribeDialog(context: context, source: 'ad-remove'),
-            //     child: SizedBox(
-            //         width: double.infinity,
-            //         child: Text(
-            //           'Remove Ads',
-            //           textAlign: TextAlign.center,
-            //           style: TextStyle(color: Colors.grey[500], fontSize: 12),
-            //         )),
-            //   ),
             SizedBox(height: 4),
           ],
         );

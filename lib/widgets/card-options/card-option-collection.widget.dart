@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-// import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 
 import 'package:rift/models/card.model.dart';
 import 'package:rift/models/card-search.model.dart';
@@ -24,7 +24,7 @@ import 'package:rift/constants/main-card-search.constant.dart';
 import 'package:rift/helpers/auth.helper.dart';
 import 'package:rift/helpers/card-options.helper.dart';
 import 'package:rift/helpers/analytics.helper.dart';
-// import 'package:rift/helpers/revenuecat.helper.dart';
+import 'package:rift/helpers/revenuecat.helper.dart';
 
 class CardOptionCollection extends ConsumerStatefulWidget {
   const CardOptionCollection({
@@ -68,10 +68,10 @@ class _CardOptionCollectionState extends ConsumerState<CardOptionCollection> {
       });
     });
 
-    // Purchases.addCustomerInfoUpdateListener((customerInfo) async {
-    //   final isSubscribed = checkIfSubscribed(customerInfo);
-    //   if (isSubscribed) setState(() => _isPro = isSubscribed);
-    // });
+    Purchases.addCustomerInfoUpdateListener((customerInfo) async {
+      final isSubscribed = checkIfSubscribed(customerInfo);
+      if (isSubscribed) setState(() => _isPro = isSubscribed);
+    });
   }
 
   @override

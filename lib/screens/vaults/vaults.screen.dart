@@ -5,7 +5,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-// import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 
 import 'package:rift/main.dart';
@@ -23,7 +23,7 @@ import 'package:rift/widgets/ads/ad-banner.widget.dart';
 import 'package:rift/helpers/util.helper.dart';
 import 'package:rift/helpers/profile.helper.dart';
 import 'package:rift/helpers/analytics.helper.dart';
-// import 'package:rift/helpers/revenuecat.helper.dart';
+import 'package:rift/helpers/revenuecat.helper.dart';
 
 import 'package:rift/providers/vaults.provider.dart';
 import 'package:rift/providers/ad.provider.dart';
@@ -71,10 +71,10 @@ class _VaultsScreenState extends ConsumerState<VaultsScreen> {
       });
     });
 
-    // Purchases.addCustomerInfoUpdateListener((customerInfo) async {
-    //   final isSubscribed = checkIfSubscribed(customerInfo);
-    //   if (isSubscribed && mounted) setState(() => _isPro = isSubscribed);
-    // });
+    Purchases.addCustomerInfoUpdateListener((customerInfo) async {
+      final isSubscribed = checkIfSubscribed(customerInfo);
+      if (isSubscribed && mounted) setState(() => _isPro = isSubscribed);
+    });
   }
 
   @override
@@ -94,7 +94,7 @@ class _VaultsScreenState extends ConsumerState<VaultsScreen> {
     }
 
     if (vaults.length >= limit) {
-      // showSubscribeDialog(context: context, source: 'vault-limit');
+      showSubscribeDialog(context: context, source: 'vault-limit');
       return;
     }
     _goToNewVault();
@@ -180,7 +180,7 @@ class _VaultsScreenState extends ConsumerState<VaultsScreen> {
                                   ),
                                 ),
                                 subtitle: const Text('Subscribe to unlock'),
-                                // onTap: () => showSubscribeDialog(context: context, source: 'vault-locked'),
+                                onTap: () => showSubscribeDialog(context: context, source: 'vault-locked'),
                               );
                             }
 

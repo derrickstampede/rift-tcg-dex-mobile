@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-// import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 
 import 'package:rift/models/vault.model.dart';
 
 import 'package:rift/helpers/vault.helper.dart';
 import 'package:rift/helpers/util.helper.dart';
 import 'package:rift/helpers/analytics.helper.dart';
-// import 'package:rift/helpers/revenuecat.helper.dart';
+import 'package:rift/helpers/revenuecat.helper.dart';
 
 import 'package:rift/widgets/vaults/vault-color-picker.widget.dart';
 
@@ -33,7 +33,6 @@ class _VaultFormScreenState extends ConsumerState<VaultFormScreen> {
   final _vaultForm = VaultForm(
       id: null, name: null, slug: null, category: 'actual', type: null, color: null, other: null, order: 1, cards: []);
 
-  // final _categoryOptions = vaultCategoryOptions;
   final _typeOptions = vaultTypeOptions;
 
   Color _pickerColor = Colors.red;
@@ -57,10 +56,10 @@ class _VaultFormScreenState extends ConsumerState<VaultFormScreen> {
       });
     }
 
-    // Purchases.addCustomerInfoUpdateListener((customerInfo) async {
-    //   final isSubscribed = checkIfSubscribed(customerInfo);
-    //   if (isSubscribed) setState(() => _isPro = isSubscribed);
-    // });
+    Purchases.addCustomerInfoUpdateListener((customerInfo) async {
+      final isSubscribed = checkIfSubscribed(customerInfo);
+      if (isSubscribed) setState(() => _isPro = isSubscribed);
+    });
 
     super.initState();
   }
@@ -236,71 +235,6 @@ class _VaultFormScreenState extends ConsumerState<VaultFormScreen> {
                                     _vaultForm.updateName = value;
                                   }),
                             ]),
-                            // const SizedBox(
-                            //   height: 4,
-                            // ),
-                            // Text(
-                            //   "Category",
-                            //   style: TextStyle(
-                            //       fontWeight: FontWeight.w700, fontSize: 14, color: Theme.of(context).colorScheme.outline),
-                            // ),
-                            // const SizedBox(
-                            //   height: 6,
-                            // ),
-                            // Container(
-                            //   width: double.infinity,
-                            //   padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                            //   decoration: BoxDecoration(
-                            //     borderRadius: BorderRadius.circular(4.0),
-                            //     border: Border.all(
-                            //         color: Theme.of(context).colorScheme.outline, style: BorderStyle.solid, width: 1),
-                            //   ),
-                            //   child: DropdownButtonFormField<String>(
-                            //       value: _vaultForm.category,
-                            //       isExpanded: true,
-                            //       decoration: const InputDecoration(border: InputBorder.none),
-                            //       onChanged: (String? value) {
-                            //         setState(() {
-                            //           _vaultForm.updateCategory = value;
-                            //         });
-                            //       },
-                            //       onSaved: (value) {
-                            //         _vaultForm.updateCategory = value;
-                            //       },
-                            //       items: [
-                            //         const DropdownMenuItem<String>(
-                            //           value: null,
-                            //           child: Text(
-                            //             "Select Category",
-                            //             style: TextStyle(color: Colors.black54),
-                            //           ),
-                            //         ),
-                            //         for (var i = 0; i < _categoryOptions.length; i++)
-                            //           DropdownMenuItem<String>(
-                            //             value: _categoryOptions[i].value,
-                            //             child: Text(_categoryOptions[i].label),
-                            //           )
-                            //       ]),
-                            // ),
-                            if (_vaultForm.category == 'digital')
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  // const SizedBox(
-                                  //   height: 4,
-                                  // ),
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(4.0),
-                                        color: Theme.of(context).colorScheme.secondaryContainer),
-                                    child: Text(
-                                      "Digital vaults let you easily organize your card collection however you want. Maybe a vault for your rarest cards and monitor their total value or a vault of cards a friend borrowed from you.",
-                                      selectionColor: Theme.of(context).colorScheme.onSecondaryContainer,
-                                    ),
-                                  )
-                                ],
-                              ),
                             if (_vaultForm.category == 'actual')
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
