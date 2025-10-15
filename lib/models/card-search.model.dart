@@ -62,6 +62,7 @@ class CardSearchFilters {
   final List<String> effect;
   final String? asc;
   final String? desc;
+  final String? legend;
 
   CardSearchFilters({
     required this.collection,
@@ -80,6 +81,7 @@ class CardSearchFilters {
     required this.effect,
     required this.asc,
     required this.desc,
+    this.legend,
   });
 
   Map<String, dynamic> toJson() => {
@@ -99,6 +101,7 @@ class CardSearchFilters {
     'effect': effect,
     'asc': asc,
     'desc': desc,
+    'legend': legend,
   };
 
   factory CardSearchFilters.fromMap(Map<String, dynamic> map) => CardSearchFilters(
@@ -118,6 +121,7 @@ class CardSearchFilters {
     effect: map['effect'],
     asc: map['asc'],
     desc: map['desc'],
+    legend: map['legend'],
   );
 }
 

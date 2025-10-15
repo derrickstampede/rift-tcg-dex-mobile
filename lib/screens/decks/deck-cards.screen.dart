@@ -251,7 +251,7 @@ class _DeckCardsScreenState extends ConsumerState<DeckCardsScreen> {
   void _goToSelectCards(Deck deck) async {
     await Config.router.navigateTo(
       context,
-      '/decks/pick?slug=${deck.slug}&color=${Uri.encodeComponent(deck.legend.color!)}',
+      '/decks/pick?slug=${deck.slug}&color=${Uri.encodeComponent(deck.legend.color!)}&legend=${deck.legend.legend}',
     );
   }
 

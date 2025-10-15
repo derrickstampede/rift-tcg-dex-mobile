@@ -159,13 +159,17 @@ class FluroRoutes {
         handlerFunc: (BuildContext? context, Map<String, dynamic> params) {
           String? slug;
           String? color;
+          String? legend;
           if (params['slug'] != null) {
             slug = params['slug'].first;
           }
           if (params['color'] != null) {
             color = params['color'].first;
           }
-          return SelectCardsScreen(slug: slug, color: color);
+          if (params['legend'] != null) {
+            legend = params['legend'].first;
+          }
+          return SelectCardsScreen(slug: slug, color: color, legend: legend);
         },
       ),
       transitionType: TransitionType.native,

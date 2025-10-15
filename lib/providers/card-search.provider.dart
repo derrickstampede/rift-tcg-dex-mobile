@@ -84,6 +84,7 @@ class CardSearchNotifier extends _$CardSearchNotifier {
         asc: search['filters']['asc'],
         desc: search['filters']['desc'],
         offset: refresh ? 0 : search['cards'].length,
+        legend: search['filters']['legend'],
       );
       final cards = response.cards;
 
@@ -284,6 +285,7 @@ class CardSearchNotifier extends _$CardSearchNotifier {
       effect: state.filters.effect,
       asc: asc,
       desc: desc,
+      legend: newState.filters.legend,
     );
 
     logEvent(name: 'card_sort', parameters: {'show': value, 'by': isAsending ? 'asc' : 'desc'});
@@ -339,6 +341,7 @@ class CardSearchNotifier extends _$CardSearchNotifier {
       effect: state.filters.effect,
       asc: asc,
       desc: desc,
+      legend: newState.filters.legend,
     );
 
     logEvent(name: 'card_sort', parameters: {'show': state.status.orderBy, 'by': isAsending ? 'asc' : 'desc'});
@@ -452,7 +455,7 @@ class CardSearchNotifier extends _$CardSearchNotifier {
       rarity: newState.filters.rarity,
       language: newState.filters.language,
       color: newState.filters.color,
-      domain: newState.filters.domain,  
+      domain: newState.filters.domain,
       type: newState.filters.type,
       art: newState.filters.art,
       energy: newState.filters.energy,
@@ -462,6 +465,7 @@ class CardSearchNotifier extends _$CardSearchNotifier {
       effect: newState.filters.effect,
       asc: newState.filters.asc,
       desc: newState.filters.desc,
+      legend: newState.filters.legend,
     );
 
     logEvent(name: 'filter_collection', parameters: {'value': value.toString()});
@@ -487,6 +491,7 @@ class CardSearchNotifier extends _$CardSearchNotifier {
       effect: newState.filters.effect,
       asc: newState.filters.asc,
       desc: newState.filters.desc,
+      legend: newState.filters.legend,
     );
 
     update(newState);
@@ -501,7 +506,7 @@ class CardSearchNotifier extends _$CardSearchNotifier {
       rarity: newState.filters.rarity,
       language: newState.filters.language,
       color: newState.filters.color,
-      domain: newState.filters.domain,  
+      domain: newState.filters.domain,
       type: newState.filters.type,
       art: newState.filters.art,
       energy: newState.filters.energy,
@@ -511,6 +516,7 @@ class CardSearchNotifier extends _$CardSearchNotifier {
       effect: newState.filters.effect,
       asc: newState.filters.asc,
       desc: newState.filters.desc,
+      legend: newState.filters.legend,
     );
 
     logEvent(name: 'filter_set', parameters: {'value': value});
@@ -544,6 +550,7 @@ class CardSearchNotifier extends _$CardSearchNotifier {
       effect: newState.filters.effect,
       asc: newState.filters.asc,
       desc: newState.filters.desc,
+      legend: newState.filters.legend,
     );
 
     logEvent(name: 'filter_rarity', parameters: {'value': value});
@@ -577,6 +584,7 @@ class CardSearchNotifier extends _$CardSearchNotifier {
       effect: newState.filters.effect,
       asc: newState.filters.asc,
       desc: newState.filters.desc,
+      legend: newState.filters.legend,
     );
 
     logEvent(name: 'filter_language', parameters: {'value': value});
@@ -615,6 +623,7 @@ class CardSearchNotifier extends _$CardSearchNotifier {
       effect: newState.filters.effect,
       asc: newState.filters.asc,
       desc: newState.filters.desc,
+      legend: newState.filters.legend,
     );
     newState.status = CardSearchStatus(
       isInitializing: false,
@@ -671,6 +680,7 @@ class CardSearchNotifier extends _$CardSearchNotifier {
       effect: newState.filters.effect,
       asc: newState.filters.asc,
       desc: newState.filters.desc,
+      legend: newState.filters.legend,
     );
     newState.status = CardSearchStatus(
       isInitializing: false,
@@ -722,6 +732,7 @@ class CardSearchNotifier extends _$CardSearchNotifier {
       effect: newState.filters.effect,
       asc: newState.filters.asc,
       desc: newState.filters.desc,
+      legend: newState.filters.legend,
     );
 
     logEvent(name: 'filter_type', parameters: {'value': value});
@@ -755,6 +766,7 @@ class CardSearchNotifier extends _$CardSearchNotifier {
       effect: newState.filters.effect,
       asc: newState.filters.asc,
       desc: newState.filters.desc,
+      legend: newState.filters.legend,
     );
 
     logEvent(name: 'filter_art', parameters: {'value': value});
@@ -781,6 +793,7 @@ class CardSearchNotifier extends _$CardSearchNotifier {
       effect: newState.filters.effect,
       asc: newState.filters.asc,
       desc: newState.filters.desc,
+      legend: newState.filters.legend,
     );
 
     logEvent(name: 'filter_energy', parameters: {'value': '${value.start},${value.end}'});
@@ -807,13 +820,13 @@ class CardSearchNotifier extends _$CardSearchNotifier {
       effect: newState.filters.effect,
       asc: newState.filters.asc,
       desc: newState.filters.desc,
+      legend: newState.filters.legend,
     );
 
     logEvent(name: 'filter_might', parameters: {'value': '${value.start},${value.end}'});
     update(newState);
   }
 
-  
   void updatePower(SfRangeValues value) {
     final newState = CardSearch.fromMap(state.toJson());
 
@@ -834,6 +847,7 @@ class CardSearchNotifier extends _$CardSearchNotifier {
       effect: newState.filters.effect,
       asc: newState.filters.asc,
       desc: newState.filters.desc,
+      legend: newState.filters.legend,
     );
 
     logEvent(name: 'filter_power', parameters: {'value': '${value.start},${value.end}'});
@@ -859,6 +873,7 @@ class CardSearchNotifier extends _$CardSearchNotifier {
       effect: newState.filters.effect,
       asc: newState.filters.asc,
       desc: newState.filters.desc,
+      legend: newState.filters.legend,
     );
 
     logEvent(name: 'filter_feature', parameters: {'value': value});
@@ -892,6 +907,7 @@ class CardSearchNotifier extends _$CardSearchNotifier {
       effect: currentEffect,
       asc: newState.filters.asc,
       desc: newState.filters.desc,
+      legend: newState.filters.legend,
     );
 
     logEvent(name: 'filter_effect', parameters: {'value': value});
@@ -998,6 +1014,7 @@ class CardSearchNotifier extends _$CardSearchNotifier {
       effect: [],
       asc: newState.filters.asc,
       desc: newState.filters.desc,
+      legend: newState.filters.legend,
     );
 
     update(newState);

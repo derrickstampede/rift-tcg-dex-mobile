@@ -39,6 +39,7 @@ class CardSearchRepository {
     String? asc,
     String? desc,
     int? offset,
+    String? legend,
   }) async {
     try {
       final headers = {...httpHeaders};
@@ -99,6 +100,10 @@ class CardSearchRepository {
 
       if (offset != null) {
         queryParams.putIfAbsent('offset', () => offset.toString());
+      }
+
+      if (legend != null && legend.isNotEmpty) {
+        queryParams.putIfAbsent('legend', () => legend);
       }
 
       final url = Uri.https(dotenv.env['API']!, 'api/v1/cards/search', queryParams);

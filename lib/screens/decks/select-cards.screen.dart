@@ -25,10 +25,11 @@ import 'package:rift/widgets/cards/card-sort-header.widget.dart';
 import 'package:rift/widgets/ads/ad-banner.widget.dart';
 
 class SelectCardsScreen extends ConsumerStatefulWidget {
-  const SelectCardsScreen({super.key, this.slug, this.color});
+  const SelectCardsScreen({super.key, this.slug, this.color, this.legend});
 
   final String? slug;
   final String? color;
+  final String? legend;
 
   @override
   ConsumerState<SelectCardsScreen> createState() => _SelectCardsScreenState();
@@ -42,56 +43,7 @@ class _SelectCardsScreenState extends ConsumerState<SelectCardsScreen> {
   late final StreamSubscription<AuthState> _authStateSubscription;
 
   final _searchScreen = 'select-cards';
-  CardSearch _cardSearch = CardSearch(
-    cards: [],
-    cardBatches: [],
-    status: CardSearchStatus(
-      isInitializing: true,
-      isLoading: false,
-      hasReachedLimit: false,
-      showOwned: false,
-      view: 'name',
-      orderBy: 'set',
-      isAscending: false,
-      showCollectionDisabled: false,
-      showTypeRequired: false,
-      showColorRequired: false,
-      selectLeader: false,
-      addToDeck: true,
-      addToDeckSelect: true,
-      addToVault: false,
-    ),
-    filters: CardSearchFilters(
-      collection: false,
-      name: null,
-      setId: null,
-      rarity: [],
-      language: [],
-      domain: [],
-      type: ["Signature Spell", "Spell", "Token Unit", "Unit", "Rune", "Gear"],
-      color: [],
-      art: [],
-      energy: List<int>.from(json.decode(dotenv.env['CARD_SEARCH_ENERGY_RESET']!)),
-      might: List<int>.from(json.decode(dotenv.env['CARD_SEARCH_MIGHT_RESET']!)),
-      power: List<int>.from(json.decode(dotenv.env['CARD_SEARCH_POWER_RESET']!)),
-      tag: null,
-      effect: [],
-      asc: null,
-      desc: null,
-    ),
-    config: CardSearchConfig(
-      disableCollection: false,
-      disableRarity: const [],
-      disableType: const ["Legend", "Champion Unit", "Battlefield"],
-      disableColor: const [],
-      initialResetColor: const [],
-      initialResetType: const [],
-      initialResetRarity: const [],
-      requireOneType: true,
-      requireOneColor: true,
-    ),
-    symbol: null,
-  );
+  late CardSearch _cardSearch;
 
   final int _deckCardLimit = int.parse(dotenv.env['CARD_PER_DECK_LIMIT']!);
   final List<String> _allColors = ['Red', 'Blue', 'Green', 'Yellow', 'Purple', 'Orange', 'No Color'];
@@ -101,6 +53,59 @@ class _SelectCardsScreenState extends ConsumerState<SelectCardsScreen> {
   @override
   void initState() {
     super.initState();
+
+    final types = ["Signature Spell", "Signature Unit", "Spell", "Token Unit", "Unit", "Rune", "Gear"];
+    _cardSearch = CardSearch(
+      cards: [],
+      cardBatches: [],
+      status: CardSearchStatus(
+        isInitializing: true,
+        isLoading: false,
+        hasReachedLimit: false,
+        showOwned: false,
+        view: 'name',
+        orderBy: 'set',
+        isAscending: false,
+        showCollectionDisabled: false,
+        showTypeRequired: false,
+        showColorRequired: false,
+        selectLeader: false,
+        addToDeck: true,
+        addToDeckSelect: true,
+        addToVault: false,
+      ),
+      filters: CardSearchFilters(
+        collection: false,
+        name: null,
+        setId: null,
+        rarity: [],
+        language: [],
+        domain: [],
+        type: types,
+        color: [],
+        art: [],
+        energy: List<int>.from(json.decode(dotenv.env['CARD_SEARCH_ENERGY_RESET']!)),
+        might: List<int>.from(json.decode(dotenv.env['CARD_SEARCH_MIGHT_RESET']!)),
+        power: List<int>.from(json.decode(dotenv.env['CARD_SEARCH_POWER_RESET']!)),
+        tag: null,
+        effect: [],
+        asc: null,
+        desc: null,
+        legend: widget.legend,
+      ),
+      config: CardSearchConfig(
+        disableCollection: false,
+        disableRarity: const [],
+        disableType: const ["Legend", "Champion Unit", "Battlefield"],
+        disableColor: const [],
+        initialResetColor: const [],
+        initialResetType: types,
+        initialResetRarity: const [],
+        requireOneType: true,
+        requireOneColor: true,
+      ),
+      symbol: null,
+    );
 
     final searchCardsJson = _cardSearch.toJson();
     List<String> colors = widget.color!.split("/");

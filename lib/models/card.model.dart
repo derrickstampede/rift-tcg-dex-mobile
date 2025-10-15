@@ -177,6 +177,7 @@ class CardListItem with ChangeNotifier {
   final num? tcgpEn;
   final num? cmEn;
   final num? cmJp;
+  final String? legend;
 
   CardListItem({
     required this.id,
@@ -206,6 +207,7 @@ class CardListItem with ChangeNotifier {
     required this.tcgpEn,
     required this.cmEn,
     required this.cmJp,
+    this.legend,
   });
 
   Map<String, dynamic> toJson() => {
@@ -236,6 +238,7 @@ class CardListItem with ChangeNotifier {
     'tcgp_en': tcgpEn,
     'cm_en': cmEn,
     'cm_jp': cmJp,
+    'legend': legend,
   };
 
   factory CardListItem.fromMap(Map<String, dynamic> map) => CardListItem(
@@ -272,6 +275,7 @@ class CardListItem with ChangeNotifier {
     tcgpEn: map['tcgp_en'],
     cmEn: map['cm_en'],
     cmJp: map['cm_jp'],
+    legend: map['legend'],
   );
 }
 
