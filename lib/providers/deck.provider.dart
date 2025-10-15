@@ -102,8 +102,12 @@ class DeckBuildNotifier extends _$DeckBuildNotifier {
     if (card.maxDeckCards != null) {
       cardLimit = card.maxDeckCards!;
     }
-    if (card.type == "ENERGY MARKER" && energyCount() >= 1) {
-      showSnackbar('Energy marker limit reached');
+    if (card.type == "Rune" && runeCount() >= 12) {
+      showSnackbar('Rune limit reached');
+      return null;
+    }
+    if ((card.type == "Signature Spell" || card.type == "Signature Unit") && signatureCount() >= 3) {
+      showSnackbar('Signature limit reached');
       return null;
     }
     if (cardInstances >= cardLimit) {
@@ -112,8 +116,11 @@ class DeckBuildNotifier extends _$DeckBuildNotifier {
     }
 
     int totalCards = 0;
-    final sideCards = ["ENERGY MARKER"];
-    for (var c in state!.cards.where((c) => c.type != 'LEADER').toList()) {
+    final sideCards = ["Rune", "Token Unit"];
+    for (var c
+        in state!.cards
+            .where((c) => c.type != 'Legend' && c.type != 'Champion Unit' && c.type != 'Battlefield')
+            .toList()) {
       if (!sideCards.contains(c.type)) {
         totalCards = c.count + totalCards;
       }
@@ -234,9 +241,17 @@ class DeckBuildNotifier extends _$DeckBuildNotifier {
     return instances;
   }
 
-  int energyCount() {
+  int runeCount() {
     int count = 0;
-    for (var c in state!.cards.where((c) => c.type == "ENERGY MARKER")) {
+    for (var c in state!.cards.where((c) => c.type == "Rune")) {
+      count += c.count;
+    }
+    return count;
+  }
+
+  int signatureCount() {
+    int count = 0;
+    for (var c in state!.cards.where((c) => c.type == "Signature Spell" || c.type == "Signature Unit")) {
       count += c.count;
     }
     return count;
@@ -249,13 +264,13 @@ class DeckBuildNotifier extends _$DeckBuildNotifier {
     if (deck == null) return total;
 
     for (var i = 0; i < deck.cards.length; i++) {
-      if (deck.cards[i].type == "ENERGY MARKER") {
+      if (deck.cards[i].type == "Rune" || deck.cards[i].type == "Token Unit") {
         continue;
       }
       total += deck.cards[i].count;
     }
 
-    //* REMOVE LEADER
+    //* REMOVE LEGEND
     total -= 1;
 
     return total;
@@ -268,9 +283,7 @@ class DeckBuildNotifier extends _$DeckBuildNotifier {
     if (deck == null) return total;
 
     for (var i = 0; i < deck.cards.length; i++) {
-      if (deck.cards[i].type != "Legend" &&
-          deck.cards[i].type != "Champion Unit" &&
-          deck.cards[i].type != "Battlefield") {
+      if (deck.cards[i].type == "Rune" || deck.cards[i].type == "Token Unit") {
         total += deck.cards[i].count;
       }
     }
