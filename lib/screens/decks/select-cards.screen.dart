@@ -54,7 +54,7 @@ class _SelectCardsScreenState extends ConsumerState<SelectCardsScreen> {
   void initState() {
     super.initState();
 
-    final types = ["Signature Spell", "Signature Unit", "Spell", "Token Unit", "Unit", "Rune", "Gear"];
+    final types = ["Signature Spell", "Signature Unit", "Champion Unit", "Spell", "Token Unit", "Unit", "Rune", "Gear"];
     _cardSearch = CardSearch(
       cards: [],
       cardBatches: [],
@@ -96,7 +96,7 @@ class _SelectCardsScreenState extends ConsumerState<SelectCardsScreen> {
       config: CardSearchConfig(
         disableCollection: false,
         disableRarity: const [],
-        disableType: const ["Legend", "Champion Unit", "Battlefield"],
+        disableType: const ["Legend", "Battlefield"],
         disableColor: const [],
         initialResetColor: const [],
         initialResetType: types,

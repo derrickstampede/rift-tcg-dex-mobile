@@ -51,6 +51,7 @@ class DeckCreateForm extends ConsumerStatefulWidget {
 class _DeckCreateFormState extends ConsumerState<DeckCreateForm> {
   final _formKey = GlobalKey<FormState>();
   final _filterForm = FilterForm(name: null, legendId: null, thumbnail: null);
+  final _nameFocusNode = FocusNode();
 
   bool _isSaving = false;
 
@@ -73,15 +74,26 @@ class _DeckCreateFormState extends ConsumerState<DeckCreateForm> {
     });
   }
 
+  @override
+  void dispose() {
+    _nameFocusNode.dispose();
+    super.dispose();
+  }
+
   void _goToSelectLegend() async {
+    _unfocus();
+    
     CardListItem? legendCard = await Config.router.navigateTo(context, '/decks/select-leader');
     setState(() {
       _legendCard = legendCard;
     });
+    _unfocus();
   }
 
   void _goToSelectChampion() async {
     if (_legendCard == null) return;
+
+    _unfocus();
 
     final encodedColor = Uri.encodeComponent(_legendCard!.color ?? '');
     final url = '/decks/select-champion?color=$encodedColor';
@@ -89,13 +101,25 @@ class _DeckCreateFormState extends ConsumerState<DeckCreateForm> {
     setState(() {
       _championCard = championCard;
     });
+    _unfocus();
   }
 
   void _goToSelectBattlefield() async {
+    _unfocus();
+    
     CardListItem? battlefieldCard = await Config.router.navigateTo(context, '/decks/select-battlefield');
     setState(() {
       _battlefieldCard = battlefieldCard;
     });
+    _unfocus();
+  }
+
+  void _unfocus() {
+    if (mounted) {
+      _nameFocusNode.unfocus();
+      // Also try to hide the keyboard using SystemChannels
+      SystemChannels.textInput.invokeMethod('TextInput.hide');
+    }
   }
 
   Future<void> _submit(WidgetRef ref) async {
@@ -184,6 +208,7 @@ class _DeckCreateFormState extends ConsumerState<DeckCreateForm> {
                 ),
                 const SizedBox(height: 6),
                 TextFormField(
+                  focusNode: _nameFocusNode,
                   decoration: InputDecoration(
                     hintText: 'Name',
                     counterText: '',

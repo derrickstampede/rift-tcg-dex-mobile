@@ -136,13 +136,49 @@ class _CardDeckEditState extends ConsumerState<CardDeckEdit> {
     ref.read(deckListNotifierProvider.notifier).updateUpdatedAt(widget.slug);
   }
 
+  List<CardListItem> _sortCards(List<CardListItem> cards) {
+    final signatures = ['Signature Unit', 'Signature Spell'];
+
+    final legendCard = cards.where((c) => c.type?.toLowerCase() == 'legend').toList();
+    final championCard = cards.where((c) => c.type?.toLowerCase() == 'champion unit').toList();
+    final signatureCards = cards.where((c) => signatures.contains(c.type?.toLowerCase())).toList();
+    final unitCards = cards.where((c) => c.type?.toLowerCase() == 'unit').toList();
+    final spellCards = cards.where((c) => c.type?.toLowerCase() == 'spell').toList();
+    final gearCards = cards.where((c) => c.type?.toLowerCase() == 'gear').toList();
+    final battlefieldCards = cards.where((c) => c.type?.toLowerCase() == 'battlefield').toList();
+    final tokenCards = cards.where((c) => c.type?.toLowerCase() == 'token unit').toList();
+    final runeCards = cards.where((c) => c.type?.toLowerCase() == 'rune').toList();
+
+    legendCard.sort((a, b) => a.cardId.compareTo(b.cardId));
+    championCard.sort((a, b) => a.cardId.compareTo(b.cardId));
+    signatureCards.sort((a, b) => a.cardId.compareTo(b.cardId));
+    unitCards.sort((a, b) => a.cardId.compareTo(b.cardId));
+    spellCards.sort((a, b) => a.cardId.compareTo(b.cardId));
+    gearCards.sort((a, b) => a.cardId.compareTo(b.cardId));
+    battlefieldCards.sort((a, b) => a.cardId.compareTo(b.cardId));
+    tokenCards.sort((a, b) => a.cardId.compareTo(b.cardId));
+    runeCards.sort((a, b) => a.cardId.compareTo(b.cardId));
+
+    return [
+      ...legendCard,
+      ...battlefieldCards,
+      ...championCard,
+      ...signatureCards,
+      ...unitCards,
+      ...spellCards,
+      ...gearCards,
+      ...tokenCards,
+      ...runeCards,
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     final deck$ = ref.watch(deckBuildNotifierProvider(widget.slug));
     if (deck$ == null) {
       return loadingWidget;
     }
-    _cardSearch.cards = deck$.cards;
+    _cardSearch.cards = _sortCards(deck$.cards);
     final legends = deck$.cards.where((c) => c.type == "Legend");
     if (legends.isEmpty) {
       _cardSearch.cards.insert(0, deck$.legend);
@@ -163,11 +199,7 @@ class _CardDeckEditState extends ConsumerState<CardDeckEdit> {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
-                subtitle: Text(
-                  '${widget.card.cardId} \u2981 ${widget.card.might.toString()} might',
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
+                subtitle: Text(widget.card.cardId, maxLines: 2, overflow: TextOverflow.ellipsis),
                 onTap: () {},
                 trailing: SizedBox(
                   width: 120,
@@ -227,20 +259,16 @@ class _CardDeckEditState extends ConsumerState<CardDeckEdit> {
                     overflow: TextOverflow.ellipsis,
                   ),
                   subtitle:
-                      search$.cards[i].type != 'CHAMPION'
+                      search$.cards[i].type == 'Legend'
                           ? Text(
-                            '${search$.cards[i].cardId} \u2981 ${search$.cards[i].might!.toString()} might',
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                          )
-                          : Text(
                             '${search$.cards[i].cardId} \u2981 ${ref.read(deckBuildNotifierProvider(widget.slug).notifier).totalCards()}/$_deckCardLimit cards',
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                          ),
+                          )
+                          : Text(search$.cards[i].cardId, maxLines: 2, overflow: TextOverflow.ellipsis),
                   onTap: null,
                   trailing:
-                      search$.cards[i].type != 'LEADER'
+                      search$.cards[i].type != 'Legend' && search$.cards[i].type != 'Battlefield'
                           ? SizedBox(
                             width: 120,
                             child: Row(

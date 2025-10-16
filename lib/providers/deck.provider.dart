@@ -69,7 +69,7 @@ class DeckBuildNotifier extends _$DeckBuildNotifier {
       "battlefield_id": deck['battlefield']['id'],
       "cards":
           deck['cards']
-              .where((c) => c['type'] != 'LEGEND' && c['type'] != 'CHAMPION UNIT' && c['type'] != 'BATTLEFIELD')
+              .where((c) => c['type'] != 'Legend' && c['type'] != 'Champion Unit' && c['type'] != 'Battlefield')
               .map((c) {
                 return {"card_id": c['id'], "count": c['count']};
               })
@@ -194,7 +194,7 @@ class DeckBuildNotifier extends _$DeckBuildNotifier {
     debounceUpdate();
 
     num cardCount = 0;
-    final cards = deck['cards'].where((c) => c['type'] != 'LEGEND').toList();
+    final cards = deck['cards'].where((c) => c['type'] != 'Legend').toList();
     for (var i = 0; i < cards.length; i++) {
       cardCount += cards[i]['count'];
     }
@@ -209,6 +209,7 @@ class DeckBuildNotifier extends _$DeckBuildNotifier {
         "name": deck['name'],
         "legend_id": deck['legend']['id'],
         "champion_id": deck['champion']['id'],
+        "battlefield_id": deck['battlefield']['id'],
         "cards":
             deck['cards']
                 .where((c) => c['type'] != 'Legend' && c['type'] != 'Champion Unit')

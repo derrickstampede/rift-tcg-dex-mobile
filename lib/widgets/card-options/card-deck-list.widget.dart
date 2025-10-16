@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -13,7 +14,7 @@ import 'package:rift/models/card.model.dart';
 import 'package:rift/models/deck.model.dart';
 
 import 'package:rift/widgets/cards/card-image.widget.dart';
-import 'package:rift/widgets/misc/color-hexagon.widget.dart';
+import 'package:rift/widgets/misc/domain-icon.widget.dart';
 
 class CardDeckList extends ConsumerStatefulWidget {
   const CardDeckList({super.key, required this.card, required this.selectDeck});
@@ -87,23 +88,37 @@ class _CardDeckListState extends ConsumerState<CardDeckList> {
         ? allowedDecks.isNotEmpty
             ? Column(
               children: [
-                for (int i = 0; i < allowedDecks.length; i++)
-                  ListTile(
-                    leading: SizedBox(width: 42, child: CardImage(imageUrl: allowedDecks[i].legend.thumbnail)),
+                ...allowedDecks.map((d) {
+                  final visibility = d.isPublic ? 'Public' : 'Private';
+                  final visibilityIcon = d.isPublic ? Symbols.public : Symbols.lock;
+
+                  return ListTile(
+                    leading: SizedBox(width: 42, child: CardImage(imageUrl: d.legend.thumbnail)),
                     title: Text(
-                      allowedDecks[i].name,
+                      d.name,
                       style: const TextStyle(fontWeight: FontWeight.w700),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    subtitle: Text(
-                      '${allowedDecks[i].legend.name} \u2981 ${allowedDecks[i].cardCount} cards',
+                    subtitle: RichText(
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
+                      text: TextSpan(
+                        text: '',
+                        style: DefaultTextStyle.of(context).style,
+                        children: [
+                          TextSpan(text: '${d.cardCount} cards \u2981 '),
+                          for (var domain in d.legend.color!.split('/'))
+                            WidgetSpan(alignment: PlaceholderAlignment.middle, child: DomainIcon(domain: domain)),
+                          TextSpan(text: ' \u2981 '),
+                          WidgetSpan(alignment: PlaceholderAlignment.middle, child: Icon(visibilityIcon, size: 16)),
+                          TextSpan(text: ' $visibility'),
+                        ],
+                      ),
                     ),
-                    onTap: () => _selectDeck(allowedDecks[i].slug),
-                    trailing: ColorHexagon(size: 24, colors: allowedDecks[i].legend.color!),
-                  ),
+                    onTap: () => _selectDeck(d.slug),
+                  );
+                }),
               ],
             )
             : Padding(

@@ -819,7 +819,18 @@ class _CardScreenState extends ConsumerState<CardScreen> {
                                         ),
                                       ),
                                       Expanded(
-                                        flex: 2,
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            const Subheader(text: 'Domain'),
+                                            Text(
+                                              _card.domain != null ? _card.domain! : '-',
+                                              style: const TextStyle(fontSize: 16),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Expanded(
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [

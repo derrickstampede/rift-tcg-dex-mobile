@@ -19,10 +19,11 @@ import 'package:rift/helpers/card-options.helper.dart';
 import 'package:rift/routes/config.dart';
 
 class CardAddRemove extends ConsumerStatefulWidget {
-  const CardAddRemove({super.key, required this.card, required this.deck});
+  const CardAddRemove({super.key, required this.card, required this.deck, required this.screen});
 
   final CardListItem card;
   final Deck deck;
+  final String? screen;
 
   @override
   ConsumerState<CardAddRemove> createState() => _CardAddRemoveState();
@@ -116,7 +117,7 @@ class _CardAddRemoveState extends ConsumerState<CardAddRemove> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          if (widget.card.type != "Legend" && widget.card.type != "Champion Unit" && widget.card.type != "Battlefield")
+          if (widget.card.type != "Legend" && widget.card.type != "Battlefield" && widget.screen != 'switch-champion')
             SizedBox(
               width: 42,
               child: RawMaterialButton(
@@ -150,7 +151,7 @@ class _CardAddRemoveState extends ConsumerState<CardAddRemove> {
                 child: Icon(Symbols.loop, size: 24.0, color: backgroundColor),
               ),
             ),
-          if (widget.card.type == "Champion Unit")
+          if (widget.card.type == "Champion Unit" && widget.screen == 'switch-champion')
             SizedBox(
               width: 42,
               child: RawMaterialButton(
@@ -189,7 +190,7 @@ class _CardAddRemoveState extends ConsumerState<CardAddRemove> {
               child: CardDeckCount(card: widget.card, deck: widget.deck, foregroundColor: foregroundColor),
             ),
           ),
-          if (widget.card.type != "Legend" && widget.card.type != "Champion Unit" && widget.card.type != "Battlefield")
+          if (widget.card.type != "Legend" && widget.card.type != "Battlefield" && widget.screen != 'switch-champion')
             SizedBox(
               width: 42,
               child: RawMaterialButton(

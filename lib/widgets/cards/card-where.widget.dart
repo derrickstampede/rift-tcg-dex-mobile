@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 import 'package:rift/main.dart';
 
@@ -13,9 +14,9 @@ import 'package:rift/models/vault.model.dart';
 
 import 'package:rift/helpers/card.helper.dart';
 
-import 'package:rift/widgets/misc/color-hexagon.widget.dart';
-import 'package:rift/widgets/misc/color-circle.widget.dart';
 import 'package:rift/widgets/cards/card-image.widget.dart';
+import 'package:rift/widgets/misc/domain-icon.widget.dart';
+import 'package:rift/widgets/misc/color-circle.widget.dart';
 import 'package:rift/widgets/misc/titlecase.widget.dart';
 import 'package:rift/widgets/misc/subheader.widget.dart';
 
@@ -114,30 +115,39 @@ class _CardWhereState extends State<CardWhere> {
                     padding: EdgeInsets.symmetric(horizontal: 8),
                     child: Text('-', style: TextStyle(fontSize: 16)),
                   ),
-                ..._decks.map(
-                  (d) => ListTile(
+                ..._decks.map((d) {
+                  final visibility = d.isPublic ? 'Public' : 'Private';
+                  final visibilityIcon = d.isPublic ? Symbols.public : Symbols.lock;
+
+                  return ListTile(
                     contentPadding: const EdgeInsets.symmetric(horizontal: 8),
                     dense: true,
-                    leading: SizedBox(
-                      width: 90,
-                      child: Row(
-                        children: [
-                          Expanded(child: CardImage(imageUrl: d.legend.thumbnail)),
-                          Expanded(child: CardImage(imageUrl: d.champion.thumbnail)),
-                        ],
-                      ),
-                    ),
+                    leading: SizedBox(width: 42, child: CardImage(imageUrl: d.legend.thumbnail)),
                     title: Text(
                       d.name,
                       style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    subtitle: Text('${d.cardCount} cards', maxLines: 2, overflow: TextOverflow.ellipsis),
-                    onTap: () => _goToDeck(d),
-                    trailing: ColorHexagon(size: 24, colors: d.legend.color!),
-                  ),
-                ),
+                    subtitle: RichText(
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      text: TextSpan(
+                        text: '',
+                        style: DefaultTextStyle.of(context).style,
+                        children: [
+                          TextSpan(text: '${d.cardCount} cards \u2981 '),
+                          for (var domain in d.legend.color!.split('/'))
+                            WidgetSpan(alignment: PlaceholderAlignment.middle, child: DomainIcon(domain: domain)),
+                          TextSpan(text: ' \u2981 '),
+                          WidgetSpan(alignment: PlaceholderAlignment.middle, child: Icon(visibilityIcon, size: 16)),
+                          TextSpan(text: ' $visibility'),
+                        ],
+                      ),
+                    ),
+                    onTap: () => _goToDeck(d)
+                  );
+                }),
                 const SizedBox(height: 8),
               ],
             ),

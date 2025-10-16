@@ -40,7 +40,7 @@ class _SwitchChampionScreenState extends ConsumerState<SwitchChampionScreen> {
   Session? _session = supabase.auth.currentSession;
   late final StreamSubscription<AuthState> _authStateSubscription;
 
-  final _searchScreen = 'switch-leader';
+  final _searchScreen = 'switch-champion';
   late final CardSearch _cardSearch;
   final _allColors = ['Red', 'Green', 'Blue', 'Orange', 'Purple', 'Yellow', 'No Color'];
 

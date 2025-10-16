@@ -221,8 +221,8 @@ class _DeckCardsScreenState extends ConsumerState<DeckCardsScreen> {
 
     return [
       ...legendCard,
-      ...championCard,
       ...battlefieldCards,
+      ...championCard,
       ...signatureCards,
       ...unitCards,
       ...spellCards,

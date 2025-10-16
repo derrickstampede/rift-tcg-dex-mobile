@@ -14,11 +14,27 @@
       },
       "oauth_client": [
         {
+          "client_id": "769875276341-1j0k3chl0f1ejabgrrm48jq71u75dmtl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.xedtcg.rift",
+            "certificate_hash": "65520d244d37d4e5b7c557c0776c8e345ae34357"
+          }
+        },
+        {
           "client_id": "769875276341-3nvi5mc200a9lj1815fdiuatuuk5ft4i.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.xedtcg.rift",
             "certificate_hash": "6b4532e170d99556be89a18188d27ceed21005eb"
+          }
+        },
+        {
+          "client_id": "769875276341-p6ft6takbgbohmi01qp9flkdra23tjbp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.xedtcg.rift",
+            "certificate_hash": "4598c8ee8895db628b4863aec50054c03ae7cf4e"
           }
         },
         {
@@ -47,7 +63,8 @@
             }
           ]
         }
-      }
+      },
+      "admob_app_id": "ca-app-pub-5747268466930988~8539083228"
     }
   ],
   "configuration_version": "1"

@@ -117,22 +117,22 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                         Config.router.navigateTo(context, route);
                       },
                     ),
-                    ListTile(
-                      leading: const Icon(Symbols.star),
-                      title: const Text(
-                        'Apply Promo Code',
-                        style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14, height: 1.3),
-                      ),
-                      subtitle: const Text(
-                        'Get special offers on PRO features!',
-                        style: TextStyle(fontSize: 12),
-                      ),
-                      trailing: const Icon(Symbols.chevron_forward),
-                      onTap: () {
-                        const route = '/profile/settings/trial-code';
-                        Config.router.navigateTo(context, route);
-                      },
-                    ),
+                    // ListTile(
+                    //   leading: const Icon(Symbols.star),
+                    //   title: const Text(
+                    //     'Apply Promo Code',
+                    //     style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14, height: 1.3),
+                    //   ),
+                    //   subtitle: const Text(
+                    //     'Get special offers on PRO features!',
+                    //     style: TextStyle(fontSize: 12),
+                    //   ),
+                    //   trailing: const Icon(Symbols.chevron_forward),
+                    //   onTap: () {
+                    //     const route = '/profile/settings/trial-code';
+                    //     Config.router.navigateTo(context, route);
+                    //   },
+                    // ),
                     ListTile(
                       leading: const Icon(Symbols.analytics),
                       title: const Text(

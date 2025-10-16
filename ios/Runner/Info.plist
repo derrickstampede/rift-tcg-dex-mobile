@@ -86,7 +86,13 @@
 		<!-- Required Unity Ads configuration -->
 		<key>GADMediationProviderUnity</key>
 		<string>UNITY</string>
-		<key>UIStatusBarHidden</key>
-		<false/>
-	</dict>
+	<key>UIStatusBarHidden</key>
+	<false/>
+	<!-- NSBonjourServices required by build process -->
+	<key>NSBonjourServices</key>
+	<array/>
+	<!-- Local Network Usage Description -->
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>This app uses the local network to discover and connect to nearby devices for enhanced functionality.</string>
+</dict>
 </plist>

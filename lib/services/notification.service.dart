@@ -18,18 +18,31 @@ class NotificationService {
   bool _isInitialized = false;
 
   Future<void> initialize() async {
+    print('🔔 NotificationService: Starting initialization...');
     try {
+      await setupFlutterNotifications();
       FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
       await _requestPermission();
       await _setupMessageHandlers();
 
       try {
+        // For iOS, we need to get the APNS token first
+        if (Platform.isIOS) {
+          final apnsToken = await FirebaseMessaging.instance.getAPNSToken();
+          print('APNS Token: $apnsToken');
+          if (apnsToken == null) {
+            print('WARNING: APNS token is null. Push notifications may not work.');
+          }
+        }
+        
         final token = await FirebaseMessaging.instance.getToken();
-        // final token =
-        //     Platform.isIOS ? await FirebaseMessaging.instance.getAPNSToken() : await FirebaseMessaging.instance.getToken();
         print('FCM Token: $token');
+        
+        if (token == null) {
+          print('WARNING: FCM token is null. Push notifications will not work.');
+        }
       } catch (e) {
-        print('Failed to get FCM token: $e');
+        print('Failed to get FCM/APNS token: $e');
         // Continue app execution even if token retrieval fails
       }
     } catch (e) {
@@ -56,7 +69,15 @@ class NotificationService {
       criticalAlert: false,
       provisional: false,
     );
-    print('Permission status: ${settings.authorizationStatus}');
+    print('🔔 Permission status: ${settings.authorizationStatus}');
+    
+    if (settings.authorizationStatus == AuthorizationStatus.denied) {
+      print('❌ Push notifications permission denied');
+    } else if (settings.authorizationStatus == AuthorizationStatus.notDetermined) {
+      print('⚠️ Push notifications permission not determined');
+    } else if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+      print('✅ Push notifications permission authorized');
+    }
   }
 
   Future<void> setupFlutterNotifications() async {
@@ -126,17 +147,20 @@ class NotificationService {
   }
 
   Future<void> _setupMessageHandlers() async {
+    print('🔔 Setting up message handlers...');
+    
     // foreground message
     FirebaseMessaging.onMessage.listen((message) async {
-      print('foreground message');
-      print('onMessage: $message');
+      print('📱 Received foreground message');
+      print('Message data: ${message.data}');
+      print('Message notification: ${message.notification?.title} - ${message.notification?.body}');
       showNotification(message);
     });
 
-    // background message
+    // background message - when user taps notification
     FirebaseMessaging.onMessageOpenedApp.listen((message) async {
-      print('foreground message');
-      print('onMessage: $message');
+      print('🔔 App opened from notification');
+      print('Message data: ${message.data}');
       // showNotification(message);
     });
 

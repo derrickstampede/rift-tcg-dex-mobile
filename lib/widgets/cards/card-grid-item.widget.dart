@@ -284,7 +284,7 @@ class _CardGridItemState extends ConsumerState<CardGridItem> {
               bottom: searchNotifier$.showOwned() ? 70 : 46,
               left: 0,
               right: 0,
-              child: CardAddRemove(card: widget.card, deck: widget.deck!),
+              child: CardAddRemove(card: widget.card, deck: widget.deck!, screen: widget.searchScreen),
             ),
           if (widget.vault != null) ...[
             Positioned(
